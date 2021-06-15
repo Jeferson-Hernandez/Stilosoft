@@ -15,10 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\Abstract\" />
-    <Folder Include="Models\Business\" />
-  </ItemGroup>
-
 </Project>
