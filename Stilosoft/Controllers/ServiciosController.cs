@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Stilosoft.Models.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,17 @@ namespace Stilosoft.Controllers
 {
     public class ServiciosController : Controller
     {
-        public IActionResult Index()
+        private readonly IServicioService _servicioService;
+
+        public ServiciosController(IServicioService servicioService)
         {
-            return View();
+            _servicioService = servicioService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _servicioService.ObtenerListaServicios());
         }
     }
 }

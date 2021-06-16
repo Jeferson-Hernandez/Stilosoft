@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Stilosoft.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace Stilosoft.Models.DAL
         {
 
         }
-
-
-
+        public DbSet<Servicio> Servicio { get; set; }
+        public DbSet<Insumo> Insumo { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
     }
 }

@@ -26,6 +26,6 @@ namespace Stilosoft.Models.Entities
         public string Medida {get; set; }
 
         [Required]
-        public bool Estadp {get; set; }
+        public bool Estado {get; set; }
     }
 }

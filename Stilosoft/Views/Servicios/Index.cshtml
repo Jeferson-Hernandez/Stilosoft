@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Stilosoft.Models.Entities.Servicio>
+
+@{
+    ViewData["Title"] = "Servicios";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Servicios</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="index" asp-controller="Servicios">Inicio</a></li>
+                    <li class="breadcrumb-item active">Servicios</li>
+                </ol>
+            </div>
+        </div>
+        <p>
+            <a href="#" class="btn btn-success"> Registrar servicio</a>
+        </p>
+        <table class="table" id="tabla">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Duracion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Costo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Categoria)
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duracion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Categoria)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+
+
+}

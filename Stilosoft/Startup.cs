@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stilosoft.Models.Abstract;
+using Stilosoft.Models.Business;
 using Stilosoft.Models.DAL;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,11 @@ namespace Stilosoft
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            var conexion = Configuration["ConnetionStrings:conexion_sqlServer"];
+            var conexion = Configuration["ConnectionStrings:conexion_sqlServer"];
             services.AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(conexion));
 
-
+            services.AddScoped<IServicioService, ServicioService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +59,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Servicios}/{action=Index}/{id?}");
             });
         }
     }

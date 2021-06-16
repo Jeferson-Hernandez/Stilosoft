@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Stilosoft.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Stilosoft.Models.Abstract
 {
-    interface IServicioService
+    public interface IServicioService
     {
+        Task<IEnumerable<Servicio>> ObtenerListaServicios();
     }
 }
