@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stilosoft.Models.Abstract;
+using Stilosoft.Business.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;

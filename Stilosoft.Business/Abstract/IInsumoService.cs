@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stilosoft.Models.Entities
+namespace Stilosoft.Business.Abstract
 {
-    public class Permiso
+    interface IInsumoService
     {
     }
 }

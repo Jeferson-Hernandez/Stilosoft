@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stilosoft.Models.Business
+namespace Stilosoft.Business.Business
 {
-    public class InsumoService
+    public class ProveedorService
     {
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stilosoft.Models.Abstract
+namespace Stilosoft.Business.Abstract
 {
-    interface IProductoService
+    interface IProveedorService
     {
     }
 }
