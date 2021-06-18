@@ -18,7 +18,6 @@ namespace Stilosoft.Model.Entities
         
 
         [Required(ErrorMessage = "La cantidad del insumo es obligatoria")]
-        [Column(TypeName = "int")]
         public int Cantidad {get; set; }
 
         [Required(ErrorMessage = "La medida es obligatoria")]

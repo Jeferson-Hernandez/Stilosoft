@@ -60,7 +60,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Servicios}/{action=Index}/{id?}");
+                    pattern: "{controller=Insumo}/{action=Index}/{Id?}");
             });
         }
     }
