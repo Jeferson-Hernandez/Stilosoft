@@ -33,6 +33,7 @@ namespace Stilosoft
                     options.UseSqlServer(conexion));
 
             services.AddScoped<IServicioService, ServicioService>();
+            services.AddScoped<IInsumoService, InsumoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +60,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Servicios}/{action=Index}/{id?}");
+                    pattern: "{controller=Insumos}/{action=Index}/{Id?}");
             });
         }
     }

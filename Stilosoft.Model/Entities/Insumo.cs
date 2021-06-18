@@ -13,16 +13,16 @@ namespace Stilosoft.Model.Entities
         public int InsumoId { get; set; }
 
         [Required(ErrorMessage = "El nombre del insumo es obligatorio")]
-        [Column (TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string Nombre {get; set;}
         
 
         [Required(ErrorMessage = "La cantidad del insumo es obligatoria")]
-        [Column (TypeName = "int")]
+        [Column(TypeName = "int")]
         public int Cantidad {get; set; }
 
         [Required(ErrorMessage = "La medida es obligatoria")]
-        [Column (TypeName = "nvarchar(15)")]
+        [Column(TypeName = "nvarchar(15)")]
         public string Medida {get; set; }
 
         [Required]
