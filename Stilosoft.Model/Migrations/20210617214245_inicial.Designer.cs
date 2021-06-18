@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stilosoft.Model.DAL;
 
-namespace Stilosoft.Migrations
+namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210617214245_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,7 +20,7 @@ namespace Stilosoft.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Stilosoft.Models.Entities.Insumo", b =>
+            modelBuilder.Entity("Stilosoft.Model.Entities.Insumo", b =>
                 {
                     b.Property<int>("InsumoId")
                         .ValueGeneratedOnAdd()
@@ -44,7 +46,7 @@ namespace Stilosoft.Migrations
                     b.ToTable("Insumo");
                 });
 
-            modelBuilder.Entity("Stilosoft.Models.Entities.Producto", b =>
+            modelBuilder.Entity("Stilosoft.Model.Entities.Producto", b =>
                 {
                     b.Property<int>("ProductoId")
                         .ValueGeneratedOnAdd()
@@ -73,7 +75,7 @@ namespace Stilosoft.Migrations
                     b.ToTable("Producto");
                 });
 
-            modelBuilder.Entity("Stilosoft.Models.Entities.Proveedor", b =>
+            modelBuilder.Entity("Stilosoft.Model.Entities.Proveedor", b =>
                 {
                     b.Property<int>("ProveedorId")
                         .ValueGeneratedOnAdd()
@@ -111,7 +113,7 @@ namespace Stilosoft.Migrations
                     b.ToTable("Proveedor");
                 });
 
-            modelBuilder.Entity("Stilosoft.Models.Entities.Servicio", b =>
+            modelBuilder.Entity("Stilosoft.Model.Entities.Servicio", b =>
                 {
                     b.Property<int>("ServicioId")
                         .ValueGeneratedOnAdd()
@@ -127,6 +129,9 @@ namespace Stilosoft.Migrations
 
                     b.Property<int>("Duracion")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

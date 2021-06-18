@@ -36,6 +36,9 @@
                         @Html.DisplayNameFor(model => model.Categoria)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </th>
+                    <th>
                         Acciones
                     </th>
                 </tr>
@@ -43,20 +46,36 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duracion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Costo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Categoria)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duracion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Costo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria)
+                    </td>
+                    <td>
+                        @if (item.Estado == true)
+                        {
+                            <i class="fas fa-toggle-on"></i>
+                        }
+                        else if (item.Estado == false)
+                        {
+                            <i class="fas fa-toggle-off"></i>
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form href="#" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </form>                        
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Stilosoft.Migrations
+namespace Stilosoft.Model.Migrations
 {
     public partial class inicial : Migration
     {
@@ -67,7 +67,8 @@ namespace Stilosoft.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Duracion = table.Column<int>(type: "int", nullable: false),
                     Costo = table.Column<long>(type: "bigint", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
