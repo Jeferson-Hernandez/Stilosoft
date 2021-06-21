@@ -1,0 +1,60 @@
+﻿@model Stilosoft.Model.Entities.Servicio
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Productos</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Estilistas</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary">Servicios</a>
+        </div>
+        <div class="col-md-5">
+            <a href="#" class="btn btn-primary">Programación agenda</a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Crear" enctype="multipart/form-data"> 
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Duracion" class="control-label"></label>
+                    <input asp-for="Duracion" class="form-control" />
+                    <span asp-validation-for="Duracion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Costo" class="control-label"></label>
+                    <input asp-for="Costo" class="form-control" />
+                    <span asp-validation-for="Costo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Categoria" class="control-label"></label>
+                    <input asp-for="Categoria" class="form-control" />
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

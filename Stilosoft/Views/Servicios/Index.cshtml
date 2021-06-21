@@ -3,49 +3,54 @@
 @{
     ViewData["Title"] = "Servicios";
 }
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Servicios</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-action="index" asp-controller="Servicios">Inicio</a></li>
-                    <li class="breadcrumb-item active">Servicios</li>
-                </ol>
-            </div>
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Productos</a>
         </div>
-        <p>
-            <a href="#" class="btn btn-success"> Registrar servicio</a>
-        </p>
-        <table class="table" id="tabla">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Duracion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Costo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Categoria)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Estado)
-                    </th>
-                    <th>
-                        Acciones
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Estilistas</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary">Servicios</a>
+        </div>
+        <div class="col-md-5">
+            <a href="#" class="btn btn-primary">Programación agenda</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="Crear" class="btn btn-success"> Registrar servicio</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duracion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Costo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nombre)
@@ -70,16 +75,16 @@
                         }
                     </td>
                     <td>
-                        <a href="#" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form href="#" class="d-inline">
+                        <a asp-action="Editar" asp-route-id="@item.ServicioId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form asp-action="Eliminar" asp-route-id="@item.ServicioId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </form>                        
+                        </form>
                     </td>
                 </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+
 </section>
 
 @section Scripts{
