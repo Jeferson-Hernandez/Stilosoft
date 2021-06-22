@@ -28,5 +28,6 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "El celular es obligatorio")]
         [Column(TypeName = "nvarchar(15)")]
         public string celular { get; set; }
+        public bool Estado { get; set; }
     }
 }

@@ -18,5 +18,6 @@ namespace Stilosoft.Model.DAL
         public DbSet<Insumo> Insumo { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<Estilista> Estilista { get; set; }
     }
 }
