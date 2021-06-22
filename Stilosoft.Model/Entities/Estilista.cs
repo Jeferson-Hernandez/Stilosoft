@@ -15,7 +15,7 @@ namespace Stilosoft.Model.Entities
         [DisplayName("Estilista")]
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
-        public int Nombre { get; set; }
+        public string Nombre { get; set; }
         [DisplayName("Fecha de nacimiento")]
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
         [Column(TypeName = "Date")]

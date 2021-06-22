@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stilosoft.Model.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace Stilosoft.Business.Abstract
 {
     public interface IEstilistaService
     {
-
-
+        Task<IEnumerable<Estilista>> ObtenerListaEstilistas();
     }
 }

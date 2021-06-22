@@ -1,4 +1,5 @@
-﻿using Stilosoft.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
 using Stilosoft.Model.Entities;
 using System;
@@ -18,10 +19,10 @@ namespace Stilosoft.Business.Business
             _context = context;
         }
 
-        /*public async Task<IEnumerable<Estilista>> ObtenerListaEstilistas()
+        public async Task<IEnumerable<Estilista>> ObtenerListaEstilistas()
         {
-            
-        }*/
+            return await _context.Estilista.ToListAsync();
+        }
 
     }
 }
