@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -6,11 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stilosoft.Model.Entities
+namespace Stilosoft.ViewModels
 {
-    public class Producto
+    public class ProductoViewModel
     {
-        [Key]
         public int ProductoId { get; set; }
 
         [DisplayName("Producto")]
@@ -28,6 +28,8 @@ namespace Stilosoft.Model.Entities
 
         [Required(ErrorMessage = "El precio es obligatorio")]
         public long Precio { get; set; }
+
+        public IFormFile Imagen { get; set; }
         public string RutaImagen { get; set; }
     }
 }
