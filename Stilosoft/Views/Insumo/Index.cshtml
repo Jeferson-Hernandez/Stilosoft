@@ -18,7 +18,7 @@
             </div>
         </div>
         <p>
-            <a href="#" class="btn btn-success"> Registrar insumo</a>
+            <a asp-action="CrearInsu" class="btn btn-success"> Registrar insumo</a>
         </p>
         <table class="table" id="tabla">
             <thead>
@@ -38,25 +38,34 @@
                     <th>
                         Acciones
                     </th>
+                   
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cantidad)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Medida)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Estado)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Medida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        |<a asp-action="EditarInsu" class="btn btn-success"> Editar insumo</a>
+
+                        <form asp-action="EliminarInsu" asp-route-id="@item.InsumoId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
                 }
             </tbody>
         </table>
@@ -66,6 +75,46 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("CrearInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
 
 
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+                  Swal.fire({
+                    title: "Error",
+                      icon: 'error',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+    </script>
 }

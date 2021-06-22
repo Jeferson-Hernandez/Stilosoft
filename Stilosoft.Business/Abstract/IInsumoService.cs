@@ -8,6 +8,10 @@ namespace Stilosoft.Business.Abstract
 {
     public interface IInsumoService
     {
-        Task<IEnumerable<Insumo>> ObtenerListaInsumo();
+        Task<IEnumerable<Insumo>> ObtenerListaInsumos();
+        Task RegistrarInsumo(Insumo insumo);
+        Task<Insumo> ObtenerInsumoPorId(int Id);
+        Task EditarInsumo(Insumo insumo);
+        Task EliminarInsumo(int Id);
     }
 }
