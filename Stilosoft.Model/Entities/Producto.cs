@@ -28,6 +28,7 @@ namespace Stilosoft.Model.Entities
 
         [Required(ErrorMessage = "El precio es obligatorio")]
         public long Precio { get; set; }
+        [DisplayName("Imagen")]
         public string RutaImagen { get; set; }
     }
 }

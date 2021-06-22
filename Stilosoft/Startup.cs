@@ -33,6 +33,7 @@ namespace Stilosoft
                     options.UseSqlServer(conexion));
 
             services.AddScoped<IServicioService, ServicioService>();
+            services.AddScoped<IProductoService, ProductoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
