@@ -18,6 +18,7 @@ namespace Stilosoft.Model.Entities
         public int Nombre { get; set; }
         [DisplayName("Fecha de nacimiento")]
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
+        [Column(TypeName = "Date")]
         public DateTime FechaNacimiento { get; set; }
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La Cédula es obligatoria")]

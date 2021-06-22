@@ -25,5 +25,6 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La categoría es obligatoria")]
         [Column(TypeName = "nvarchar(50)")]
         public string Categoria { get; set; }
+        public bool Estado { get; set; }
     }
 }
