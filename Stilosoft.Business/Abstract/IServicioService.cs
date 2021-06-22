@@ -13,5 +13,6 @@ namespace Stilosoft.Business.Abstract
         Task GuardarServicio(Servicio servicio);
         Task EditarServicio(Servicio servicio);
         Task EliminarServicio(int id);
+        Task<Servicio> NombreServicioExiste(string nombre);
     }
 }

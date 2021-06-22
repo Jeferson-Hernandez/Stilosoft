@@ -35,9 +35,14 @@ namespace Stilosoft.Controllers
             if (ModelState.IsValid)
             {
                 servicio.Estado = true;
-
                 try
                 {
+                    var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
+
+                    if (ServicioExiste != null)
+                    {
+                        return RedirectToAction("index");
+                    }
                     await _servicioService.GuardarServicio(servicio);
                     return RedirectToAction("index");
                 }
@@ -67,6 +72,12 @@ namespace Stilosoft.Controllers
             {
                 try
                 {
+                    var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
+
+                    if (ServicioExiste != null)
+                    {
+                        return RedirectToAction("index");
+                    }
                     await _servicioService.EditarServicio(servicio);
                     return RedirectToAction("index");
                 }
@@ -83,14 +94,18 @@ namespace Stilosoft.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Eliminar(int id)
+        public async Task<IActionResult> Eliminar(int? id)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _servicioService.EliminarServicio(id);
-                    return RedirectToAction("index");
+                    if (id != null)
+                    {
+                        await _servicioService.EliminarServicio(id.Value);
+                        return RedirectToAction("index");
+                    }
+                    return NotFound();
                 }
                 catch (Exception)
                 {
@@ -101,6 +116,25 @@ namespace Stilosoft.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditarEstado(int id)
+        {
+            Servicio servicio = await _servicioService.ObtenerServicioPorId(id);
+            if (servicio.Estado == true)
+                servicio.Estado = false;
+            else if (servicio.Estado == false)
+                servicio.Estado = true;
+
+            try
+            {
+                await _servicioService.EditarServicio(servicio);
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

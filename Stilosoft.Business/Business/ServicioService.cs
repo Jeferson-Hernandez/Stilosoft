@@ -31,7 +31,7 @@ namespace Stilosoft.Business.Business
         public async Task GuardarServicio(Servicio servicio)
         {
             _context.Add(servicio);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();            
         }
 
         public async Task EditarServicio(Servicio servicio)
@@ -45,6 +45,11 @@ namespace Stilosoft.Business.Business
             var servicio = await ObtenerServicioPorId(id);
             _context.Remove(servicio);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Servicio> NombreServicioExiste(string nombre)
+        {
+            return await _context.Servicio.FirstOrDefaultAsync(n => n.Nombre == nombre);
         }
     }
 }

@@ -67,11 +67,15 @@
                     <td>
                         @if (item.Estado == true)
                         {
-                            <i class="fas fa-toggle-on"></i>
+                            <form asp-action="EditarEstado" asp-route-id="@item.ServicioId">
+                                <button type="submit"><i class="fas fa-toggle-on"></i></button>
+                            </form>
                         }
                         else if (item.Estado == false)
                         {
-                            <i class="fas fa-toggle-off"></i>
+                            <form asp-action="EditarEstado" asp-route-id="@item.ServicioId">
+                                <button type="submit"><i class="fas fa-toggle-off"></i></button>
+                            </form>                            
                         }
                     </td>
                     <td>
