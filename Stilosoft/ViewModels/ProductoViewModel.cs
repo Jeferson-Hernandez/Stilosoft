@@ -30,7 +30,7 @@ namespace Stilosoft.ViewModels
         public long Precio { get; set; }
 
         public IFormFile Imagen { get; set; }
-        [DisplayName("imagen")]
+        [DisplayName("Imagen")]
         public string RutaImagen { get; set; }
     }
 }

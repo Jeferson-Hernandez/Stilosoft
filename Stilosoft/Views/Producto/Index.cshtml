@@ -23,14 +23,11 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="Crear" class="btn btn-success"> Registrar producto</a>
+        <a asp-action="CrearPro" class="btn btn-success"> Registrar producto</a>
     </p>
     <table class="table" id="tabla">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductoId)
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
@@ -56,9 +53,6 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProductoId)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
@@ -71,11 +65,18 @@
                     @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RutaImagen)
+                    @if (item.RutaImagen != null)
+                    {
+                        <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                    }
+                    else
+                    {
+                        <p>No hay imagen asociada al producto</p>
+                    }
                 </td>
                 <td>
-                    <a asp-action="Editar" asp-route-id="@item.ProductoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                    <form asp-action="Eliminar" asp-route-id="@item.ProductoId" class="d-inline">
+                    <a asp-action="" asp-route-id="@item.ProductoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                    <form asp-action="EliminarProducto" asp-route-id="@item.ProductoId" class="d-inline">
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </form>
                 </td>
