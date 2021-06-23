@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.Entities;
+using Stilosoft.ViewModels.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,19 @@ namespace Stilosoft.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear(Servicio servicio)
+        public async Task<IActionResult> Crear(ServicioViewModel servicioViewModel)
         {
             if (ModelState.IsValid)
             {
-                servicio.Estado = true;
+                Servicio servicio = new()
+                {
+                    Nombre = servicioViewModel.Nombre,
+                    Duracion = servicioViewModel.Duracion,
+                    Costo = servicioViewModel.Costo,
+                    Categoria = servicioViewModel.Categoria,
+                    Estado = true
+                };
+                
                 try
                 {
                     var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
@@ -62,14 +71,34 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> Editar(int id)
         {
             Servicio servicio = await _servicioService.ObtenerServicioPorId(id);
-            return View(servicio);
+            ServicioViewModel servicioViewModel = new()
+            {
+                ServicioId = servicio.ServicioId,
+                Nombre = servicio.Nombre,
+                Duracion = servicio.Duracion,
+                Costo = servicio.Costo,
+                Categoria = servicio.Categoria,
+                Estado = servicio.Estado
+            };
+
+            return View(servicioViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(Servicio servicio)
+        public async Task<IActionResult> Editar(ServicioViewModel servicioViewModel)
         {
             if (ModelState.IsValid)
             {
+                Servicio servicio = new()
+                {
+                    ServicioId = servicioViewModel.ServicioId,
+                    Nombre = servicioViewModel.Nombre,
+                    Duracion = servicioViewModel.Duracion,
+                    Costo = servicioViewModel.Costo,
+                    Categoria = servicioViewModel.Categoria,
+                    Estado = servicioViewModel.Estado
+                };
+
                 try
                 {
                     var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
