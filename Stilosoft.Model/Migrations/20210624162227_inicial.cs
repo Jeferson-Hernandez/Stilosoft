@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Stilosoft.Model.Migrations
 {
-    public partial class usuarios : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,92 @@ namespace Stilosoft.Model.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estilista",
+                columns: table => new
+                {
+                    EstilistaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "Date", nullable: false),
+                    cedula = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    celular = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estilista", x => x.EstilistaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Insumo",
+                columns: table => new
+                {
+                    InsumoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Medida = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Insumo", x => x.InsumoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Producto",
+                columns: table => new
+                {
+                    ProductoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Precio = table.Column<long>(type: "bigint", nullable: false),
+                    RutaImagen = table.Column<string>(type: "nvarchar(50)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Producto", x => x.ProductoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proveedor",
+                columns: table => new
+                {
+                    ProveedorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nit = table.Column<string>(type: "nvarchar(25)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(10)", nullable: true),
+                    Contacto = table.Column<string>(type: "nvarchar(25)", nullable: false),
+                    TelefonoContacto = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proveedor", x => x.ProveedorId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Servicio",
+                columns: table => new
+                {
+                    ServicioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Duracion = table.Column<int>(type: "int", nullable: false),
+                    Costo = table.Column<long>(type: "bigint", nullable: false),
+                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servicio", x => x.ServicioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +178,8 @@ namespace Stilosoft.Model.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -137,8 +223,8 @@ namespace Stilosoft.Model.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -147,6 +233,28 @@ namespace Stilosoft.Model.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Celular = table.Column<string>(type: "nvarchar(10)", nullable: true),
+                    Cedula = table.Column<string>(type: "nvarchar(15)", nullable: true),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.ClienteId);
+                    table.ForeignKey(
+                        name: "FK_Cliente_AspNetUsers_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -208,6 +316,24 @@ namespace Stilosoft.Model.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Cliente");
+
+            migrationBuilder.DropTable(
+                name: "Estilista");
+
+            migrationBuilder.DropTable(
+                name: "Insumo");
+
+            migrationBuilder.DropTable(
+                name: "Producto");
+
+            migrationBuilder.DropTable(
+                name: "Proveedor");
+
+            migrationBuilder.DropTable(
+                name: "Servicio");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
