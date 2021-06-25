@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Servicios;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    
     public class ServiciosController : Controller
     {
         private readonly IServicioService _servicioService;
@@ -17,7 +19,7 @@ namespace Stilosoft.Controllers
         {
             _servicioService = servicioService;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Index()
         {

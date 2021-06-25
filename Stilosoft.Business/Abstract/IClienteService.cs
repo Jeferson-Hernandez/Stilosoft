@@ -12,5 +12,6 @@ namespace Stilosoft.Business.Abstract
         Task<IEnumerable<Cliente>> ObtenerListaClientes();
         Task GuardarCliente(Cliente cliente);
         Task EditarCliente(Cliente cliente);
+        Task<Cliente> ObtenerClientePorId(string id);
     }
 }

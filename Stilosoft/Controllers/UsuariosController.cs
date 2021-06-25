@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Usuarios;
@@ -15,16 +17,21 @@ namespace Stilosoft.Controllers
         private readonly IClienteService _clienteService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        const string SesionNombre = "_Nombre";
 
-        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _clienteService = clienteService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var listaUsuariosClientes = await _clienteService.ObtenerListaClientes();
+            //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();
+            return View(listaUsuariosClientes);
         }
         [HttpGet]
         public IActionResult Registrar()
@@ -72,6 +79,32 @@ namespace Stilosoft.Controllers
                 }
             }
             return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var resultado = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RecordarMe, false);
+                if (resultado.Succeeded)
+                {
+                    var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
+
+                    var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
+
+                    _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
+                    return RedirectToAction("index","Servicios");
+                }
+                return View();
+            }
+            return View(loginViewModel);
         }
     }
 }
