@@ -45,9 +45,20 @@ namespace Stilosoft.Controllers
                     Nombre = productoViewModel.Nombre,
                     Cantidad = productoViewModel.Cantidad,
                     Categoria = productoViewModel.Categoria,
-                    Precio = productoViewModel.Precio
+                    Precio = productoViewModel.Precio,
                 };
-
+                if (producto.Cantidad <= 0)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
+                    return RedirectToAction("index");
+                }
+                else if (producto.Precio <= 0)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "El precio debe ser mayor a 0";
+                    return RedirectToAction("index");
+                }
                 string path = null;
                 string wwwRootPath = null;
 
@@ -76,7 +87,7 @@ namespace Stilosoft.Controllers
                         }
 
                         await _productoService.RegistrarProducto(producto);
-                        TempData["Accion"] = "GuardarProducto";
+                        TempData["Accion"] = "RegistrarProducto";
                         TempData["Mensaje"] = "Producto guardado con éxito";
                         return RedirectToAction("Index");
                     }
@@ -107,7 +118,7 @@ namespace Stilosoft.Controllers
             };
             return View(productoViewModel);
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> EditarProducto(ProductoViewModel productoViewModel)
         {
             {
@@ -119,9 +130,20 @@ namespace Stilosoft.Controllers
                         Nombre = productoViewModel.Nombre,
                         Cantidad = productoViewModel.Cantidad,
                         Categoria = productoViewModel.Categoria,
-                        Precio = productoViewModel.Precio,
-                        RutaImagen = productoViewModel.RutaImagen
+                        Precio = productoViewModel.Precio
                     };
+                    if (producto.Cantidad <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
+                        return RedirectToAction("index");
+                    }
+                    else if (producto.Precio <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "El precio debe ser mayor a 0";
+                        return RedirectToAction("index");
+                    }
                     string wwwRootPath = null;
                     string path = null;
 
@@ -153,7 +175,7 @@ namespace Stilosoft.Controllers
                     
 
                         await _productoService.EditarProducto(producto);
-                        TempData["Accion"] = "RegistrarProducto";
+                        TempData["Accion"] = "EditarProducto";
                         TempData["Mensaje"] = "Producto registrado correctamente";
                         return RedirectToAction("index");
                     }

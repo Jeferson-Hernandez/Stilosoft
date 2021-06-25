@@ -1,18 +1,20 @@
 ﻿@model Stilosoft.ViewModels.ProductoViewModel
+
 @{
-    ViewData["Title"] = "CrearProducto";
+    ViewData["Title"] = "EditarProducto";
 }
+
 <br />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-secondary">Productos</a>
+            <a href="#" class="btn btn-primary">Productos</a>
         </div>
         <div class="col-md-1 mr-md-4">
             <a href="#" class="btn btn-primary">Estilistas</a>
         </div>
         <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary">Servicios</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary">Servicios</a>
         </div>
         <div class="col-md-5">
             <a href="#" class="btn btn-primary">Programación agenda</a>
@@ -23,7 +25,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="CrearPro" enctype="multipart/form-data">
+            <form asp-action="EditarProducto" asp-route-id="@Model.ProductoId" enctype="multipart/form-data">
                 <input type="hidden" asp-for="ProductoId" />
                 <input type="hidden" asp-for="RutaImagen" />
 
@@ -54,7 +56,7 @@
                     <span asp-validation-for="Imagen" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    <input type="submit" value="Editar" class="btn btn-primary" />
                 </div>
             </form>
         </div>
