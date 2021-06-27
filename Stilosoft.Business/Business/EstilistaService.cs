@@ -49,8 +49,8 @@ namespace Stilosoft.Business.Business
         }
         public bool CedulaEstilistaExiste(string cedula, int id)
         {
-            var estilista = _context.Estilista.FirstOrDefault(e => e.Cedula == cedula);
-            if (id == estilista.EstilistaId)
+            var cedulaExiste = _context.Estilista.FirstOrDefault(e => e.Cedula == cedula);
+            if (id == cedulaExiste.EstilistaId)
             {
                 return false;
             }

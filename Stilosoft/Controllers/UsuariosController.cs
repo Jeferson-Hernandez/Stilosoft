@@ -152,7 +152,7 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CerrarSesion()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Login","Usuarios");
         }
     }
 }

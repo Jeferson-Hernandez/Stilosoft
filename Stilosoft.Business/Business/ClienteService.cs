@@ -25,7 +25,7 @@ namespace Stilosoft.Business.Business
         }
         public async Task<Cliente> ObtenerClientePorId(string id)
         {
-            return await _context.Cliente.Include(u => u.IdentityUser).FirstOrDefaultAsync();
+            return await _context.Cliente.Include(u => u.IdentityUser).FirstOrDefaultAsync(s=>s.ClienteId.Contains(id));
         }
 
         public async Task GuardarCliente(Cliente cliente)
