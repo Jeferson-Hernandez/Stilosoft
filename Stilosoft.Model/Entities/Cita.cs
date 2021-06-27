@@ -19,8 +19,8 @@ namespace Stilosoft.Model.Entities
         [Column(TypeName = "Date")]
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage = "La hora es obligatoria")]
-        [Column(TypeName = "Time")]
-        public DateTime Hora { get; set; }
+        [Column(TypeName = "nvarchar(20)")]
+        public string Hora { get; set; }
         [Required]
         public long Total { get; set; }
         [Column(TypeName = "nvarchar(20)")]

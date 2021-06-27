@@ -16,9 +16,9 @@ namespace Stilosoft.Model.Entities
         
         [Column(TypeName = "Date")]
         public DateTime Fecha { get; set; }
-        
-        [Column(TypeName = "Time")]
-        public DateTime Hora { get; set; }
+
+        [Column(TypeName = "nvarchar(20)")]
+        public string Hora { get; set; }
         public long Total { get; set; }
         [Column(TypeName = "nvarchar(20)")]
         public string Estado { get; set; }
