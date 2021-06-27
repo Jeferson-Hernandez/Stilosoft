@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210627002929_todasentidades")]
-    partial class todasentidades
+    [Migration("20210627220522_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

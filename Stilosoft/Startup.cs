@@ -98,7 +98,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
+                    pattern: "{controller=Insumo}/{action=Index}/{Id?}");
             });
         }
     }
