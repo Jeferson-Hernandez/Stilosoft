@@ -13,7 +13,7 @@ namespace Stilosoft.Controllers
     public class InsumoController:Controller
     { 
     private readonly IInsumoService _insumoService;
-        private Boolean validacion = true;
+    private Boolean validacion = true;
 
 
 
