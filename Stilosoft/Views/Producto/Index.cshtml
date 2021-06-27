@@ -1,5 +1,139 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Stilosoft.Model.Entities.Producto>
+
 @{
+    ViewData["Title"] = "Producto";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-secondary">Productos</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Estilistas</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary">Servicios</a>
+        </div>
+        <div class="col-md-5">
+            <a href="#" class="btn btn-primary">Programación agenda</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="CrearPro" class="btn btn-success"> Registrar producto</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaImagen)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @if (item.RutaImagen != null)
+                        {
+                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                        }
+                        else
+                        {
+                            <p>No hay imagen asociada al producto</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="EditarProducto" asp-route-id="@item.ProductoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form asp-action="EliminarProducto" asp-route-id="@item.ProductoId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.ProductoId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarProducto")) { <text>
+                  Swal.fire({
+                    title: "Registrar producto",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarProducto")) { <text>
+                  Swal.fire({
+                    title: "Editar producto",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarProducto")) { <text>
+                  Swal.fire({
+                    title: "Eliminar producto",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+                  Swal.fire({
+                    title: "Error",
+                      icon: 'error',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres Eliminar el Registro?"))
+                return true;
+            else
+                return false;
+        }
+    </script>
 }
