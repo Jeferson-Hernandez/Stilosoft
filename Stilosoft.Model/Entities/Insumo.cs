@@ -26,5 +26,8 @@ namespace Stilosoft.Model.Entities
 
         [Required]
         public bool Estado {get; set; }
+
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
+        public virtual List<DetalleServicioInsumo> DetalleServicioInsumos { get; set; }
     }
 }
