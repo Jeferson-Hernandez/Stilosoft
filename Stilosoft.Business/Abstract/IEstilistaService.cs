@@ -10,5 +10,11 @@ namespace Stilosoft.Business.Abstract
     public interface IEstilistaService
     {
         Task<IEnumerable<Estilista>> ObtenerListaEstilistas();
+        bool CedulaEstilistaExiste(string cedula, int id);
+        Task<Estilista> CedulaEstilistaExiste(string cedula);
+        Task EliminarEstilista(int id);
+        Task EditarEstilista(Estilista estilista);
+        Task GuardarEstilista(Estilista estilista);
+        Task<Estilista> ObtenerEstilistaPorId(int id);
     }
 }

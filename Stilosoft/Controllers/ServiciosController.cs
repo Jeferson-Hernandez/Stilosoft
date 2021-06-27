@@ -103,12 +103,12 @@ namespace Stilosoft.Controllers
 
                 try
                 {
-                    var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
+                    /*var ServicioExiste = await _servicioService.NombreServicioExiste(servicio.Nombre);
 
                     if (ServicioExiste != null)
                     {
                         return RedirectToAction("index");
-                    }
+                    }*/
                     await _servicioService.EditarServicio(servicio);
                     return RedirectToAction("index");
                 }
