@@ -1,7 +1,7 @@
 ﻿@model Stilosoft.Model.Entities.Insumo
 
 @{
-    ViewData["Title"] = "EditarInsu";
+    ViewData["Title"] = "CrearInsu";
 }
 
 <br />
@@ -11,9 +11,9 @@
             <a href="#" class="btn btn-primary">Proveedores</a>
         </div>
         <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Insumo" class="btn btn-secondary">Insumo</a>
+            <a asp-action="index" asp-controller="Insumo" class="btn btn-secondary">Insumos</a>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <a href="#" class="btn btn-primary">Compras</a>
         </div>
     </div>
@@ -22,10 +22,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Editar" enctype="multipart/form-data">
-                <input type="hidden" asp-for="InsumoId" />
-                <input type="hidden" asp-for="Estado" />
-
+            <form asp-action="CrearInsumo" enctype="multipart/form-data"> 
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
                     <label asp-for="Nombre" class="control-label"></label>
@@ -42,9 +39,9 @@
                     <input asp-for="Medida" class="form-control" />
                     <span asp-validation-for="Medida" class="text-danger"></span>
                 </div>
-               
+                
                 <div class="form-group">
-                    <input type="submit" value="Editar" class="btn btn-primary" />
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
                 </div>
             </form>
         </div>

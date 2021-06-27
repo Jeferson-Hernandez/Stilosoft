@@ -18,7 +18,7 @@
             </div>
         </div>
         <p>
-            <a asp-action="CrearInsu" class="btn btn-success"> Registrar insumo</a>
+            <a asp-action="CrearInsumo" class="btn btn-success"> Registrar insumo</a>
         </p>
         <table class="table" id="tabla">
             <thead>
@@ -58,9 +58,8 @@
                         @Html.DisplayFor(modelItem => item.Estado)
                     </td>
                     <td>
-                        |<a asp-action="EditarInsu" class="btn btn-success"> Editar insumo</a>
-
-                        <form asp-action="EliminarInsu" asp-route-id="@item.InsumoId" class="d-inline">
+                        <a asp-action="EditarInsumo" asp-route-id="@item.InsumoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form asp-action="EliminarInsumo" asp-route-id="@item.InsumoId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>

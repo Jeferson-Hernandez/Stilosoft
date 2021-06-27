@@ -30,7 +30,7 @@ namespace Stilosoft.Controllers
     }
 
     // Crear
-    public IActionResult CrearInsu()
+    public IActionResult CrearInsumo()
     {
         return View();
     }
@@ -38,7 +38,7 @@ namespace Stilosoft.Controllers
     // Crear
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CrearInsu(Insumo insumo)
+    public async Task<IActionResult> CrearInsumo(Insumo insumo)
     {
         try
         {
@@ -65,7 +65,7 @@ namespace Stilosoft.Controllers
     }
 
     // Editar
-    public async Task<IActionResult> EditarInsu(int Id)
+    public async Task<IActionResult> EditarInsumo(int Id)
     {
 
         Insumo insumo = await _insumoService.ObtenerInsumoPorId(Id);
@@ -75,7 +75,7 @@ namespace Stilosoft.Controllers
     // Editar
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditarInsu(int Id, Insumo insumo)
+    public async Task<IActionResult> EditarInsumo(int Id, Insumo insumo)
     {
         if (Id != insumo.InsumoId)
         {
@@ -104,7 +104,7 @@ namespace Stilosoft.Controllers
 
     // Eliminar
     [HttpPost]
-    public async Task<IActionResult> EliminarInsu(int Id)
+    public async Task<IActionResult> EliminarInsumo(int Id)
     {
         if (ModelState.IsValid)
         {

@@ -24,7 +24,7 @@ namespace Stilosoft.Business.Business
         }
         public async Task<Insumo> ObtenerInsumoPorId(int Id)
         {
-            return await _context.Insumo.FirstOrDefaultAsync(t => t.InsumoId == Id);
+            return await _context.Insumo.FirstOrDefaultAsync(i => i.InsumoId == Id);
         }
         public async Task RegistrarInsumo(Insumo insumo)
         {
