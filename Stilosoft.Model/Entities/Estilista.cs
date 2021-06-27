@@ -15,7 +15,7 @@ namespace Stilosoft.Model.Entities
         [DisplayName("Estilista")]
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
-        public int Nombre { get; set; }
+        public string Nombre { get; set; }
         [DisplayName("Fecha de nacimiento")]
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
         [Column(TypeName = "Date")]
@@ -23,10 +23,13 @@ namespace Stilosoft.Model.Entities
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La Cédula es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
-        public string cedula { get; set; }
+        public string Cedula { get; set; }
         [DisplayName("Celular")]
         [Required(ErrorMessage = "El celular es obligatorio")]
         [Column(TypeName = "nvarchar(15)")]
-        public string celular { get; set; }
+        public string Celular { get; set; }
+        public bool Estado { get; set; }
+        public virtual List<DetalleCita> DetalleCitas { get; set; }
+        public virtual List<DetalleServicioServicios> DetalleServicioServicios { get; set; }
     }
 }

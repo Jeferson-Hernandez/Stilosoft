@@ -31,5 +31,7 @@ namespace Stilosoft.Model.Entities
 
         [Column(TypeName = "nvarchar(50)")]
         public string RutaImagen { get; set; }
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
+        public virtual List<DetalleServicioProductos> DetalleServicioProductos { get; set; }
     }
 }

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Stilosoft.Model\Stilosoft.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>

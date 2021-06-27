@@ -6,11 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stilosoft.Model.Entities
+namespace Stilosoft.ViewModels.Servicios
 {
-    public class Servicio
+    public class ServicioViewModel
     {
-        [Key]
         public int ServicioId { get; set; }
         [DisplayName("Servicio")]
         [Required(ErrorMessage = "El nombre es obligatorio")]
@@ -26,8 +25,5 @@ namespace Stilosoft.Model.Entities
         [Column(TypeName = "nvarchar(50)")]
         public string Categoria { get; set; }
         public bool Estado { get; set; }
-        public virtual List<DetalleCita> DetalleCitas { get; set; }
-        public virtual List<DetalleServicioServicios> DetalleServicioServicios { get; set; }
-        public virtual List<DetalleServicioInsumo> DetalleServicioInsumos { get; set; }
     }
 }
