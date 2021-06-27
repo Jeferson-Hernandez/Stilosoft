@@ -14,8 +14,7 @@ namespace Stilosoft.Model.Entities
 
         [Required(ErrorMessage = "El nombre del insumo es obligatorio")]
         [Column (TypeName = "nvarchar(50)")]
-        public string Nombre {get; set;}
-        
+        public string Nombre {get; set;}        
 
         [Required(ErrorMessage = "La cantidad del insumo es obligatoria")]
         [Column (TypeName = "int")]
@@ -27,5 +26,7 @@ namespace Stilosoft.Model.Entities
 
         [Required]
         public bool Estado {get; set; }
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
+        public virtual List<DetalleServicioInsumo> DetalleServicioInsumos { get; set; }
     }
 }

@@ -29,5 +29,7 @@ namespace Stilosoft.Model.Entities
         [Column(TypeName = "nvarchar(15)")]
         public string celular { get; set; }
         public bool Estado { get; set; }
+        public virtual List<DetalleCita> DetalleCitas { get; set; }
+        public virtual List<DetalleServicioServicios> DetalleServicioServicios { get; set; }
     }
 }
