@@ -1,4 +1,4 @@
-﻿@model Stilosoft.ViewModels.Servicios.ServicioViewModel
+﻿@model Stilosoft.ViewModels.Estilistas.EstilistaViewModel
 
 @{
     ViewData["Title"] = "Crear";
@@ -9,8 +9,8 @@
     <div class="row">
         <div class="col-md-10">
             <a href="#" class="btn btn-primary btn-lg mr-md-4">Productos</a>
-            <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary btn-lg mr-md-4">Servicios</a>
+            <a asp-action="index" asp-controller="Estilistas" class="btn btn-secondary btn-lg mr-md-4">Estilistas</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
             <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
         </div>
     </div>
@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Crear" enctype="multipart/form-data"> 
+            <form asp-action="Crear" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
                     <label asp-for="Nombre" class="control-label"></label>
@@ -27,19 +27,19 @@
                     <span asp-validation-for="Nombre" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Duracion" class="control-label"></label>
-                    <input asp-for="Duracion" class="form-control" />
-                    <span asp-validation-for="Duracion" class="text-danger"></span>
+                    <label asp-for="FechaNacimiento" class="control-label"></label>
+                    <input type="date" asp-for="FechaNacimiento" class="form-control" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Costo" class="control-label"></label>
-                    <input asp-for="Costo" class="form-control" />
-                    <span asp-validation-for="Costo" class="text-danger"></span>
+                    <label asp-for="Cedula" class="control-label"></label>
+                    <input asp-for="Cedula" class="form-control" />
+                    <span asp-validation-for="Cedula" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Categoria" class="control-label"></label>
-                    <input asp-for="Categoria" class="form-control" />
-                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                    <label asp-for="Celular" class="control-label"></label>
+                    <input asp-for="Celular" class="form-control" />
+                    <span asp-validation-for="Celular" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Guardar" class="btn btn-primary" />

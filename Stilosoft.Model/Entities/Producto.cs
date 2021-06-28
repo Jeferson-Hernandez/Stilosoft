@@ -30,5 +30,7 @@ namespace Stilosoft.Model.Entities
         public long Precio { get; set; }
         [DisplayName("Imagen")]
         public string RutaImagen { get; set; }
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
+        public virtual List<DetalleServicioProductos> DetalleServicioProductos { get; set; }
     }
 }

@@ -1,23 +1,23 @@
-﻿@model IEnumerable<Stilosoft.Model.Entities.Servicio>
+﻿@model IEnumerable<Stilosoft.Model.Entities.Estilista>
 
 @{
-    ViewData["Title"] = "Servicios";
+    ViewData["Title"] = "Estilista";
 }
 <br />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
             <a href="#" class="btn btn-primary btn-lg mr-md-4">Productos</a>
-            <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary btn-lg mr-md-4">Servicios</a>
+            <a asp-action="index" asp-controller="Estilistas" class="btn btn-secondary btn-lg mr-md-4">Estilistas</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
             <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
-        </div>        
+        </div>
     </div>
 </div>
 <hr>
 <section class="content">
     <p>
-        <a asp-action="Crear" class="btn btn-success"> Registrar servicio</a>
+        <a asp-action="Crear" class="btn btn-success"> Registrar estilista</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -26,13 +26,13 @@
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Duracion)
+                    @Html.DisplayNameFor(model => model.FechaNacimiento)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Costo)
+                    @Html.DisplayNameFor(model => model.Cedula)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Categoria)
+                    @Html.DisplayNameFor(model => model.Celular)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Estado)
@@ -50,31 +50,31 @@
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Duracion)
+                        @( DateTime.Now.Year - item.FechaNacimiento.Year )
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Costo)
+                        @Html.DisplayFor(modelItem => item.Cedula)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Categoria)
+                        @Html.DisplayFor(modelItem => item.Celular)
                     </td>
                     <td>
                         @if (item.Estado == true)
                         {
-                            <form asp-action="EditarEstado" asp-route-id="@item.ServicioId">
+                            <form asp-action="EditarEstado" asp-route-id="@item.EstilistaId">
                                 <button type="submit"><i class="fas fa-toggle-on"></i></button>
                             </form>
                         }
                         else if (item.Estado == false)
                         {
-                            <form asp-action="EditarEstado" asp-route-id="@item.ServicioId">
+                            <form asp-action="EditarEstado" asp-route-id="@item.EstilistaId">
                                 <button type="submit"><i class="fas fa-toggle-off"></i></button>
-                            </form>                            
+                            </form>
                         }
                     </td>
                     <td>
-                        <a asp-action="Editar" asp-route-id="@item.ServicioId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="Eliminar" asp-route-id="@item.ServicioId" class="d-inline">
+                        <a asp-action="Editar" asp-route-id="@item.EstilistaId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form asp-action="Eliminar" asp-route-id="@item.EstilistaId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
@@ -82,8 +82,9 @@
             }
         </tbody>
     </table>
-
 </section>
+
+
 
 @section Scripts{
 
