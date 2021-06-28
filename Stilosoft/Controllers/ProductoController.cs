@@ -176,7 +176,7 @@ namespace Stilosoft.Controllers
 
                         await _productoService.EditarProducto(producto);
                         TempData["Accion"] = "EditarProducto";
-                        TempData["Mensaje"] = "Producto registrado correctamente";
+                        TempData["Mensaje"] = "Producto editado correctamente";
                         return RedirectToAction("index");
                     }
                     catch (Exception)
