@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
 using Stilosoft.Model.Entities;
+using Stilosoft.ViewModels.Insumo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace Stilosoft.Controllers
     public class InsumoController:Controller
     { 
     private readonly IInsumoService _insumoService;
-    private Boolean validacion = true;
 
 
 
@@ -38,101 +38,158 @@ namespace Stilosoft.Controllers
     // Crear
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CrearInsumo(Insumo insumo)
+    public async Task<IActionResult> CrearInsumo(InsumoViewModel insumoViewModel)
     {
-        try
-        {
+          
             if (ModelState.IsValid)
             {
-                    insumo.Estado = validacion;
-                    await _insumoService.RegistrarInsumo(insumo);
+                    Insumo insumo = new()
+                    {
+                        Nombre = insumoViewModel.Nombre,
+                        Cantidad = insumoViewModel.Cantidad,
+                        Medida = insumoViewModel.Medida,
+                        Estado = true
+                    };
                     
-               
+                try
+                {
+                    var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
+
+                    if (insumoExiste != null)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    await _insumoService.RegistrarInsumo(insumo);
+                    TempData["Accion"] = "CrearInsu";
+                    TempData["Mensaje"] = "Insumo creado exitosamente";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
 
             }
-
-            TempData["Accion"] = "CrearInsu";
-            TempData["Mensaje"] = "Insumo creado exitosamente";
+      
             return RedirectToAction(nameof(Index));
-        }
-        catch (Exception)
-        {
-            TempData["Accion"] = "CrearInsuF";
-            TempData["Mensaje"] = "Fallo al crear el insumo";
-            return RedirectToAction(nameof(Index));
-        }
+        
+        
 
     }
 
-    // Editar
-    public async Task<IActionResult> EditarInsumo(int Id)
+        // Editar
+        [HttpGet]
+        public async Task<IActionResult> EditarInsumo(int Id)
     {
 
-        Insumo insumo = await _insumoService.ObtenerInsumoPorId(Id);
-        return View(insumo);
+            Insumo insumo = await _insumoService.ObtenerInsumoPorId(Id);
+            InsumoViewModel insumoViewModel = new()
+            {
+                InsumoId = insumo.InsumoId,
+                Nombre = insumo.Nombre,
+                Cantidad = insumo.Cantidad,
+                Medida = insumo.Medida,
+                Estado = insumo.Estado
+            };
+        return View(insumoViewModel);
     }
 
     // Editar
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditarInsumo(int Id, Insumo insumo)
+    public async Task<IActionResult> EditarInsumo(InsumoViewModel insumoViewModel)
     {
-        if (Id != insumo.InsumoId)
-        {
-            return NotFound();
-        }
-            
             if (ModelState.IsValid)
-        {
+            {
+                Insumo insumo = new()
+                {
+                    InsumoId = insumoViewModel.InsumoId,
+                    Nombre = insumoViewModel.Nombre,
+                    Cantidad = insumoViewModel.Cantidad,
+                    Medida = insumoViewModel.Medida,
+                    Estado = insumoViewModel.Estado
+                };
+
                 try
                 {
+                    var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
+
+                    if (insumoExiste != null)
+                    {
+                        TempData["Accion"] = "EditarInsuF";
+                        TempData["Mensaje"] = "Modificacion fallida";
+                        return RedirectToAction("Index");
+                    }
                     await _insumoService.EditarInsumo(insumo);
                     TempData["Accion"] = "EditarInsu";
                     TempData["Mensaje"] = "Modificacion exitosa";
-                    return RedirectToAction(nameof(Index));
-                   
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
-            catch (Exception)
+            else
             {
-                TempData["Accion"] = "EditarInsuF";
-                TempData["Mensaje"] = "Modificacion fallida";
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
+           
         }
-        return View(insumo);
-    }
 
     // Eliminar
     [HttpPost]
-    public async Task<IActionResult> EliminarInsumo(int Id)
+    public async Task<IActionResult> EliminarInsumo(int? Id)
     {
-        if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (Id != null)
+                    {
+                        await _insumoService.EliminarInsumo(Id.Value);
+                        TempData["Accion"] = "EliminarInsu";
+                        TempData["Mensaje"] = "Insumo eliminado correctamente";
+                        return RedirectToAction("index");
+                    }
+               
+                    return NotFound();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+
+
+        }
+    
+    public async Task<IActionResult> EditarEstado(int Id)
         {
+            Insumo insumo = await _insumoService.ObtenerInsumoPorId(Id);
+            if (insumo.Estado == true)
+               insumo.Estado = false;
+            else if (insumo.Estado == false)
+                insumo.Estado = true;
+
             try
             {
-                Insumo insumo = await _insumoService.ObtenerInsumoPorId(Id);
-
-                await _insumoService.EliminarInsumo(Id);
-                TempData["Accion"] = "EliminarInsu";
-                TempData["Mensaje"] = "Insumo eliminado correctamente";
+                await _insumoService.EditarInsumo(insumo);
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                TempData["Accion"] = "Error";
-                TempData["Mensaje"] = "Ocurrió un error";
-                return RedirectToAction("Index");
+                throw;
             }
         }
-        else
-        {
-            TempData["Accion"] = "Error";
-            TempData["Mensaje"] = "Ocurrió un error";
-            return RedirectToAction("Index");
-        }
-
     }
-
-}
 }
 

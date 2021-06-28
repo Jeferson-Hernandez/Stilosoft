@@ -55,12 +55,21 @@
                         @Html.DisplayFor(modelItem => item.Medida)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Estado)
+                        @if (item.Estado == true)
+                        {
+                    <form asp-action="EditarEstado" asp-route-id="@item.InsumoId">
+                        <button type="submit"><i class="fas fa-toggle-on"></i></button>
+                    </form> }
+                                    else if (item.Estado == false)
+                                    {
+                    <form asp-action="EditarEstado" asp-route-id="@item.InsumoId">
+                        <button type="submit"><i class="fas fa-toggle-off"></i></button>
+                    </form>}
                     </td>
                     <td>
                         <a asp-action="EditarInsumo" asp-route-id="@item.InsumoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="EliminarInsumo" asp-route-id="@item.InsumoId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        <form asp-action="EliminarInsumo" asp-route-id="@item.InsumoId" onclick="return  DeleteConfirm()" href="/Insumo/Index/@item.InsumoId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar insumo?');"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -115,5 +124,13 @@
                  </text>
         }
 
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres Eliminar el Registro?"))
+                return true;
+            else
+                return false;
+        }
     </script>
 }

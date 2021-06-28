@@ -13,5 +13,6 @@ namespace Stilosoft.Business.Abstract
         Task<Insumo> ObtenerInsumoPorId(int Id);
         Task EditarInsumo(Insumo insumo);
         Task EliminarInsumo(int Id);
+        Task<Insumo> NombreInsumoExiste(string Nombre);
     }
 }

@@ -42,7 +42,11 @@ namespace Stilosoft.Business.Business
             _context.Remove(insumo);
             await _context.SaveChangesAsync();
         }
-        
+        public async Task<Insumo> NombreInsumoExiste(string Nombre)
+        {
+            return await _context.Insumo.FirstOrDefaultAsync(i => i.Nombre == Nombre);
+        }
+
 
     }
 }
