@@ -14,6 +14,7 @@ namespace Stilosoft.Model.Entities
     {
         [Key, ForeignKey("IdentityUser")]
         public string ClienteId { get; set; }
+        [DisplayName("Cliente")]
         [Column(TypeName = "nvarchar(50)")]
         public string Nombre { get; set; }
         [Column(TypeName = "nvarchar(50)")]

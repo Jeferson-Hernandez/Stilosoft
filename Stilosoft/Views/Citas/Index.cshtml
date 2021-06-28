@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Stilosoft.Model.Entities.Cita>
+
+@{
+    ViewData["Title"] = "Citas";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a href="#" class="btn btn-primary btn-lg mr-md-4">Clientes</a>
+            <a asp-action="index" asp-controller="Citas" class="btn btn-secondary btn-lg mr-md-4">Citas</a>
+            <a href="#" class="btn btn-primary btn-lg mr-md-4">Solicitud de servicio</a>
+            <a href="#" class="btn btn-primary btn-lg">Ventas</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="Crear" class="btn btn-success"> Crear cita</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cliente.Nombre) 
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Hora)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cliente.Nombre) @Html.DisplayFor(modelItem => item.Cliente.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-dark"><i class="far fa-lightbulb"></i></a>
+                        <form asp-action="Eliminar" asp-route-id="@item.CitaId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+
+}
