@@ -1,5 +1,130 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<Stilosoft.Model.Entities.Insumo>
+
+@{ ViewData["Title"] = "Insumos"; }
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a asp-action="Index" asp-controller="Proveedor" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="Index" asp-controller="Insumo" class="btn btn-secondary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="CrearInsumo" class="btn btn-success"> Registrar insumo</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Medida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medida)
+            </td>
+            <td>
+                @if (item.Estado == true)
+                {
+            <form asp-action="EditarEstado" asp-route-id="@item.InsumoId">
+                <button type="submit"><i class="fas fa-toggle-on"></i></button>
+            </form> }
+                            else if (item.Estado == false)
+                            {
+            <form asp-action="EditarEstado" asp-route-id="@item.InsumoId">
+                <button type="submit"><i class="fas fa-toggle-off"></i></button>
+            </form>}
+            </td>
+            <td>
+                <a asp-action="EditarInsumo" asp-route-id="@item.InsumoId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                <form asp-action="EliminarInsumo" asp-route-id="@item.InsumoId" class="d-inline">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+            </td>
+        </tr>
+}
+        </tbody>
+    </table>
+
+</section>
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("CrearInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarInsu")) { <text>
+                  Swal.fire({
+                    title: "Proceso finalizado",
+                      icon: 'success',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+                  Swal.fire({
+                    title: "Error",
+                      icon: 'error',
+                    html: "@TempData["Mensaje"]"
+                  });
+                 </text>
+        }
+
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres Eliminar el Registro?"))
+                return true;
+            else
+                return false;
+        }
+    </script>
 }

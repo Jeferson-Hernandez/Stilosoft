@@ -304,6 +304,9 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
 
@@ -321,6 +324,12 @@ namespace Stilosoft.Model.Migrations
 
                     b.Property<string>("NoFactura")
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Periodicidad")
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");
