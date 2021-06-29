@@ -29,31 +29,23 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.ProveedorId)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Cantidad)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FechaFactura)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NoFactura)
+
+                </th>
+                    @Html.DisplayNameFor(model => model.PrecioTotal)
+                <th>
+                    Factura
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.FormaPago)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FechaInicioPago)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FechaRegistro)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Periodicidad)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cuotas)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RutaImagen)
+                    Ver detalle compra
                 </th>
                 <th>
                     Acciones
@@ -65,28 +57,16 @@
             {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Cantidad)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FechaFactura)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NoFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FormaPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaInicioPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodicidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cuotas)
+                    @Html.DisplayFor(modelItem => item.PrecioTotal)
                 </td>
                 <td>
                     @if (item.RutaImagen != null)
@@ -99,11 +79,17 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="EditarCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                    <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+                </td>
+                <td>
+                    <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
                     <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                     </form>
+
                 </td>
+                
+
             </tr>
             }
         </tbody>
@@ -114,6 +100,7 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
+    <script type="text/javascript"><!--    function showHide() { //create an object reference to the div containing images var oImageDiv=document.getElementById('myimageDiv') //set display to inline if currently none, otherwise to none oImageDiv.style.display=(oImageDiv.style.display=='none')?'inline':'none' } //--></script>
     <script>
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra")) { <text>
                   Swal.fire({

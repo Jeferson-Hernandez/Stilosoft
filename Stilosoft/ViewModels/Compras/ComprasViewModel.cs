@@ -17,6 +17,9 @@ namespace Stilosoft.ViewModels
         public int ProveedorId { get; set; }
         [Required(ErrorMessage = "La cantidad es obligatoria")]
         public int Cantidad { get; set; }
+        [Required(ErrorMessage = "El precio de la compra es obligatorio")]
+        [DisplayName("Precio de la compra")]
+        public long PrecioTotal { get; set; }
         [Required(ErrorMessage = "La fecha de la facutra es obligatoria")]
         [Column(TypeName = "Date")]
         [DisplayName("Fecha de la factura")]

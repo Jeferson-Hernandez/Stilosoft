@@ -44,6 +44,7 @@ namespace Stilosoft.Controllers
                 {
                     ProveedorId = comprasViewModel.ProveedorId,
                     Cantidad = comprasViewModel.Cantidad,
+                    PrecioTotal = comprasViewModel.PrecioTotal,
                     FechaFactura = comprasViewModel.FechaFactura,
                     NoFactura = comprasViewModel.NoFactura,
                     FormaPago = comprasViewModel.FormaPago,

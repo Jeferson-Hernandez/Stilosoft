@@ -13,6 +13,7 @@ namespace Stilosoft.Model.Entities
         public int CompraId { get; set; }
         public int ProveedorId { get; set; }
         public int Cantidad { get; set; }
+        public long PrecioTotal { get; set; }
         [Column(TypeName = "Date")]
         public DateTime FechaFactura { get; set; }
         [Column(TypeName = "nvarchar(20)")]

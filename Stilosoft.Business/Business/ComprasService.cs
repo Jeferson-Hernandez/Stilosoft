@@ -19,7 +19,8 @@ namespace Stilosoft.Business.Business
         }
         public async Task<IEnumerable<Compra>> ObtenerListaCompras()
         {
-            return await _context.Compra.ToListAsync();
+            return await _context.Compra.Include(p=>p.Proveedor).ToListAsync();
+
         }
         public async Task<Compra> ObtenerCompraPorId(int Id)
         {
