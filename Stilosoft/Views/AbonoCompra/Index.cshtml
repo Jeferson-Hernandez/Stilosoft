@@ -20,11 +20,14 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="CrearPro" class="btn btn-success"> Agregar abono</a>
+        <a asp-action="AgregarAbonoCompra" class="btn btn-success"> Agregar abono</a>
     </p>
     <table class="table" id="tabla">
         <thead>
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Compra.PrecioTotal)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Compra.Cuotas)
                 </th>
@@ -32,7 +35,10 @@
                     @Html.DisplayNameFor(model => model.CantAbono)
                 </th>
                 <th>
-                    Valor total
+                    @Html.DisplayNameFor(model => model.FechaPago)
+                </th>
+                <th>
+                    Valor final
                 </th>
                 <th>
                     Acciones
@@ -43,8 +49,11 @@
             @foreach (var item in Model)
             {
 
-                var ValorTotal = item.Compra.Cuotas - item.CantAbono;
+                var ValorFinal = item.Compra.PrecioTotal - item.CantAbono;
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Compra.PrecioTotal)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Compra.Cuotas)
                 </td>
@@ -52,7 +61,10 @@
                     @Html.DisplayFor(modelItem => item.CantAbono)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => ValorTotal)
+                    @Html.DisplayFor(modelItem => item.FechaPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ValorFinal)
                 </td>
                 <td>
                     <form asp-action="EliminarProducto" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">

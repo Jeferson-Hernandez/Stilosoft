@@ -1,0 +1,35 @@
+﻿@model Stilosoft.ViewModels.AbonoCompra.AbonoCompraViewModels
+
+@{
+    ViewData["Title"] = "Agregar abono";
+}
+
+<br />
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AgregarAbonoCompra" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div>
+                <input type="hidden" asp-for="AbonoCompraId" />
+                <div class="form-group">
+                    <label asp-for="CantAbono" class="control-label"></label>
+                    <input asp-for="CantAbono" class="form-control" />
+                    <span asp-validation-for="CantAbono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaPago" class="control-label"></label>
+                    <input type="date" asp-for="FechaPago" class="form-control" />
+                    <span asp-validation-for="FechaPago" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
