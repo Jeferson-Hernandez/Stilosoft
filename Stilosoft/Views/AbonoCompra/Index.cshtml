@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Stilosoft.Model.Entities.AbonoCompra>
+
+@{
+    ViewData["Title"] = "AbonoCompra";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-secondary">Proveedores</a>
+        </div>
+        <div class="col-md-1 mr-md-4">
+            <a href="#" class="btn btn-primary">Insumos</a>
+        </div>
+        <div class="col-md-5">
+            <a href="#" class="btn btn-primary">Compras</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="CrearPro" class="btn btn-success"> Agregar abono</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Compra.Cuotas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CantAbono)
+                </th>
+                <th>
+                    Valor total
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                var ValorTotal = item.Compra.Cuotas - item.CantAbono;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Compra.Cuotas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantAbono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ValorTotal)
+                </td>
+                <td>
+                    <form asp-action="EliminarProducto" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+
+

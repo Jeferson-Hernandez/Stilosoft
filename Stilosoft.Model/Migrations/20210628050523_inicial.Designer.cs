@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210627002929_todasentidades")]
-    partial class todasentidades
+    [Migration("20210628050523_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -582,7 +582,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("RutaImagen")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductoId");
 

@@ -580,7 +580,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("RutaImagen")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductoId");
 
