@@ -50,28 +50,28 @@
             {
 
                 var ValorFinal = item.Compra.PrecioTotal - item.CantAbono;
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Compra.PrecioTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Compra.Cuotas)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantAbono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => ValorFinal)
-                </td>
-                <td>
-                    <form asp-action="EliminarProducto" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
-                    </form>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Compra.PrecioTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Compra.Cuotas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CantAbono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => ValorFinal)
+                    </td>
+                    <td>
+                        <form asp-action="EliminarProducto" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
+                        </form>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
