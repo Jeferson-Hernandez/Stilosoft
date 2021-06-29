@@ -51,4 +51,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+            @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+                      alertify.alert('Error', '@TempData["Mensaje"]', function(){ alertify.alert('Error'); });
+                     </text>
+            }
+    </script>
 }

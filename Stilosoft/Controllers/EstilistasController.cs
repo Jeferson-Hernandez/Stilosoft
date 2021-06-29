@@ -44,20 +44,30 @@ namespace Stilosoft.Controllers
                     var CedulaExiste = await _estilistaService.CedulaEstilistaExiste(estilista.Cedula);
                     if (CedulaExiste != null)
                     {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cédula ya se encuentra registrada";
                         return View(estilistaViewModel);
                     }
                     else if (estilista.FechaNacimiento.Year >= (DateTime.Now.Year - 15))
                     {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La edad debe ser mayor de 15 años";
                         return View(estilistaViewModel);
                     }
                     await _estilistaService.GuardarEstilista(estilista);
+                    TempData["Accion"] = "Crear";
+                    TempData["Mensaje"] = "Estilista guardado correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(estilistaViewModel);
         }
         [HttpGet]
@@ -65,7 +75,9 @@ namespace Stilosoft.Controllers
         {
             if (id == null || id == 0)
             {
-                return NotFound();
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
             }
             Estilista estilista = await _estilistaService.ObtenerEstilistaPorId(id.Value);
             EstilistaViewModel estilistaViewModel = new()
@@ -103,16 +115,24 @@ namespace Stilosoft.Controllers
                     }*/
                     if (estilista.FechaNacimiento.Year >= (DateTime.Now.Year - 15))
                     {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La edad debe ser mayor de 15 años";
                         return View(estilistaViewModel);
                     }
                     await _estilistaService.EditarEstilista(estilista);
+                    TempData["Accion"] = "Editar";
+                    TempData["Mensaje"] = "Estilista editado correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(estilistaViewModel);
         }
         [HttpPost]
@@ -122,14 +142,20 @@ namespace Stilosoft.Controllers
             {
                 if (id == null || id == 0)
                 {
-                    return NotFound();
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Error";
+                    return RedirectToAction("index");
                 }
                 await _estilistaService.EliminarEstilista(id.Value);
+                TempData["Accion"] = "Eliminar";
+                TempData["Mensaje"] = "Estilista eliminado correctamente";
                 return RedirectToAction("index");
             }
             catch (Exception)
             {
-                throw;
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
         [HttpPost]
@@ -137,7 +163,9 @@ namespace Stilosoft.Controllers
         {
             if (id == null || id == 0)
             {
-                return NotFound();
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
             }
             Estilista estilista = await _estilistaService.ObtenerEstilistaPorId(id.Value);
             try
@@ -148,11 +176,15 @@ namespace Stilosoft.Controllers
                     estilista.Estado = true;
 
                 await _estilistaService.EditarEstilista(estilista);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
                 return RedirectToAction("index");
             }
-            catch (Exception)            {
-
-                throw;
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
     }

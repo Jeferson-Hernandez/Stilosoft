@@ -52,20 +52,27 @@ namespace Stilosoft.Controllers
 
                     if (ServicioExiste != null)
                     {
-                        return RedirectToAction("index");
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "El servicio ya se encuentra registrado";
+                        return View(servicioViewModel);
                     }
                     await _servicioService.GuardarServicio(servicio);
+                    TempData["Accion"] = "Crear";
+                    TempData["Mensaje"] = "Servicio guardado correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
             else
             {
-                return NotFound();
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
 
@@ -110,17 +117,22 @@ namespace Stilosoft.Controllers
                         return RedirectToAction("index");
                     }*/
                     await _servicioService.EditarServicio(servicio);
+                    TempData["Accion"] = "Editar";
+                    TempData["Mensaje"] = "Servicio editado correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
             else
             {
-                return NotFound();
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
 
@@ -134,19 +146,26 @@ namespace Stilosoft.Controllers
                     if (id != null)
                     {
                         await _servicioService.EliminarServicio(id.Value);
+                        TempData["Accion"] = "Eliminar";
+                        TempData["Mensaje"] = "Servicio eliminado correctamente";
                         return RedirectToAction("index");
                     }
-                    return NotFound();
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
             else
             {
-                return NotFound();
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
         [HttpPost]
@@ -161,11 +180,15 @@ namespace Stilosoft.Controllers
             try
             {
                 await _servicioService.EditarServicio(servicio);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
                 return RedirectToAction("index");
             }
             catch (Exception)
             {
-                throw;
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
             }
         }
     }
