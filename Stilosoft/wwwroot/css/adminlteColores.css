@@ -1,0 +1,26 @@
+﻿
+/*  NavBar  */
+.main-header {
+    background-color: #2f5cb6 !important;
+}
+.nav-item, a {
+    color: aliceblue !important;
+}
+#cerrarSesion:hover{
+    font-size: 17px;
+    color: burlywood;
+}
+
+/*  Footer  */
+.main-footer {
+    background-color: #2f5cb6 !important;
+    color: aliceblue !important;
+}
+
+/* SideBar  */
+#menu {
+    background-color: #2f5cb6 !important;
+}
+#menu-opciones {
+    background-color: #333333 !important;
+}

@@ -18,7 +18,7 @@ namespace Stilosoft.Controllers
             _estilistaService = estilistaService;
         }
         public async Task<IActionResult> Index()
-        {
+        {            
             return View(await _estilistaService.ObtenerListaEstilistas());
         }
         [HttpGet]
@@ -108,8 +108,8 @@ namespace Stilosoft.Controllers
 
                 try
                 {
-                    /*var cedulaExiste = _estilistaService.CedulaEstilistaExiste(estilista.Cedula, estilista.EstilistaId);
-                    if (cedulaExiste == true)
+                    /*var cedulaExiste = await _estilistaService.CedulaEstilistaExisteEditar(estilistaViewModel.Cedula);
+                    if (cedulaExiste.Count().Equals(2))
                     {
                         return View(estilistaViewModel);
                     }*/
