@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
+using Stilosoft.Business.Dtos;
 using Stilosoft.Model.DAL;
 using Stilosoft.Model.Entities;
 using System;
@@ -46,10 +47,25 @@ namespace Stilosoft.Business.Business
             _context.Remove(servicio);
             await _context.SaveChangesAsync();
         }
-
         public async Task<Servicio> NombreServicioExiste(string nombre)
         {
             return await _context.Servicio.FirstOrDefaultAsync(n => n.Nombre == nombre);
+        }
+        public List<CitaServiciosDto> ObtenerListaServiciosCita()
+        {
+            List<CitaServiciosDto> listaServiciosDtos = new();
+            _context.Servicio.ToList().ForEach(s =>
+            {
+                CitaServiciosDto citaServiciosDto = new()
+                {
+                    ServicioId = s.ServicioId,
+                    Nombre = s.Nombre,
+                    Costo = s.Costo,
+                    Duracion = s.Duracion
+                };
+                listaServiciosDtos.Add(citaServiciosDto);
+            });
+            return listaServiciosDtos;
         }
     }
 }
