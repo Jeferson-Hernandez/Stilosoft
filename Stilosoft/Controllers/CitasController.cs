@@ -38,15 +38,40 @@ namespace Stilosoft.Controllers
             return View(citaDetalleDto);
         }
         [HttpPost]
-        public IActionResult Crear(CitaDetalleDto citaDetalleDto)
+        public async Task<IActionResult> Crear(CitaDetalleDto citaDetalleDto)
         {
             if (ModelState.IsValid)
             {
-                /*Cita cita = new()
+                var hora = citaDetalleDto.FechaHora.TimeOfDay.ToString();
+                long total = 0;
+                
+                foreach (var servicio in citaDetalleDto.Servicios)
                 {
-                     = citaDetalleDto.ClienteId,
+                    if (servicio.Seleccionado==true)
+                    {
+                        total += servicio.Costo;
+                    };
+                }
+                Cita cita = new()
+                {
+                    ClienteId = citaDetalleDto.ClienteId,
+                    Estado = "Por Aprobar",
+                    Fecha = citaDetalleDto.FechaHora.Date,
+                    Hora = hora,
+                    Total = total
+                };
+                try
+                {
+                    await _citaService.GuardarCita(cita); 
+                    var citaId = _citaService.ObtenerCitaMaxId();
 
-                };*/
+                    await _citaService.GuardarCitaDetalle(citaId, citaDetalleDto.Servicios);
+                    return RedirectToAction("index");
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             return View();
         }

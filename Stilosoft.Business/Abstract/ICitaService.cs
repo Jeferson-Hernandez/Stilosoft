@@ -1,4 +1,5 @@
-﻿using Stilosoft.Model.Entities;
+﻿using Stilosoft.Business.Dtos.Cita;
+using Stilosoft.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace Stilosoft.Business.Abstract
         Task<Cita> ObtenerCitaPorId(int id);
         Task GuardarCita(Cita cita);
         Task EliminarCita(int id);
+        int ObtenerCitaMaxId();
+        Task GuardarCitaDetalle(int citaId, List<CitaServiciosDto> citaServiciosDtos);
+
     }
 }
