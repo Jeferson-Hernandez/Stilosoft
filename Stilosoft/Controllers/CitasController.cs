@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Business.Dtos;
+using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Citas;
 using System;
 using System.Collections.Generic;
@@ -30,16 +31,23 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> Crear()
         {
-            ViewBag.Clientes = new SelectList(await _clienteService.ObtenerListaClientes(), "ClienteId", "Nombre");
+            ViewBag.Clientes = new SelectList(await _clienteService.ObtenerListaClientes(), "ClienteId", "Nombre");            
             CitaDetalleDto citaDetalleDto = new();
             citaDetalleDto.Servicios = _servicioService.ObtenerListaServiciosCita();
 
             return View(citaDetalleDto);
         }
         [HttpPost]
-        public IActionResult Crear(CitaViewModel citaViewModel)
-        {     
+        public IActionResult Crear(CitaDetalleDto citaDetalleDto)
+        {
+            if (ModelState.IsValid)
+            {
+                /*Cita cita = new()
+                {
+                     = citaDetalleDto.ClienteId,
 
+                };*/
+            }
             return View();
         }
     }

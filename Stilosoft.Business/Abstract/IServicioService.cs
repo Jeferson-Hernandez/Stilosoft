@@ -1,4 +1,5 @@
 ﻿using Stilosoft.Business.Dtos;
+using Stilosoft.Business.Dtos.Cita;
 using Stilosoft.Model.Entities;
 using System;
 using System.Collections.Generic;

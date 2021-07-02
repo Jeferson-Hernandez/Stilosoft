@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Business.Dtos;
+using Stilosoft.Business.Dtos.Cita;
 using Stilosoft.Model.DAL;
 using Stilosoft.Model.Entities;
 using System;
