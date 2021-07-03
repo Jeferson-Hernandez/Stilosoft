@@ -63,6 +63,10 @@ namespace Stilosoft.Business.Business
             _context.Add(detalleCita);
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<DetalleCita>> ObtenerListaDetalleCitaPorId(int id)
+        {
+            return await _context.DetalleCita.Include(c=>c.Cita).Include(s=>s.Servicio).Where(c=>c.CitaId == id).ToListAsync();
+        }
 
     }
 }

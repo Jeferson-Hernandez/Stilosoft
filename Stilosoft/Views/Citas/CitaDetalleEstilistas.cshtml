@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Stilosoft.Model.Entities.DetalleCita>
+
+@{
+    ViewData["Title"] = "CitaDetalleEstilistas";
+}
+
+<br />
+<div class="container-fluid align-content-center">
+    <form asp-action="Crear" enctype="multipart/form-data">
+        <div class="row justify-content-between">
+            <table class="table" id="tabla">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Servicio.Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Servicio.Costo)
+                        </th>
+                        <!--<th>
+                            Html.DisplayNameFor(model => model.Estilista.Nombre)
+                        </th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Servicio.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Servicio.Costo)
+                            </td>
+                                                    
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="form-group justify-content-center">
+                <br />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.getElementById("ListaClientes").selectedIndex = -1;
+    </script>
+
+
+}

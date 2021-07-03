@@ -62,7 +62,7 @@
                         @Html.DisplayFor(modelItem => item.Estado)
                     </td>
                     <td>
-                        <a href="#" class="btn btn-dark"><i class="far fa-lightbulb"></i></a>
+                        <a asp-action="CitaDetalleEstilistas" asp-route-id="@item.CitaId" class="btn btn-dark"><i class="far fa-lightbulb"></i></a>
                         <form asp-action="Eliminar" asp-route-id="@item.CitaId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>

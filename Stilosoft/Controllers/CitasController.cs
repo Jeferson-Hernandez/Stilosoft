@@ -16,12 +16,14 @@ namespace Stilosoft.Controllers
         private readonly ICitaService _citaService;
         private readonly IClienteService _clienteService;
         private readonly IServicioService _servicioService;
+        private readonly IEstilistaService _estilistaService;
 
-        public CitasController(ICitaService citaService, IClienteService clienteService, IServicioService servicioService)
+        public CitasController(ICitaService citaService, IClienteService clienteService, IServicioService servicioService, IEstilistaService estilistaService)
         {
             _citaService = citaService;
             _clienteService = clienteService;
             _servicioService = servicioService;
+            _estilistaService = estilistaService;
         }
 
         public async Task<IActionResult> Index()
@@ -74,6 +76,12 @@ namespace Stilosoft.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> CitaDetalleEstilistas(int id)
+        {
+            ViewBag.Estilistas = new SelectList(await _estilistaService.ObtenerListaEstilistas(), "EstilistaId", "Nombre");
+            return View(await _citaService.ObtenerListaDetalleCitaPorId(id));
         }
     }
 }
