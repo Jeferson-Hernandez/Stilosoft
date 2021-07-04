@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Business.Dtos;
+using Stilosoft.Business.Dtos.Cita;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Citas;
 using System;
@@ -81,7 +82,28 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CitaDetalleEstilistas(int id)
         {
             ViewBag.Estilistas = new SelectList(await _estilistaService.ObtenerListaEstilistas(), "EstilistaId", "Nombre");
-            return View(await _citaService.ObtenerListaDetalleCitaPorId(id));
+
+            CitaDetalleEstilistaDto citaDetalleEstilista = new();
+            citaDetalleEstilista.Estilistas = _citaService.ObtenerListaDetalleCitaPorId(id);
+
+            return View(citaDetalleEstilista);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CitaDetalleEstilistas(CitaDetalleEstilistaDto citaDetalleEstilistaDto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _citaService.GuardarCitaDetalleEstilista(citaDetalleEstilistaDto.Estilistas);
+                    return RedirectToAction("index");
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return View(citaDetalleEstilistaDto);
         }
     }
 }

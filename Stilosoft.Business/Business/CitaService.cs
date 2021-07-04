@@ -42,7 +42,7 @@ namespace Stilosoft.Business.Business
         {
             return _context.Cita.Max(c => c.CitaId);
         }
-
+        //Relacionado al crear la cita y guardar lo ingresado al detalle
         public async Task GuardarCitaDetalle(int citaId, List<CitaServiciosDto> citaServiciosDtos)
         {
             foreach (var servicios in citaServiciosDtos)
@@ -63,10 +63,42 @@ namespace Stilosoft.Business.Business
             _context.Add(detalleCita);
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<DetalleCita>> ObtenerListaDetalleCitaPorId(int id)
+        //Relacionado con la selección del estilista para asignarlo al detalle de la cita
+        public List<CitaDetalleAsignarEstilistaDto> ObtenerListaDetalleCitaPorId(int id)
         {
-            return await _context.DetalleCita.Include(c=>c.Cita).Include(s=>s.Servicio).Where(c=>c.CitaId == id).ToListAsync();
+            List<CitaDetalleAsignarEstilistaDto> ListaCitaDetalle = new();
+            _context.DetalleCita.Include(s => s.Servicio).Where(c => c.CitaId == id).ToList().ForEach(s =>
+              {
+                  CitaDetalleAsignarEstilistaDto citaDetalleEstilista = new()
+                  {
+                      CitaId = s.CitaId,
+                      CostoServicio = s.Servicio.Costo,
+                      DetalleCitaId = s.DetalleCitaId,
+                      NombreServicio = s.Servicio.Nombre,
+                      ServicioId = s.ServicioId
+                  };
+                  ListaCitaDetalle.Add(citaDetalleEstilista);
+              });
+            return ListaCitaDetalle;            
         }
-
+        public async Task GuardarCitaDetalleEstilista(List<CitaDetalleAsignarEstilistaDto> asignarEstilista)
+        {
+            foreach (var estilista in asignarEstilista)
+            {                
+               DetalleCita detalleCita = new()
+               {
+                  DetalleCitaId = estilista.DetalleCitaId,
+                  CitaId = estilista.CitaId,
+                  ServicioId = estilista.ServicioId,
+                  EstilistaId = estilista.EstilistaId
+               };
+               await AsignarEstilistaDetalle(detalleCita);                
+            }
+        }
+        public async Task AsignarEstilistaDetalle(DetalleCita detalleCita)
+        {
+            _context.Update(detalleCita);
+            await _context.SaveChangesAsync();
+        }
     }
 }

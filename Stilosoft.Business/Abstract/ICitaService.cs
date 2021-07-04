@@ -16,7 +16,8 @@ namespace Stilosoft.Business.Abstract
         Task EliminarCita(int id);
         int ObtenerCitaMaxId();
         Task GuardarCitaDetalle(int citaId, List<CitaServiciosDto> citaServiciosDtos);
-        Task<IEnumerable<DetalleCita>> ObtenerListaDetalleCitaPorId(int id);
+        List<CitaDetalleAsignarEstilistaDto> ObtenerListaDetalleCitaPorId(int id);
+        Task GuardarCitaDetalleEstilista(List<CitaDetalleAsignarEstilistaDto> asignarEstilista);
 
     }
 }

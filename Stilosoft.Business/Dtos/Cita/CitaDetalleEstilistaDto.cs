@@ -9,6 +9,10 @@ namespace Stilosoft.Business.Dtos.Cita
 {
     public class CitaDetalleEstilistaDto
     {
+        public List<CitaDetalleAsignarEstilistaDto> Estilistas { get; set; }
+    }
+    public class CitaDetalleAsignarEstilistaDto
+    {
         [Required]
         public int DetalleCitaId { get; set; }
         [Required]
@@ -16,6 +20,8 @@ namespace Stilosoft.Business.Dtos.Cita
         [Required]
         public int ServicioId { get; set; }
         [Required(ErrorMessage = "El estilista es obligatorio")]
-        public int EstilistaId { get; set; }
+        public int? EstilistaId { get; set; }
+        public string NombreServicio { get; set; }
+        public long CostoServicio { get; set; }
     }
 }
