@@ -10,7 +10,7 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210629040022_inicial")]
+    [Migration("20210701193956_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,8 +230,20 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cuotas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CuotasPagadas")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
+
+                    b.Property<long>("MontoAbonado")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
@@ -322,12 +334,15 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("Date");
 
                     b.Property<string>("FormaPago")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("NoFactura")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Periodicidad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<long>("PrecioTotal")
@@ -337,6 +352,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RutaImagen")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompraId");

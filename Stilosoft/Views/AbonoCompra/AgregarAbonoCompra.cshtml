@@ -9,10 +9,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="AgregarAbonoCompra" enctype="multipart/form-data">
+            <form asp-action="AgregarAbonoCompra" asp-route-Id="@ViewBag.IdCompra" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly"></div>
-                <input type="hidden" asp-for="AbonoCompraId" />
-                <input type="hidden" asp-for="CompraId" />
                 <div class="form-group">
                     <label asp-for="CantAbono" class="control-label"></label>
                     <input asp-for="CantAbono" class="form-control" />

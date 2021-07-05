@@ -270,13 +270,13 @@ namespace Stilosoft.Model.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     FechaFactura = table.Column<DateTime>(type: "Date", nullable: false),
-                    NoFactura = table.Column<string>(type: "nvarchar(20)", nullable: true),
-                    FormaPago = table.Column<string>(type: "nvarchar(15)", nullable: true),
+                    NoFactura = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    FormaPago = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     FechaInicioPago = table.Column<DateTime>(type: "Date", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "Date", nullable: false),
-                    Periodicidad = table.Column<string>(type: "nvarchar(20)", nullable: true),
+                    Periodicidad = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Cuotas = table.Column<int>(type: "int", nullable: false),
-                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -374,6 +374,10 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CantAbono = table.Column<int>(type: "int", nullable: false),
                     FechaPago = table.Column<DateTime>(type: "Date", nullable: false),
+                    Cuotas = table.Column<int>(type: "int", nullable: false),
+                    CuotasPagadas = table.Column<int>(type: "int", nullable: false),
+                    MontoAbonado = table.Column<long>(type: "bigint", nullable: false),
+                    PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     CompraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
