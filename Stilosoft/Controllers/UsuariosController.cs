@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Stilosoft.Business.Dtos.Usuarios;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Usuarios;
@@ -10,6 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
+
+
 
 namespace Stilosoft.Controllers
 {
@@ -20,15 +27,17 @@ namespace Stilosoft.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
         const string SesionNombre = "_Nombre";
 
-        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager)
+        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _clienteService = clienteService;
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
             _roleManager = roleManager;
+            _configuration = configuration;
         }
         public async Task<IActionResult> Index()
         {
@@ -146,6 +155,97 @@ namespace Stilosoft.Controllers
                 }
             }
             return View(crearUsuarioViewModel);
+        }
+
+
+        [HttpGet]
+        public IActionResult OlvidePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OlvidePassword(OlvidePasswordDto olvidePasswordDto)
+        {
+            if (ModelState.IsValid)
+            {
+                // buscamos el email a ver si existe
+                var usuario = await _userManager.FindByEmailAsync(olvidePasswordDto.Email);
+
+                if (usuario != null)
+                {
+                    //generamos un token
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(usuario);
+
+                    //creamos un link para resetear el password
+                    var passwordresetLink = Url.Action("ResetearPassword", "Usuarios",
+                        new { email = olvidePasswordDto.Email, token = token }, Request.Scheme);
+
+                    //Opción 1
+
+                    MailMessage mensaje = new();
+                    mensaje.To.Add(olvidePasswordDto.Email); //destinatario
+                    mensaje.Subject = "Recuperar contraseña";
+                    
+                    mensaje.Body = passwordresetLink;
+                    mensaje.IsBodyHtml = false;
+                    mensaje.From = new MailAddress(_configuration["Mail"], "Maria C Stilos");
+                    SmtpClient smtpClient = new("smtp.gmail.com");
+                    smtpClient.Port = 587;
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Credentials = new System.Net.NetworkCredential(_configuration["Mail"], _configuration["Password"]);
+                    smtpClient.Send(mensaje);
+                    return View("OlvidePasswordConfirmacion");
+
+                }else
+                {
+                    return View(olvidePasswordDto);
+                }
+            }
+
+
+            return View(olvidePasswordDto);
+        }
+
+        //Cuando hacemos clic en el link que llegó al correo
+        [HttpGet]
+        public IActionResult ResetearPassword(string token, string email)
+        {
+            if (token == null || email == null)
+            {
+                ModelState.AddModelError("", "Error token");
+            }
+            return View();
+        }
+        //Cuando hacemos clic en el link que llegó al correo
+        [HttpPost]
+        public async Task<IActionResult> ResetearPassword(ResetearPasswordDto resetearPasswordDto)
+        {
+            if (ModelState.IsValid)
+            {
+                //buscamos el usuario
+                var usuario = await _userManager.FindByEmailAsync(resetearPasswordDto.Email);
+
+                if (usuario != null)
+                {
+                    //se resetea el password
+                    var result = await _userManager.ResetPasswordAsync(usuario, resetearPasswordDto.Token, resetearPasswordDto.Password);
+                    if (result.Succeeded)
+                        return View("ResetearPasswordConfirmacion");
+                    else
+                    {
+                        foreach (var errores in result.Errors)
+                        {
+                            if (errores.Description.ToString().Equals("Invalid token."))
+                                ModelState.AddModelError("", "El token es invalido");
+                        }
+                        return View(resetearPasswordDto);
+                    }
+                }
+                return View(resetearPasswordDto);
+            }
+            return View(resetearPasswordDto);
         }
 
         [HttpGet]

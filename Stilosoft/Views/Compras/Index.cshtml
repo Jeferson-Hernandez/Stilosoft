@@ -24,6 +24,7 @@
 <section class="content">
     <p>
         <a asp-action="CrearCompra" class="btn btn-success"> Registrar compra</a>
+        
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -40,7 +41,7 @@
                 <th>
 
                 </th>
-                    @Html.DisplayNameFor(model => model.PrecioTotal)
+                @Html.DisplayNameFor(model => model.PrecioTotal)
                 <th>
                     Factura
                 </th>
@@ -55,42 +56,42 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cantidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioTotal)
-                </td>
-                <td>
-                    @if (item.RutaImagen != null)
-                    {
-                        <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
-                    }
-                    else
-                    {
-                        <p>No hay factura asociada a la compra</p>
-                    }
-                </td>
-                <td>
-                    <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                </td>
-                <td>
-                    <a asp-action="Index" asp-controller="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                    </form>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecioTotal)
+                    </td>
+                    <td>
+                        @if (item.RutaImagen != null)
+                        {
+                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
+                        }
+                        else
+                        {
+                            <p>No hay factura asociada a la compra</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+                    </td>
+                    <td>
+                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                        </form>
 
-                </td>
-                
+                    </td>
 
-            </tr>
+
+                </tr>
             }
         </tbody>
     </table>
@@ -100,45 +101,49 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-    <script type="text/javascript"><!--    function showHide() { //create an object reference to the div containing images var oImageDiv=document.getElementById('myimageDiv') //set display to inline if currently none, otherwise to none oImageDiv.style.display=(oImageDiv.style.display=='none')?'inline':'none' } //--></script>
-    <script>
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra")) { <text>
-                  Swal.fire({
-                    title: "Registrar compra",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
+    <script src="js-global/FancyZoom.js" type="text/javascript"></script>
+    <script src="js-global/FancyZoomHTML.js" type="text/javascript"></script>
 
-         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarCompra")) { <text>
-                  Swal.fire({
-                    title: "Editar compra",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra"))
+    {<text>
+            Swal.fire({
+            title: "Registrar compra",
+            icon: 'success',
+            html: "@TempData["Mensaje"]"
+            });
+    </text>
+}
 
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarCompra")) { <text>
-                  Swal.fire({
-                    title: "Eliminar compra",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarCompra"))
+    {<text>
+            Swal.fire({
+            title: "Editar compra",
+            icon: 'success',
+            html: "@TempData["Mensaje"]"
+            });
+    </text>
+}
 
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-                  Swal.fire({
-                    title: "Error",
-                      icon: 'error',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarCompra"))
+    {<text>
+            Swal.fire({
+            title: "Eliminar compra",
+            icon: 'success',
+            html: "@TempData["Mensaje"]"
+            });
+    </text>
+}
 
-    </script>
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
+    {<text>
+            Swal.fire({
+            title: "Error",
+            icon: 'error',
+            html: "@TempData["Mensaje"]"
+            });
+    </text>
+}
+
     <script type="text/javascript">
         function DeleteConfirm() {
             if (confirm("¿Quieres eliminar la compra?"))

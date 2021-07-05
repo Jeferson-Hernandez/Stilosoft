@@ -29,8 +29,9 @@ namespace Stilosoft.Controllers
         }
 
         [HttpGet]
-        public IActionResult CrearCompra()
+        public async Task<IActionResult> CrearCompra()
         {
+            ViewBag.ListarProveedor = new SelectList(await _comprasService.ObtenerListaCompras(), "ClienteId", "NombreCliente");
             return View(new ComprasViewModel());
         }
         [HttpPost]
