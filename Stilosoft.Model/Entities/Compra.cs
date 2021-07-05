@@ -15,14 +15,9 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "El proveedor es obligatorio")]
         [DisplayName("Proveedor")]
         public int ProveedorId { get; set; }
-        [Required(ErrorMessage = "La cantidad es obligatoria")]
-        public int Cantidad { get; set; }
-        [Required(ErrorMessage = "El precio de la compra es obligatorio")]
-        [DisplayName("Precio de la compra")]
-        public long PrecioTotal { get; set; }
-        [Required(ErrorMessage = "La fecha de la facutra es obligatoria")]
+        [Required(ErrorMessage = "La fecha de la compra es obligatoria")]
         [Column(TypeName = "Date")]
-        [DisplayName("Fecha de la factura")]
+        [DisplayName("Fecha de compra")]
         public DateTime FechaFactura { get; set; }
         [Required(ErrorMessage = "El número de la factura es obligatorio")]
         [Column(TypeName = "nvarchar(20)")]
@@ -34,7 +29,7 @@ namespace Stilosoft.Model.Entities
         public string FormaPago { get; set; }
         [Required(ErrorMessage = "La fecha de inicio del pago es obligatoria")]
         [Column(TypeName = "Date")]
-        [DisplayName("Fecha de inicio del pago")]
+        [DisplayName("Fecha de inicio de pago")]
         public DateTime FechaInicioPago { get; set; }
         [Required(ErrorMessage = "La fecha de registro es obligatoria")]
         [Column(TypeName = "Date")]
@@ -49,6 +44,6 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La factura es obligatoria")]
         public string RutaImagen { get; set; }
         public virtual Proveedor Proveedor { get; set; }
-        public virtual List<DetalleCompra> DetalleCompras { get; set; }
+        public virtual DetalleCompra DetalleCompras { get; set; }
     }
 }

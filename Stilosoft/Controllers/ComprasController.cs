@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Stilosoft.ViewModels.Compras;
 
 namespace Stilosoft.Controllers
 {
@@ -16,22 +17,34 @@ namespace Stilosoft.Controllers
     {
         private readonly IComprasService _comprasService;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IProveedorService _proveedorService;
+        private readonly IInsumoService _insumoService;
+        private readonly IProductoService _productoService;
 
-        public ComprasController(IComprasService comprasService, IWebHostEnvironment hostEnvironment)
+        public ComprasController(IComprasService comprasService, IWebHostEnvironment hostEnvironment, IProveedorService proveedorService, IProductoService productoService, IInsumoService insumoService)
         {
             _comprasService = comprasService;
             _hostEnvironment = hostEnvironment;
+            _proveedorService = proveedorService;
+            _insumoService = insumoService;
+            _productoService = productoService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _comprasService.ObtenerListaCompras());
         }
+        public async Task<IActionResult> DetalleIndex()
+        {
+            
+            return View(await _comprasService.ObtenerDetalleCompras());
+            
+        }
 
         [HttpGet]
         public async Task<IActionResult> CrearCompra()
         {
-            ViewBag.ListarProveedor = new SelectList(await _comprasService.ObtenerListaCompras(), "ClienteId", "NombreCliente");
+            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedores(), "ProveedorId", "Nombre");
             return View(new ComprasViewModel());
         }
         [HttpPost]
@@ -44,8 +57,6 @@ namespace Stilosoft.Controllers
                 Compra compra = new()
                 {
                     ProveedorId = comprasViewModel.ProveedorId,
-                    Cantidad = comprasViewModel.Cantidad,
-                    PrecioTotal = comprasViewModel.PrecioTotal,
                     FechaFactura = comprasViewModel.FechaFactura,
                     NoFactura = comprasViewModel.NoFactura,
                     FormaPago = comprasViewModel.FormaPago,
@@ -54,13 +65,15 @@ namespace Stilosoft.Controllers
                     Periodicidad = comprasViewModel.Periodicidad,
                     Cuotas = comprasViewModel.Cuotas
                 };
-                if (compra.Cantidad <= 0)
+                var CompraExiste = await _comprasService.NoFacturaExiste(compra.NoFactura);
+
+                if (CompraExiste != null)
                 {
                     TempData["Accion"] = "Error";
-                    TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
-                    return RedirectToAction("Index");
+                    TempData["Mensaje"] = "La compra ya se encuentra registrada";
+                    return View(comprasViewModel);
                 }
-                else if (compra.Cuotas <= 0)
+                if (compra.Cuotas <= 0)
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "Las cuotas deben ser mayor a 0";
@@ -96,7 +109,7 @@ namespace Stilosoft.Controllers
                     await _comprasService.RegistrarCompra(compra);
                     TempData["Accion"] = "RegistrarCompra";
                     TempData["Mensaje"] = "Compra guardada con éxito";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("CrearDetalle");
                 }
                 catch (Exception)
                 {
@@ -110,108 +123,7 @@ namespace Stilosoft.Controllers
                 return View(comprasViewModel);
             }
         }
-        [HttpGet]
-        public async Task<IActionResult> EditarCompra(int Id)
-        {
-            Compra compra = await _comprasService.ObtenerCompraPorId(Id);
-            ComprasViewModel comprasViewModel = new()
-            {
-                CompraId = compra.CompraId,
-                ProveedorId = compra.ProveedorId,
-                Cantidad = compra.Cantidad,
-                FechaFactura = compra.FechaFactura,
-                NoFactura = compra.NoFactura,
-                FormaPago = compra.FormaPago,
-                FechaInicioPago = compra.FechaInicioPago,
-                FechaRegistro = compra.FechaRegistro,
-                Periodicidad = compra.Periodicidad,
-                Cuotas = compra.Cuotas,
-                RutaImagen = compra.RutaImagen
-            };
-            return View(comprasViewModel);
-        }
-        [HttpPost]
-        public async Task<IActionResult> EditarCompra(ComprasViewModel comprasViewModel)
-        {
-            {
-                if (ModelState.IsValid)
-                {
-                    Compra compra = new()
-                    {
-                        CompraId = comprasViewModel.CompraId,
-                        ProveedorId = comprasViewModel.ProveedorId,
-                        Cantidad = comprasViewModel.Cantidad,
-                        FechaFactura = comprasViewModel.FechaFactura,
-                        NoFactura = comprasViewModel.NoFactura,
-                        FormaPago = comprasViewModel.FormaPago,
-                        FechaInicioPago = comprasViewModel.FechaInicioPago,
-                        FechaRegistro = comprasViewModel.FechaRegistro,
-                        Periodicidad = comprasViewModel.Periodicidad,
-                        Cuotas = comprasViewModel.Cuotas
-                    };
-                    if (compra.Cantidad <= 0)
-                    {
-                        TempData["Accion"] = "Error";
-                        TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
-                        return RedirectToAction("index");
-                    }
-                    else if (compra.Cuotas <= 0)
-                    {
-                        TempData["Accion"] = "Error";
-                        TempData["Mensaje"] = "Las cuotas deben ser mayor a 0";
-                        return RedirectToAction("index");
-                    }
-                    string wwwRootPath = null;
-                    string path = null;
-
-                    if (comprasViewModel.Imagen != null)
-                    {
-                        wwwRootPath = _hostEnvironment.WebRootPath;
-                        string NombreImagen = Path.GetFileNameWithoutExtension(comprasViewModel.Imagen.FileName);
-                        string Extension = Path.GetExtension(comprasViewModel.Imagen.FileName);
-                        compra.RutaImagen = NombreImagen + DateTime.Now.ToString("yymmssfff") + Extension;
-                        path = Path.Combine(wwwRootPath + "/imagenes/" + compra.RutaImagen);
-                    }
-
-                    try
-                    {
-                        if (path != null)
-                        {
-                            using var fileStream = new FileStream(path, FileMode.Create);
-                            await comprasViewModel.Imagen.CopyToAsync(fileStream);
-                            if (comprasViewModel.RutaImagen != null)
-                            {
-                                FileInfo file = new FileInfo(wwwRootPath + "/imagenes/" + comprasViewModel.RutaImagen);
-                                file.Delete();
-                            }
-                        }
-                        else
-                        {
-                            compra.RutaImagen = comprasViewModel.RutaImagen;
-                        }
-
-
-                        await _comprasService.EditarCompra(compra);
-                        TempData["Accion"] = "EditarCompra";
-                        TempData["Mensaje"] = "Compra registrada correctamente";
-                        return RedirectToAction("index");
-                    }
-                    catch (Exception)
-                    {
-                        TempData["Accion"] = "Error";
-                        TempData["Mensaje"] = "Ocurrió un error";
-                        return RedirectToAction("Index");
-                    }
-
-                }
-                else
-                {
-                    TempData["Accion"] = "Error";
-                    TempData["Mensaje"] = "Ocurrió un error";
-                    return View(comprasViewModel);
-                }
-            }
-        }
+       
         [HttpPost]
         public async Task<IActionResult> EliminarCompra(int Id)
         {
@@ -245,6 +157,162 @@ namespace Stilosoft.Controllers
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Ocurrió un error";
                 return RedirectToAction("Index");
+            }
+
+        }
+
+        // DETALLE
+        [HttpGet]
+        public async Task<IActionResult> CrearDetalleCompra()
+        {
+            ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(),"ProductoId", "Nombre");
+            return View(new CompraDetalleViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearDetalleCompra(CompraDetalleViewModel compraDetalleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                DetalleCompra detalleCompra = new()
+                {
+                   
+                    
+                    ProductoId = compraDetalleViewModel.ProductoId,
+                    
+                    Cantidad = compraDetalleViewModel.Cantidad,
+                    CantInsumo = compraDetalleViewModel.CantInsumo,
+                    CantProducto = compraDetalleViewModel.CantProducto,
+                    Costo = compraDetalleViewModel.Costo,
+                    Medida = compraDetalleViewModel.Medida,
+                    SubTotal = compraDetalleViewModel.SubTotal,
+                    Iva = compraDetalleViewModel.Iva,
+                    Total = compraDetalleViewModel.Total
+
+
+                };
+
+                try
+                {
+                    var ProductoExiste = await _comprasService.ProductoExiste(detalleCompra.ProductoId);
+
+                    if (ProductoExiste != null)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "El producto ya se encuentra registrado";
+                        return View(detalleCompra);
+                    }
+                    await _comprasService.RegistrarDetalleCompra(detalleCompra);
+                    TempData["Accion"] = "Crear";
+                    TempData["Mensaje"] = "Producto añadido con éxito";
+                    return RedirectToAction("DetalleIndex");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Hubo un error al añadir el procuto";
+                    return RedirectToAction("DetalleIndex");
+                }
+            }
+            else
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("DetalleIndex");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditarDetalleCompra(int Id)
+        {
+            DetalleCompra detalleCompra = await _comprasService.ObtenerDetalleCompraPorId(Id);
+            CompraDetalleViewModel compraDetalleViewModel = new()
+            { 
+                DetalleCompraId = detalleCompra.DetalleCompraId,
+                CompraId = detalleCompra.CompraId,
+                ProductoId = detalleCompra.ProductoId,
+                InsumoId = detalleCompra.InsumoId,
+                Cantidad = detalleCompra.Cantidad,
+                CantInsumo = detalleCompra.CantInsumo,
+                CantProducto = detalleCompra.CantProducto,
+                Costo = detalleCompra.Costo,
+                Medida = detalleCompra.Medida,
+                SubTotal = detalleCompra.SubTotal,
+                Iva = detalleCompra.Iva,
+                Total = detalleCompra.Total
+            };
+
+            return View(compraDetalleViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarDetalleCompra(CompraDetalleViewModel compraDetalleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                DetalleCompra detalleCompra = new()
+                {
+                    DetalleCompraId = compraDetalleViewModel.DetalleCompraId,
+                    CompraId = compraDetalleViewModel.CompraId,
+                    ProductoId = compraDetalleViewModel.ProductoId,
+                    InsumoId = compraDetalleViewModel.InsumoId,
+                    Cantidad = compraDetalleViewModel.Cantidad,
+                    CantInsumo = compraDetalleViewModel.CantInsumo,
+                    CantProducto = compraDetalleViewModel.CantProducto,
+                    Costo = compraDetalleViewModel.Costo,
+                    Medida = compraDetalleViewModel.Medida,
+                    SubTotal = compraDetalleViewModel.SubTotal,
+                    Iva = compraDetalleViewModel.Iva,
+                    Total = compraDetalleViewModel.Total
+                };
+
+                try
+                {
+                   
+                    await _comprasService.EditarDetalleCompra(detalleCompra);
+                    TempData["Accion"] = "Editar";
+                    TempData["Mensaje"] = "Producto editado correctamente";
+                    return RedirectToAction("DetalleIndex");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("DetalleIndex");
+                }
+            }
+            else
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("DetalleIndex");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> EliminarDetalleCompra(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DetalleCompra detalleCompra = await _comprasService.ObtenerDetalleCompraPorId(Id);
+                    await _comprasService.EliminarDetalleCompra(Id);
+                    TempData["Accion"] = "Eliminar";
+                    TempData["Mensaje"] = "Producto eliminado correctamente";
+                    return RedirectToAction("DetalleIndex");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ocurrió un error";
+                    return RedirectToAction("DetalleIndex");
+                }
+            }
+            else
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ocurrió un error";
+                return RedirectToAction("DetalleIndex");
             }
 
         }

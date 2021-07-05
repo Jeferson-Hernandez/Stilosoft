@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Stilosoft.Model.Entities.DetalleCompra>
+
+@{
+    ViewData["Title"] = "Detalle de la Compra";
+}
+<br />
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="CrearDetalle" class="btn btn-success"> Agregar insumos</a>
+    </p>
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Producto.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CantInsumo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CantProducto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Costo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Medida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubTotal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Iva)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var subtotal = item.Cantidad * item.Costo;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantInsumo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => subtotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Iva)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    <a asp-action="EditarDetalle" asp-route-id="@item.DetalleCompraId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                    <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+        alertify.alert('Agregar producto', '@TempData["Mensaje"]', function () { alertify.success('Producto agregado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar producto', '@TempData["Mensaje"]', function () { alertify.success('Producto editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
+}

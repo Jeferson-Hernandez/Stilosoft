@@ -10,7 +10,7 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210629031252_inicial")]
+    [Migration("20210705190525_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,10 +247,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClienteId1")
+                    b.Property<string>("ClienteId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estado")
@@ -269,7 +266,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("CitaId");
 
-                    b.HasIndex("ClienteId1");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Cita");
                 });
@@ -306,9 +303,6 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
 
@@ -322,21 +316,22 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("Date");
 
                     b.Property<string>("FormaPago")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("NoFactura")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Periodicidad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<long>("PrecioTotal")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");
 
                     b.Property<string>("RutaImagen")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompraId");
@@ -356,7 +351,7 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CitaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstilistaId")
+                    b.Property<int?>("EstilistaId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServicioId")
@@ -415,7 +410,8 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("DetalleCompraId");
 
-                    b.HasIndex("CompraId");
+                    b.HasIndex("CompraId")
+                        .IsUnique();
 
                     b.HasIndex("InsumoId");
 
@@ -763,7 +759,7 @@ namespace Stilosoft.Model.Migrations
                 {
                     b.HasOne("Stilosoft.Model.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId1");
+                        .HasForeignKey("ClienteId");
 
                     b.Navigation("Cliente");
                 });
@@ -800,9 +796,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasOne("Stilosoft.Model.Entities.Estilista", "Estilista")
                         .WithMany("DetalleCitas")
-                        .HasForeignKey("EstilistaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EstilistaId");
 
                     b.HasOne("Stilosoft.Model.Entities.Servicio", "Servicio")
                         .WithMany("DetalleCitas")
@@ -820,8 +814,8 @@ namespace Stilosoft.Model.Migrations
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleCompra", b =>
                 {
                     b.HasOne("Stilosoft.Model.Entities.Compra", "Compra")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("CompraId")
+                        .WithOne("DetalleCompras")
+                        .HasForeignKey("Stilosoft.Model.Entities.DetalleCompra", "CompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
