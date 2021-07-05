@@ -11,7 +11,7 @@
             <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
             <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary btn-lg mr-md-4">Servicios</a>
             <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
-        </div>        
+        </div>
     </div>
 </div>
 <hr>
@@ -69,7 +69,7 @@
                         {
                             <form asp-action="EditarEstado" asp-route-id="@item.ServicioId">
                                 <button type="submit"><i class="fas fa-toggle-off"></i></button>
-                            </form>                            
+                            </form>
                         }
                     </td>
                     <td>
@@ -89,5 +89,26 @@
 
     <script src="~/js/tabla.js"></script>
 
-
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+        alertify.alert('Guardar servicio', '@TempData["Mensaje"]', function () { alertify.success('Servicio guardado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar servicio', '@TempData["Mensaje"]', function () { alertify.success('Servicio editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar servicio', '@TempData["Mensaje"]', function () { alertify.error('Servicio eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
 }

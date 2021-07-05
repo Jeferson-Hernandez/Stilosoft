@@ -3,21 +3,24 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <p asp-action="index" asp-controller="Clientes" class="brand-link text-center">
-        <span class="brand-text font-weight-light">Stilosoft</span>
-    </p>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="container" id="menu">
+        <p asp-action="index" asp-controller="Clientes" class="brand-link text-center">
+            <span class="brand-text">Stilosoft</span>
+        </p>
+        <div class="user-panel mt-3 pb-3  d-flex">
             <div class="image">
                 <img src="~/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Bienvenido: @Context.Session.GetString("_Nombre")</a>
+                <a class="d-block">Bienvenido: @Context.Session.GetString("_Nombre")</a>
             </div>
         </div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="menu-opciones">
+
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -117,7 +120,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a asp-action="index" asp-controller="Citas" class="nav-link">
                                 <i class="fas fa-people-carry"></i>
                                 <p>Citas</p>
                             </a>

@@ -47,14 +47,9 @@ namespace Stilosoft.Business.Business
         {
             return await _context.Estilista.FirstOrDefaultAsync(n => n.Cedula == cedula);
         }
-        public bool CedulaEstilistaExiste(string cedula, int id)
-        {
-            var cedulaExiste = _context.Estilista.FirstOrDefault(e => e.Cedula == cedula);
-            if (id == cedulaExiste.EstilistaId)
-            {
-                return false;
-            }
-            return true;
+        public async Task<IEnumerable<Estilista>> CedulaEstilistaExisteEditar(string cedula)
+        {            
+            return await _context.Estilista.Where(c => c.Cedula == cedula).ToListAsync();
         }
 
     }

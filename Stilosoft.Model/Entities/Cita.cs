@@ -12,9 +12,8 @@ namespace Stilosoft.Model.Entities
     {
         [Key]
         public int CitaId { get; set; }
-        [DisplayName("Cliente")]
-        [Required]
-        public int ClienteId { get; set; }        
+        [ForeignKey("Cliente")]
+        public string ClienteId { get; set; }
         [Required(ErrorMessage = "La fecha es obligatoria")]
         [Column(TypeName = "Date")]
         public DateTime Fecha { get; set; }
