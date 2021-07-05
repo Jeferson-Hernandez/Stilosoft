@@ -1,4 +1,6 @@
-﻿using Stilosoft.Model.Entities;
+﻿using Stilosoft.Business.Dtos;
+using Stilosoft.Business.Dtos.Cita;
+using Stilosoft.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,6 @@ namespace Stilosoft.Business.Abstract
         Task EditarServicio(Servicio servicio);
         Task EliminarServicio(int id);
         Task<Servicio> NombreServicioExiste(string nombre);
+        List<CitaServiciosDto> ObtenerListaServiciosCita();
     }
 }

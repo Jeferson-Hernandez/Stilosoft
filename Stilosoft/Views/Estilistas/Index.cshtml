@@ -90,5 +90,27 @@
 
     <script src="~/js/tabla.js"></script>
 
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+                  alertify.alert('Guardar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista guardado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar estilista', '@TempData["Mensaje"]', function () { alertify.error('Estilista eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
 
 }
