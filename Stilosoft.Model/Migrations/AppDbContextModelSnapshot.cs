@@ -228,8 +228,20 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cuotas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CuotasPagadas")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
+
+                    b.Property<long>("MontoAbonado")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
