@@ -45,6 +45,8 @@ namespace Stilosoft
             services.AddScoped<IEstilistaService, EstilistaService>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<ICitaService, CitaService>();
+            services.AddScoped<IAbonoCompraService, AbonoCompraService>();
+            services.AddScoped<IComprasService, ComprasService>();
 
             services.Configure<IdentityOptions>(options =>
             {

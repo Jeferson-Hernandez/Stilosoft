@@ -12,6 +12,8 @@ namespace Stilosoft.Model.Entities
         [Key]
         public int CompraId { get; set; }
         public int ProveedorId { get; set; }
+        public int Cantidad { get; set; }
+        public long PrecioTotal { get; set; }
         [Column(TypeName = "Date")]
         public DateTime FechaFactura { get; set; }
         [Column(TypeName = "nvarchar(20)")]
@@ -22,6 +24,8 @@ namespace Stilosoft.Model.Entities
         public DateTime FechaInicioPago { get; set; }
         [Column(TypeName = "Date")]
         public DateTime FechaRegistro { get; set; }
+        [Column(TypeName = "nvarchar(20)")]
+        public string Periodicidad { get; set; }
         public int Cuotas { get; set; }
         public string RutaImagen { get; set; }
         public virtual Proveedor Proveedor { get; set; }
