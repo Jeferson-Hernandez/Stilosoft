@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Business
 {
-    public class EstilistaService:IEstilistaService
+    public class EstilistaService : IEstilistaService
     {
         private readonly AppDbContext _context;
 
@@ -22,6 +22,34 @@ namespace Stilosoft.Business.Business
         public async Task<IEnumerable<Estilista>> ObtenerListaEstilistas()
         {
             return await _context.Estilista.ToListAsync();
+        }
+        public async Task<Estilista> ObtenerEstilistaPorId(int id)
+        {
+            return await _context.Estilista.FirstOrDefaultAsync(e => e.EstilistaId == id);
+        }
+        public async Task GuardarEstilista(Estilista estilista)
+        {
+            _context.Add(estilista);
+            await _context.SaveChangesAsync();
+        }
+        public async Task EditarEstilista(Estilista estilista)
+        {
+            _context.Update(estilista);
+            await _context.SaveChangesAsync();
+        }
+        public async Task EliminarEstilista(int id)
+        {
+            var estilista = await ObtenerEstilistaPorId(id);
+            _context.Remove(estilista);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<Estilista> CedulaEstilistaExiste(string cedula)
+        {
+            return await _context.Estilista.FirstOrDefaultAsync(n => n.Cedula == cedula);
+        }
+        public async Task<IEnumerable<Estilista>> CedulaEstilistaExisteEditar(string cedula)
+        {            
+            return await _context.Estilista.Where(c => c.Cedula == cedula).ToListAsync();
         }
 
     }

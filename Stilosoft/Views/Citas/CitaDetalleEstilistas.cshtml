@@ -1,0 +1,67 @@
+﻿@model Stilosoft.Business.Dtos.Cita.CitaDetalleEstilistaDto
+
+@{
+    ViewData["Title"] = "CitaDetalleEstilistas";
+}
+
+<br />
+<div class="container-fluid align-content-center">
+    <form asp-action="CitaDetalleEstilistas" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <table class="table" id="tabla">
+                    <thead>
+                        <tr>
+                            <th>
+                                Servicio
+                            </th>
+                            <th>
+                                Costo
+                            </th>
+                            <th>
+                                Estilista
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Estilistas.Count(); i++)
+                        {
+                            <tr>
+                                @Html.HiddenFor(s => s.Estilistas[i].CitaId)
+                                @Html.HiddenFor(s => s.Estilistas[i].ServicioId)
+                                @Html.HiddenFor(s => s.Estilistas[i].DetalleCitaId)
+                                @Html.HiddenFor(s => s.Estilistas[i].NombreServicio)
+                                @Html.HiddenFor(s => s.Estilistas[i].CostoServicio)
+                                <td>
+                                    @Html.DisplayFor(s => s.Estilistas[i].NombreServicio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(s => s.Estilistas[i].CostoServicio)
+                                </td>
+                                <td>
+                                    <select id="Estilistas" asp-items="ViewBag.Estilistas" asp-for="Estilistas[i].EstilistaId" class="form-control"></select>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group justify-content-center">
+                <br />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.getElementById("Estilistas").selectedIndex = -1;
+    </script>
+
+
+}

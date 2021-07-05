@@ -1,0 +1,62 @@
+﻿@model Stilosoft.ViewModels.Estilistas.EstilistaViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a href="#" class="btn btn-primary btn-lg mr-md-4">Productos</a>
+            <a asp-action="index" asp-controller="Estilistas" class="btn btn-secondary btn-lg mr-md-4">Estilistas</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
+            <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Editar" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div>
+                <input type="hidden" asp-for="EstilistaId" />
+                <input type="hidden" asp-for="Estado" />
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaNacimiento" class="control-label"></label>
+                    <input type="date" asp-for="FechaNacimiento" class="form-control" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cedula" class="control-label"></label>
+                    <input asp-for="Cedula" class="form-control" />
+                    <span asp-validation-for="Cedula" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Celular" class="control-label"></label>
+                    <input asp-for="Celular" class="form-control" />
+                    <span asp-validation-for="Celular" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+            @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+                      alertify.alert('Error', '@TempData["Mensaje"]', function(){ alertify.alert('Error'); });
+                     </text>
+            }
+    </script>
+}
