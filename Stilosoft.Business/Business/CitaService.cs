@@ -90,7 +90,7 @@ namespace Stilosoft.Business.Business
                   DetalleCitaId = estilista.DetalleCitaId,
                   CitaId = estilista.CitaId,
                   ServicioId = estilista.ServicioId,
-                  EstilistaId = estilista.EstilistaId
+                  EstilistaId = (int)estilista.EstilistaId
                };
                await AsignarEstilistaDetalle(detalleCita);                
             }

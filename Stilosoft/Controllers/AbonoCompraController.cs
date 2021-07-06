@@ -15,18 +15,26 @@ namespace Stilosoft.Controllers
     {
         private readonly IAbonoCompraService _abonoCompraService;
         private readonly IComprasService _comprasService;
-
-        public AbonoCompraController(IAbonoCompraService abonoCompra, IComprasService comprasService)
+        private readonly IDetalleCompraService _detalleCompraService;
+        public AbonoCompraController(IAbonoCompraService abonoCompra, IComprasService comprasService, IDetalleCompraService detalleCompraService)
         {
             _abonoCompraService = abonoCompra;
             _comprasService = comprasService;
+            _detalleCompraService = detalleCompraService;
         }
         [HttpGet]
         public async Task<IActionResult> Index(int Id)
         {
             ViewBag.IdCompra = Id;
-            return View(await _abonoCompraService.ObtenerListaAbonoPorId(Id));
+            return View(await _abonoCompraService.ObtenerListaAbonoPorId(Id));       
         }
+        [HttpGet]
+        public async Task<IActionResult> Index2(int Id)
+        {
+            ViewBag.IdCompra = Id;
+            return View(await _abonoCompraService.ObtenerListaAbonoCompra());
+        }
+        [HttpGet]
         public IActionResult AgregarAbonoCompra(int Id )
         {
             ViewBag.IdCompra = Id;           
@@ -49,10 +57,10 @@ namespace Stilosoft.Controllers
                     MontoAbonado = 10000
                 };
 
-                Compra compra = await _comprasService.ObtenerCompraPorId(Id);
+                DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
                 if (abonoCompra.PrecioTotal == 0)
                 {
-                    abonoCompra.PrecioTotal = compra.PrecioTotal - abonoCompra.CantAbono;
+                    abonoCompra.PrecioTotal = detalleCompra.Total - abonoCompra.CantAbono;
                 }
                 else if (abonoCompra.PrecioTotal > 0)
                 {
@@ -70,7 +78,7 @@ namespace Stilosoft.Controllers
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
                     TempData["Accion"] = "CrearInsu";
                     TempData["Mensaje"] = "Insumo creado exitosamente";
-                    return RedirectToAction(nameof(Index), new { CompraId = Id });
+                    return RedirectToAction("Index2");
                 }
                 catch (Exception)
                 {
@@ -92,7 +100,7 @@ namespace Stilosoft.Controllers
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
                          TempData["Accion"] = "EliminarInsu";
                          TempData["Mensaje"] = "Insumo eliminado correctamente";
-                         return RedirectToAction("Index");
+                         return RedirectToAction("Index2");
                      }
 
                      return NotFound();
