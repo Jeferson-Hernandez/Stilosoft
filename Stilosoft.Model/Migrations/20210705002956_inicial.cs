@@ -270,13 +270,13 @@ namespace Stilosoft.Model.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     FechaFactura = table.Column<DateTime>(type: "Date", nullable: false),
-                    NoFactura = table.Column<string>(type: "nvarchar(20)", nullable: true),
-                    FormaPago = table.Column<string>(type: "nvarchar(15)", nullable: true),
+                    NoFactura = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    FormaPago = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     FechaInicioPago = table.Column<DateTime>(type: "Date", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "Date", nullable: false),
-                    Periodicidad = table.Column<string>(type: "nvarchar(20)", nullable: true),
+                    Periodicidad = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Cuotas = table.Column<int>(type: "int", nullable: false),
-                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -324,19 +324,18 @@ namespace Stilosoft.Model.Migrations
                 {
                     CitaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Fecha = table.Column<DateTime>(type: "Date", nullable: false),
                     Hora = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Total = table.Column<long>(type: "bigint", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(20)", nullable: false),
-                    ClienteId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Estado = table.Column<string>(type: "nvarchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cita", x => x.CitaId);
                     table.ForeignKey(
-                        name: "FK_Cita_Cliente_ClienteId1",
-                        column: x => x.ClienteId1,
+                        name: "FK_Cita_Cliente_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "Cliente",
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Restrict);
@@ -436,7 +435,7 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CitaId = table.Column<int>(type: "int", nullable: false),
                     ServicioId = table.Column<int>(type: "int", nullable: false),
-                    EstilistaId = table.Column<int>(type: "int", nullable: false)
+                    EstilistaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -452,7 +451,7 @@ namespace Stilosoft.Model.Migrations
                         column: x => x.EstilistaId,
                         principalTable: "Estilista",
                         principalColumn: "EstilistaId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_DetalleCita_Servicio_ServicioId",
                         column: x => x.ServicioId,
@@ -568,9 +567,9 @@ namespace Stilosoft.Model.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cita_ClienteId1",
+                name: "IX_Cita_ClienteId",
                 table: "Cita",
-                column: "ClienteId1");
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compra_ProveedorId",

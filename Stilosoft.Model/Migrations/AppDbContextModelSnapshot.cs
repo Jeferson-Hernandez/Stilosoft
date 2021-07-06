@@ -317,12 +317,15 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("Date");
 
                     b.Property<string>("FormaPago")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("NoFactura")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Periodicidad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<long>("PrecioTotal")
@@ -332,6 +335,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RutaImagen")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompraId");
