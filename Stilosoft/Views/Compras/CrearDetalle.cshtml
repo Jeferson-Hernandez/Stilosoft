@@ -7,22 +7,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="CrearDetalleCompra" enctype="multipart/form-data">
+            <form asp-action="CrearDetalle" enctype="multipart/form-data">
                 <input type="hidden" asp-for="DetalleCompraId" />
                 <input type="hidden" asp-for="CompraId" />
                 <input type="hidden" asp-for="ProductoId" />
                 <input type="hidden" asp-for="InsumoId" />
 
+                
+
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
-                    <label asp-for="ProductoId" class="control-label"></label>
-                    <input asp-for="ProductoId" class="form-control" />
+                    <label class="control-label">Producto</label>
+                    <select asp-items="ViewBag.ListarProducto" asp-for="ProductoId" class="form-control"></select>
                     <span asp-validation-for="ProductoId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Cantidad" class="control-label"></label>
                     <input asp-for="Cantidad" class="form-control" />
                     <span asp-validation-for="Cantidad" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="InsumoId" class="control-label"></label>
+                    <input asp-for="InsumoId" class="form-control" />
+                    <span asp-validation-for="InsumoId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="CantInsumo" class="control-label"></label>
