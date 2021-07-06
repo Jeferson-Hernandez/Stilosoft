@@ -9,8 +9,9 @@
         <div class="col-md-4">
             <form asp-action="CrearDetalleCompra" enctype="multipart/form-data">
                 <input type="hidden" asp-for="DetalleCompraId" />
-                
-                
+                <input type="hidden" asp-for="CompraId" />
+                <input type="hidden" asp-for="ProductoId" />
+                <input type="hidden" asp-for="InsumoId" />
 
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
@@ -30,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="CantProducto" class="control-label"></label>
-                    <input  asp-for="CantProducto" class="form-control" />
+                    <input asp-for="CantProducto" class="form-control" />
                     <span asp-validation-for="CantProducto" class="text-danger"></span>
                 </div>
                 <div class="form-group">

@@ -7,7 +7,7 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="CrearDetalle" class="btn btn-success"> Agregar insumos</a>
+        <a asp-action="CrearDetalle" asp-controller="Compras"  asp-route-Id="@ViewBag.IdCompra" class="btn btn-success"> Agregar insumos</a>
     </p>
     <table class="table" id="tabla">
         <thead>

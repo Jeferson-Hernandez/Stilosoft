@@ -10,11 +10,7 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20210705190525_inicial.Designer.cs
-    [Migration("20210705190525_inicial")]
-=======
-    [Migration("20210701193956_inicial")]
->>>>>>> DanielP:Stilosoft.Model/Migrations/20210701193956_inicial.Designer.cs
+    [Migration("20210705202916_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
