@@ -35,7 +35,8 @@
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {              
+            {
+                var MontoAPagar = item.Compra.PrecioTotal - item.MontoAbonado;
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Compra.PrecioTotal)
@@ -58,9 +59,25 @@
                         </form>
                     </td>
                 </tr>
-            }
-        </tbody>
-    </table>
+                break;
+             <tr>
+           
+                var MontoAPagar = item.Compra.PrecioTotal - item.MontoAbonado;
+                <th>Monto facturado: @Html.DisplayFor(modelItem => item.Compra.PrecioTotal)</th>
+                <th>
+                    Monto abonado: @Html.DisplayFor(modelItem => item.MontoAbonado)
+                </th>
+                <th>
+                    Monto a pagar: @Html.DisplayFor(modelItem => MontoAPagar)
+                </th>
+                <th>
+                    Cuotas: @Html.DisplayFor(modelItem => item.Cuotas)
+                </th>
+            
+        </tr>
+             }
+            </tbody>
+        </table>
 </section>
 
 @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))

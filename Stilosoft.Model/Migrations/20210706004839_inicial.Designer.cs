@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210628152537_cita")]
-    partial class cita
+    [Migration("20210706004839_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,8 +230,20 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cuotas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CuotasPagadas")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
+
+                    b.Property<long>("MontoAbonado")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
@@ -303,6 +315,9 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
 
@@ -316,15 +331,25 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("Date");
 
                     b.Property<string>("FormaPago")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("NoFactura")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Periodicidad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");
 
                     b.Property<string>("RutaImagen")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompraId");
@@ -579,7 +604,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("RutaImagen")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductoId");
 
