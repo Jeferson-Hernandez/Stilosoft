@@ -180,32 +180,33 @@ namespace Stilosoft.Controllers
                 {
                     CompraId = Id,
                     ProductoId = compraDetalleViewModel.ProductoId,
+                    InsumoId = compraDetalleViewModel.InsumoId,
                     Cantidad = compraDetalleViewModel.Cantidad,
                     CantInsumo = compraDetalleViewModel.CantInsumo,
                     CantProducto = compraDetalleViewModel.CantProducto,
                     Costo = compraDetalleViewModel.Costo,
                     Medida = compraDetalleViewModel.Medida,
-                    SubTotal = compraDetalleViewModel.SubTotal,
+                    SubTotal = 0,
                     Iva = compraDetalleViewModel.Iva,
-                    Total = compraDetalleViewModel.Total
+                    Total = 0
 
 
                 };
 
                 try
                 {
-                    var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.ProductoId);
+                    /*var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.ProductoId);
 
                     if (ProductoExiste != null)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "El producto ya se encuentra registrado";
                         return View(detalleCompra);
-                    }
+                    }*/
                     await _detalleCompraService.RegistrarDetalleCompra(detalleCompra);
                     TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Producto añadido con éxito";
-                    return RedirectToAction("DetalleIndex");
+                    return RedirectToAction(nameof(Index), new { CompraId = Id });
                 }
                 catch (Exception)
                 {
@@ -214,12 +215,7 @@ namespace Stilosoft.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            else
-            {
-                TempData["Accion"] = "Error";
-                TempData["Mensaje"] = "Ingresaste un valor inválido";
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction(nameof(DetalleIndex), new { CompraId = Id });
         }
 
         [HttpGet]

@@ -41,7 +41,6 @@ namespace Stilosoft.Controllers
             return View(new AbonoCompraViewModels());
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AgregarAbonoCompra(int Id, AbonoCompraViewModels abonoCompraViewModels)
         {
             if (ModelState.IsValid)

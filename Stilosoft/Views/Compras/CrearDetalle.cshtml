@@ -7,14 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="CrearDetalle" enctype="multipart/form-data">
-                <input type="hidden" asp-for="DetalleCompraId" />
-                <input type="hidden" asp-for="CompraId" />
-                <input type="hidden" asp-for="ProductoId" />
-                <input type="hidden" asp-for="InsumoId" />
-
-                
-
+            <form asp-action="CrearDetalle" asp-route-Id="@ViewBag.IdCompra" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
                     <label class="control-label">Producto</label>
@@ -26,7 +19,7 @@
                     <input asp-for="Cantidad" class="form-control" />
                     <span asp-validation-for="Cantidad" class="text-danger"></span>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label asp-for="InsumoId" class="control-label"></label>
                     <input asp-for="InsumoId" class="form-control" />
                     <span asp-validation-for="InsumoId" class="text-danger"></span>
