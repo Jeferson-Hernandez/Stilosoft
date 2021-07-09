@@ -28,12 +28,12 @@ namespace Stilosoft.Controllers
             ViewBag.IdCompra = Id;
             return View(await _abonoCompraService.ObtenerListaAbonoPorId(Id));       
         }
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> Index2(int Id)
         {
             ViewBag.IdCompra = Id;
             return View(await _abonoCompraService.ObtenerListaAbonoCompra());
-        }
+        }*/
         [HttpGet]
         public IActionResult AgregarAbonoCompra(int Id )
         {
@@ -53,8 +53,8 @@ namespace Stilosoft.Controllers
                     PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
                     CompraId = Id,
                     Cuotas = _abonoCompraService.ObtenerCuotasPorId(Id),
-                    CuotasPagadas = 5,
-                    MontoAbonado = 10000
+                    CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
+                    MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
                 };
 
                 DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
@@ -78,7 +78,7 @@ namespace Stilosoft.Controllers
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
                     TempData["Accion"] = "CrearInsu";
                     TempData["Mensaje"] = "Insumo creado exitosamente";
-                    return RedirectToAction("Index2");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
@@ -100,7 +100,7 @@ namespace Stilosoft.Controllers
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
                          TempData["Accion"] = "EliminarInsu";
                          TempData["Mensaje"] = "Insumo eliminado correctamente";
-                         return RedirectToAction("Index2");
+                         return RedirectToAction("Index");
                      }
 
                      return NotFound();
