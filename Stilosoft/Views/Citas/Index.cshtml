@@ -17,7 +17,7 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="Crear" class="btn btn-success"> Crear cita</a>
+        <a onclick="mostrarModalG('@Url.Action("Crear","Citas","null",Context.Request.Scheme)','Registrar cita')" class="btn btn-success"> Crear cita</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -62,10 +62,8 @@
                         @Html.DisplayFor(modelItem => item.Estado)
                     </td>
                     <td>
-                        <a asp-action="CitaDetalleEstilistas" asp-route-id="@item.CitaId" class="btn btn-dark"><i class="far fa-lightbulb"></i></a>
-                        <form asp-action="Eliminar" asp-route-id="@item.CitaId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </form>
+                        <a onclick="mostrarModalS('@Url.Action("CitaDetalleEstilistas","Citas", new {id = item.CitaId}, Context.Request.Scheme)', 'Detalle cita')" class="btn btn-dark"><i class="far fa-lightbulb"></i></a>
+                        
                     </td>
                 </tr>
             }
@@ -78,5 +76,20 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+                  alertify.alert('Guardar estilista', '@TempData["Mensaje"]', function () { alertify.success('Cita creada'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("AsignarEstilista")) { <text>
+        alertify.success('Estilista asignado correctamente.');
+                 </text>
+        }
+    </script>
 }

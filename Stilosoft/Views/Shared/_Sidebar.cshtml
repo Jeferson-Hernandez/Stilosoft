@@ -4,13 +4,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <div class="container" id="menu">
-        <p asp-action="index" asp-controller="Clientes" class="brand-link text-center">
-            <span class="brand-text">Stilosoft</span>
+        <p asp-action="index" asp-controller="Clientes" class="brand-link">
+            Stilosoft
         </p>
-        <div class="user-panel mt-3 pb-3  d-flex">
-            <div class="image">
-                <img src="~/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
+        <div class="user-panel mt-3 pb-3  d-flex">            
             <div class="info">
                 <a class="d-block">Bienvenido: @Context.Session.GetString("_Nombre")</a>
             </div>
@@ -19,26 +16,20 @@
     
     <!-- Sidebar -->
     <div class="sidebar" id="menu-opciones">
-
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @{
-                    //if (User.IsInRole("Administrador")) {
-                    <li class="nav-item">
-                        <a asp-action="index" asp-controller="Roles" class="nav-link">
-                            <i class="fas fa-user"></i>
-                            <p>
-                                CONFIGURACIÓN
-                            </p>
-                        </a>
-                    </li>
-                    // }
-                }
+                <li class="nav-item">
+                    <a asp-action="index" asp-controller="Roles" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <p>
+                            CONFIGURACIÓN
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a asp-action="index" asp-controller="Usuarios" class="nav-link">
-                        <i class="fas fa-archive"></i>
+                        <i class="fas fa-users"></i>
                         <p>
                             USUARIOS
                         </p>
@@ -46,16 +37,16 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-shopping-cart"></i>
                         <p>
-                            COMPRAS
+                            COMPRAS   
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-coins"></i>
+                                <i class="fas fa-handshake"></i>
                                 <p>Proveedores</p>
                             </a>
                         </li>
@@ -67,7 +58,7 @@
                         </li>
                         <li class="nav-item">
                             <a asp-action="Index" asp-controller="Compras" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-shopping-bag"></i>
                                 <p>Compras</p>
                             </a>
                         </li>
@@ -75,34 +66,34 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-archive"></i>
+                        <i class="fas fa-store-alt"></i>
                         <p>
-                            PRODUCTOS/SERVICIOS
+                            PRODUCTOS/SERVICIOS 
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a asp-action="index" asp-controller="Producto" class="nav-link">
-                                <i class="fas fa-coins"></i>
+                                <i class="fab fa-product-hunt"></i>
                                 <p>Productos</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="index" asp-controller="Estilistas" class="nav-link">
-                                <i class="fas fa-people-carry"></i>
+                                <i class="fas fa-vest"></i>
                                 <p>Estilistas</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="index" asp-controller="Servicios" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-cut"></i>
                                 <p>Servicios</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-calendar-check"></i>
                                 <p>Programación agenda</p>
                             </a>
                         </li>
@@ -110,34 +101,34 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-archive"></i>
+                        <i class="fas fa-cash-register"></i>
                         <p>
-                            VENTAS
+                            VENTAS  
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-coins"></i>
+                                <i class="fas fa-users"></i>
                                 <p>Clientes</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="index" asp-controller="Citas" class="nav-link">
-                                <i class="fas fa-people-carry"></i>
+                                <i class="fas fa-calendar-alt"></i>
                                 <p>Citas</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-calendar-plus"></i>
                                 <p>Solicitudes de servicios</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-balance-scale"></i>
                                 <p>Ventas</p>
                             </a>
                         </li>
@@ -145,28 +136,27 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-cog"></i>
+                        <i class="fas fa-chart-pie"></i>
                         <p>
-                            INFORMES
+                            INFORMES 
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-coins"></i>
+                                <i class="fas fa-chart-pie"></i>
                                 <p>Comportamiento de ventas</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-people-carry"></i>
+                                <i class="far fa-chart-bar"></i>
                                 <p>Comportamiento de servicios</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-truck"></i>
+                            <a href="#" class="nav-link">                                
                                 <p>Comportamiento de clientes</p>
                             </a>
                         </li>

@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in</title>
+    <title>Stilosoft | Inicio</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="~/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css">
+    <link href="~/lib/AlertifyJS/css/alertify.css" rel="stylesheet" />
+
+    <link href="~/lib/AlertifyJS/css/themes/default.css" rel="stylesheet" />
 </head>
 <body class="hold-transition login-page" style="        background-color: #668cff;">
     <div class="login-box" style="width: 27rem; height: auto;">
@@ -89,9 +92,15 @@
     <script src="~/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/adminlte/dist/js/adminlte.min.js"></script>
-
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }
+    <script src="~/lib/AlertifyJS/alertify.js"></script>
 </body>
 </html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Registrar")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
+}

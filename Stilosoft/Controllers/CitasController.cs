@@ -69,14 +69,20 @@ namespace Stilosoft.Controllers
                     var citaId = _citaService.ObtenerCitaMaxId();
 
                     await _citaService.GuardarCitaDetalle(citaId, citaDetalleDto.Servicios);
+                    TempData["Accion"] = "Crear";
+                    TempData["Mensaje"] = "Cita creada correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
-            return View();
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";            
+            return View(citaDetalleDto);
         }
         [HttpGet]
         public async Task<IActionResult> CitaDetalleEstilistas(int id)
@@ -96,13 +102,19 @@ namespace Stilosoft.Controllers
                 try
                 {
                     await _citaService.GuardarCitaDetalleEstilista(citaDetalleEstilistaDto.Estilistas);
+                    TempData["Accion"] = "AsignarEstilista";
+                    TempData["Mensaje"] = "Estilista asignado correctamente";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
                 }
             }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(citaDetalleEstilistaDto);
         }
     }

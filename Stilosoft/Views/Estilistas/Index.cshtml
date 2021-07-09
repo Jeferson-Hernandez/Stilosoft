@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a href="#" class="btn btn-primary btn-lg mr-md-4">Productos</a>
+            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Productos</a>
             <a asp-action="index" asp-controller="Estilistas" class="btn btn-secondary btn-lg mr-md-4">Estilistas</a>
             <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
             <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
@@ -17,7 +17,7 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="Crear" class="btn btn-success"> Registrar estilista</a>
+        <a onclick="mostrarModalS('@Url.Action("Crear","Estilistas","null",Context.Request.Scheme)','Registrar estilista')" class="btn btn-success"> Registrar estilista</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -73,7 +73,7 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Editar" asp-route-id="@item.EstilistaId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <a onclick="mostrarModalS('@Url.Action("Editar","Estilistas", new {id = item.EstilistaId}, Context.Request.Scheme)', 'Editar estilista')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
                         <form asp-action="Eliminar" asp-route-id="@item.EstilistaId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
@@ -89,7 +89,7 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-
+    <script src="~/js/modals.js"></script>
     <script>
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
                   alertify.alert('Guardar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista guardado'); });

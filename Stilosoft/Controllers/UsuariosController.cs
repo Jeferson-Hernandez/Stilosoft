@@ -79,6 +79,8 @@ namespace Stilosoft.Controllers
                             Estado = true                            
                         };
                         await _clienteService.GuardarCliente(cliente);
+                        TempData["Accion"] = "Registrar";
+                        TempData["Mensaje"] = "Usuario registrado correctamente";
                         return RedirectToAction("login", "Usuarios");
                     }
                     else

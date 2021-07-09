@@ -44,12 +44,12 @@ namespace Stilosoft
             services.AddScoped<IServicioService, ServicioService>();
             services.AddScoped<IEstilistaService, EstilistaService>();
             services.AddScoped<IClienteService, ClienteService>();
-            services.AddScoped<IInsumoService, InsumoService>();
-            services.AddScoped<IProductoService, ProductoService>();
-            services.AddScoped<IComprasService, ComprasService>();
-            services.AddScoped<IProveedorService, ProveedorService>();
+            services.AddScoped<ICitaService, CitaService>();
             services.AddScoped<IAbonoCompraService, AbonoCompraService>();
-            services.AddScoped<IDetalleCompraService, DetalleCompraService>();
+            services.AddScoped<IComprasService, ComprasService>();
+=========
+            services.AddScoped<ICitaService, CitaService>();
+>>>>>>>>> Temporary merge branch 2
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -104,7 +104,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                     pattern: "{controller=Compras}/{action=Index}/{Id?}");
+                    pattern: "{controller=Compras}/{action=Index}/{Id?}");
             });
         }
     }
