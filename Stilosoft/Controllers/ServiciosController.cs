@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
-    
+    [Authorize]
     public class ServiciosController : Controller
     {
         private readonly IServicioService _servicioService;
@@ -54,7 +54,13 @@ namespace Stilosoft.Controllers
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "El servicio ya se encuentra registrado";
-                        return View(servicioViewModel);
+                        return RedirectToAction("index");
+                    }
+                    else if (servicioViewModel.Costo <= 0 || servicioViewModel.Duracion <=0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La duración y el costo no deben ser menores a 1";
+                        return RedirectToAction("index");
                     }
                     await _servicioService.GuardarServicio(servicio);
                     TempData["Accion"] = "Crear";
@@ -116,6 +122,12 @@ namespace Stilosoft.Controllers
                     {
                         return RedirectToAction("index");
                     }*/
+                    if (servicioViewModel.Costo <= 0 || servicioViewModel.Duracion <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La duración y el costo no deben ser menores a 1";
+                        return RedirectToAction("index");
+                    }
                     await _servicioService.EditarServicio(servicio);
                     TempData["Accion"] = "Editar";
                     TempData["Mensaje"] = "Servicio editado correctamente";

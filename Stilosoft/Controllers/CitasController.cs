@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Business.Dtos;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class CitasController : Controller
     {
         private readonly ICitaService _citaService;
@@ -81,8 +83,8 @@ namespace Stilosoft.Controllers
                 }
             }
             TempData["Accion"] = "Error";
-            TempData["Mensaje"] = "Ingresaste un valor inválido";            
-            return View(citaDetalleDto);
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
         }
         [HttpGet]
         public async Task<IActionResult> CitaDetalleEstilistas(int id)
@@ -115,7 +117,7 @@ namespace Stilosoft.Controllers
             }
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";
-            return View(citaDetalleEstilistaDto);
+            return RedirectToAction("index");
         }
     }
 }

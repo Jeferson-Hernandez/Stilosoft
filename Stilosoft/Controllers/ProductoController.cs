@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class ProductoController : Controller
     {
         private readonly IProductoService _productoService;

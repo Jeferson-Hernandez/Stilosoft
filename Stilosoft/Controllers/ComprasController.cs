@@ -10,9 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Stilosoft.ViewModels.Compras;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class ComprasController : Controller
     {
         private readonly IComprasService _comprasService;
@@ -45,7 +47,7 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearCompra()
         {
-            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedores(), "ProveedorId", "Nombre");
+            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedor(), "ProveedorId", "Nombre");
             return View(new ComprasViewModel());
         }
         [HttpPost]

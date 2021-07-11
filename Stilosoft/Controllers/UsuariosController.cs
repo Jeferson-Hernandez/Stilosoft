@@ -15,8 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
@@ -41,9 +40,9 @@ namespace Stilosoft.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var listaUsuariosClientes = await _clienteService.ObtenerListaClientes();
+            var listaUsuarios = await _userManager.Users.ToListAsync();
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
-            return View(listaUsuariosClientes);
+            return View(listaUsuarios);
         }
         [HttpGet]
         public IActionResult Registrar()
@@ -128,7 +127,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(loginViewModel);
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> CrearUsuario()
         {
@@ -138,7 +137,7 @@ namespace Stilosoft.Controllers
 
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CrearUsuario(CrearUsuarioViewModel crearUsuarioViewModel)
         {
@@ -157,17 +156,41 @@ namespace Stilosoft.Controllers
                         var usuario = await _userManager.FindByEmailAsync(crearUsuarioViewModel.Email);
                         await _userManager.AddToRoleAsync(usuario, crearUsuarioViewModel.Rol);
 
+                        TempData["Accion"] = "Crear";
+                        TempData["Mensaje"] = "Usuario registrado correctamente";
                         return RedirectToAction("index");
                     }
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Correo o contraseña incorrecto";
+                    return RedirectToAction("index");
                 }
             }
-            return View(crearUsuarioViewModel);
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Correo o contraseña incorrecto";
+            return RedirectToAction("index");
         }
-
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(string id)
+        {
+            var usuario = await _userManager.FindByIdAsync(id);
+            try
+            {
+                await _userManager.DeleteAsync(usuario);
+                TempData["Accion"] = "Eliminar";
+                TempData["Mensaje"] = "Usuario eliminado correctamente";
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Correo o contraseña incorrecto";
+                return RedirectToAction("index");
+            }
+            
+        }
 
         [HttpGet]
         public IActionResult OlvidePassword()

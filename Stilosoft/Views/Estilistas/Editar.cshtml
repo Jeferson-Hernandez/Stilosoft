@@ -1,7 +1,7 @@
 ﻿@model Stilosoft.ViewModels.Estilistas.EstilistaViewModel
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Editar estilista";
     Layout = null;
 }
 
@@ -40,6 +40,8 @@
         </div>
     </div>
 </div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
