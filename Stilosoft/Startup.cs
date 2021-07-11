@@ -50,8 +50,7 @@ namespace Stilosoft
             services.AddScoped<IProveedorService, ProveedorService>();
             services.AddScoped<IAbonoCompraService, AbonoCompraService>();
             services.AddScoped<IDetalleCompraService, DetalleCompraService>();
->>>>>>>>> Temporary merge branch 2
->>>>>>>>> Temporary merge branch 2
+            services.AddScoped<ICitaService, CitaService>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -104,9 +103,9 @@ namespace Stilosoft
 
             app.UseEndpoints(endpoints =>
             {
-                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Compras}/{action=Index}/{Id?}");
+                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
             });
         }
     }
