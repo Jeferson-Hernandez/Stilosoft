@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210627002929_todasentidades")]
-    partial class todasentidades
+    [Migration("20210706002947_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,10 +247,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClienteId1")
+                    b.Property<string>("ClienteId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estado")
@@ -269,7 +266,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("CitaId");
 
-                    b.HasIndex("ClienteId1");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Cita");
                 });
@@ -347,7 +344,7 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CitaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstilistaId")
+                    b.Property<int?>("EstilistaId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServicioId")
@@ -754,7 +751,7 @@ namespace Stilosoft.Model.Migrations
                 {
                     b.HasOne("Stilosoft.Model.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId1");
+                        .HasForeignKey("ClienteId");
 
                     b.Navigation("Cliente");
                 });
@@ -791,9 +788,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasOne("Stilosoft.Model.Entities.Estilista", "Estilista")
                         .WithMany("DetalleCitas")
-                        .HasForeignKey("EstilistaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EstilistaId");
 
                     b.HasOne("Stilosoft.Model.Entities.Servicio", "Servicio")
                         .WithMany("DetalleCitas")

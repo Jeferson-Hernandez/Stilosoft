@@ -40,9 +40,6 @@ namespace Stilosoft.ViewModels.Proveedor
         [Required(ErrorMessage = "El telefono de contacto es obligatorio")]
         [Column(TypeName = "nvarchar(10)")]
         public string TelefonoContacto { get; set; }
-
-        [Required]
-        public bool Estado { get; set; } 
-
+        public bool Estado { get; internal set; }
     }
 }
