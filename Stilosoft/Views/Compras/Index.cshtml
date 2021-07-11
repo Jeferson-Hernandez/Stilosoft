@@ -23,8 +23,7 @@
 <hr>
 <section class="content">
     <p>
-        <a asp-action="CrearCompra" class="btn btn-success"> Registrar compra</a>
-        
+        <a onclick="mostrarModalS('@Url.Action("CrearCompra","Compras","null",Context.Request.Scheme)','Registrar compra')" class="btn btn-success"> Registrar compra</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -93,6 +92,7 @@
                     }                  
                 </td>
                 <td>
+
                     <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
                 </td>
                 <td>
@@ -101,153 +101,6 @@
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                     </form>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
->>>>>>>>> Temporary merge branch 2
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
->>>>>>>>> Temporary merge branch 2
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
->>>>>>>>> Temporary merge branch 2
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
->>>>>>>>> Temporary merge branch 2
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
->>>>>>>>> Temporary merge branch 2
-
-                </td>
-
 
             </tr>
             }
@@ -261,6 +114,7 @@
     <script src="~/js/tabla.js"></script>
     <script src="js-global/FancyZoom.js" type="text/javascript"></script>
     <script src="js-global/FancyZoomHTML.js" type="text/javascript"></script>
+    <script src="~/js/modals.js"></script>
 
     @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra"))
     {<text>
