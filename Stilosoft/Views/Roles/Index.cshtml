@@ -30,8 +30,8 @@
                         <label>Ingrese el nombre del rol</label>
                         <input type="text" id="rol" name="rol" class="form-control" placeholder="Nombre del rol" />
                         <br />
-                        <input type="submit" value="Crear" class="btn btn-outline-primary btn-block" />
-                        <a asp-action="Index" class="btn btn-outline-danger btn-block">Cancel</a>
+                        <input type="submit" value="Crear" class="btn btn-primary btn-block" />
+                        <a asp-action="Index" class="btn btn-danger btn-block">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -59,7 +59,7 @@
                                 <tr>
                                     <td>@r.Name</td>
                                     <td>
-                                        <a name="rol" id="rol" class="btn btn-outline-danger"
+                                        <a name="rol" id="rol" class="btn btn-danger"
                                            asp-route-rol="@r.Name"
                                            asp-action="Eliminar"
                                            onclick="return confirm('Desea eliminar este rol?')">Eliminar rol</a>

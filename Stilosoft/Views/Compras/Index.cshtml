@@ -6,17 +6,10 @@
 <br />
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-secondary">Proveedor</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Estilistas</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary">Servicios</a>
-        </div>
-        <div class="col-md-5">
-            <a href="#" class="btn btn-primary">Programación agenda</a>
+        <div class="col-md-10">
+            <a asp-action="Index" asp-controller="Proveedor" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="Index" asp-controller="Insumo" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Compras" class="btn btn-secondary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
 </div>
@@ -63,46 +56,46 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NoFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FormaPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaInicioPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cuotas)
-                </td>
-                <td>
-                    @if (item.RutaImagen != null)
-                    {
-                        <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto"/>
-                    }                  
-                </td>
-                <td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormaPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicioPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaRegistro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cuotas)
+                    </td>
+                    <td>
+                        @if (item.RutaImagen != null)
+                        {
+                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                        }
+                    </td>
+                    <td>
 
-                    <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                </td>
-                <td>
-                    <a onclick="mostrarModalS('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')"class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                    </form>
+                        <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+                    </td>
+                    <td>
+                        <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                        </form>
                     </td>
 
-            </tr>
+                </tr>
             }
         </tbody>
     </table>

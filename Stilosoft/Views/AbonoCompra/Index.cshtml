@@ -4,12 +4,9 @@
     ViewData["Title"] = "AbonoCompra";
     Layout = null;
 }
-<br />
-<hr>
 <section class="content">
     <p>
-        <a onclick="mostrarModalS('@Url.Action("AgregarAbonoCompra","AbonoCompra",new {id = @ViewBag.IdCompra},Context.Request.Scheme)','Abono Compra')" class="btn btn-success"> Agregar Abono</a>
-        <!--- <a asp-action="AgregarAbonoCompra" asp-route-Id="@ViewBag.IdCompra" class="btn btn-success"> Agregar abono</a>--->
+        <a onclick="mostrarModalS('@Url.Action("AgregarAbonoCompra","AbonoCompra",new {id = @ViewBag.IdCompra},Context.Request.Scheme)','Abono Compra')" class="btn btn-success"> Agregar abono</a>
     </p>
 
     <table class="table" id="tabla">
@@ -62,7 +59,7 @@
                 </tr>
 
             }
-        </tbody>      
+        </tbody>
     </table>
 </section>
 
@@ -75,4 +72,10 @@
         });
 </text>
 }
+@section Scripts{
 
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+
+}

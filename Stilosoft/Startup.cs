@@ -44,15 +44,15 @@ namespace Stilosoft
             services.AddScoped<IServicioService, ServicioService>();
             services.AddScoped<IEstilistaService, EstilistaService>();
             services.AddScoped<IClienteService, ClienteService>();
-            services.AddScoped<ICitaService, CitaService>();
-            services.AddScoped<IAbonoCompraService, AbonoCompraService>();
+            services.AddScoped<IInsumoService, InsumoService>();
+            services.AddScoped<IProductoService, ProductoService>();
             services.AddScoped<IComprasService, ComprasService>();
             services.AddScoped<IProveedorService, ProveedorService>();
             services.AddScoped<IAbonoCompraService, AbonoCompraService>();
             services.AddScoped<IDetalleCompraService, DetalleCompraService>();
             services.AddScoped<ICitaService, CitaService>();
-            services.AddScoped<IProductoService, ProductoService>();
-            services.AddScoped<IInsumoService, InsumoService>();
+            services.AddScoped<IProveedorService, ProveedorService>();
+
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -107,7 +107,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Compras}/{action=Index}/{Id?}");
+                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
             });
         }
     }
