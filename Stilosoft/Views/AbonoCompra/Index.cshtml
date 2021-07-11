@@ -86,7 +86,7 @@
         alertify.alert('Error', '@TempData["Mensaje"]'});
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarAbono")) { <text>
         alertify.alert('Eliminar abono', '@TempData["Mensaje"]', function () { alertify.error('Abono eliminado'); });
                  </text>
         }
