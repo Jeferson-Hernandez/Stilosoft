@@ -39,6 +39,12 @@ namespace Stilosoft.Business.Business
             _context.Update(cliente);
             await _context.SaveChangesAsync();
         }
+        public async Task EliminarCliente(string id)
+        {
+            var cliente = await ObtenerClientePorId(id);
+            _context.Remove(cliente);
+            await _context.SaveChangesAsync();
+        }
         
     }
 }
