@@ -21,18 +21,18 @@
     <link rel="stylesheet" href="~/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css">
+    <link href="~/css/login.css" rel="stylesheet" />
     <link href="~/lib/AlertifyJS/css/alertify.css" rel="stylesheet" />
-
     <link href="~/lib/AlertifyJS/css/themes/default.css" rel="stylesheet" />
 </head>
-<body class="hold-transition login-page" style="        background-color: #668cff;">
-    <div class="login-box" style="width: 27rem; height: auto;">
+<body class="hold-transition login-page">
+    <div class="login-box">
         <div class="login-logo">
-            <a><b>Maria C Stilos</b></a>
+            <a class="h1"><b>Maria C</b> Stilos</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body" style="border-radius: 5px;">
+            <div class="card-body login-card-body">
                 <p class="login-box-msg">Iniciar sesión</p>
 
                 <form asp-action="Login" method="post">
@@ -93,14 +93,19 @@
     <!-- AdminLTE App -->
     <script src="~/adminlte/dist/js/adminlte.min.js"></script>
     <script src="~/lib/AlertifyJS/alertify.js"></script>
+
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Registrar")) { <text>
+        alertify.success('Registrado correctamente.');
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]');
+                 </text>
+        }
+    </script>    
 </body>
 </html>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Registrar")) { <text>
-        alertify.success('Estado cambiado correctamente.');
-                 </text>
-        }
-    </script>
+    <partial name="_ValidationScriptsPartial" />    
 }
