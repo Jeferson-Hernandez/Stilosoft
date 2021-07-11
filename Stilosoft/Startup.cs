@@ -47,9 +47,9 @@ namespace Stilosoft
             services.AddScoped<ICitaService, CitaService>();
             services.AddScoped<IAbonoCompraService, AbonoCompraService>();
             services.AddScoped<IComprasService, ComprasService>();
-=========
+
+
             services.AddScoped<ICitaService, CitaService>();
->>>>>>>>> Temporary merge branch 2
 
             services.Configure<IdentityOptions>(options =>
             {
