@@ -39,9 +39,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Total)
                     </th>
-                    <th>
-                        Acciones
-                    </th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -77,12 +75,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => total)
                         </td>
-                        <td>
+                       <!-- <td>
                             <a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar detalle')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
                             <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                             </form>
-                        </td>
+                        </td>-->
                     </tr>
                 }
             </tbody>
@@ -111,9 +109,6 @@
         alertify.alert('Eliminar producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
-        alertify.success('Estado cambiado correctamente.');
-                 </text>
-        }
+       
         </script>
     }
