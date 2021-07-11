@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class InsumoController:Controller
     { 
     private readonly IInsumoService _insumoService;

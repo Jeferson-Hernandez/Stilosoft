@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
 using Stilosoft.Model.Entities;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Business
 {
-    public class ProveedorService
+    public class ProveedorService:IProveedorService
     {
         private readonly AppDbContext _context;
 

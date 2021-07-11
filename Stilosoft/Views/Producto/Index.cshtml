@@ -6,24 +6,18 @@
 <br />
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-secondary">Productos</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Estilistas</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary">Servicios</a>
-        </div>
-        <div class="col-md-5">
-            <a href="#" class="btn btn-primary">Programación agenda</a>
+        <div class="col-md-10">
+            <a asp-action="index" asp-controller="Producto" class="btn btn-secondary btn-lg mr-md-4">Productos</a>
+            <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
+            <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
         </div>
     </div>
 </div>
 <hr>
 <section class="content">
     <p>
-        <a onclick="mostrarModalG('@Url.Action("CrearPro","Producto", "null", Context.Request.Scheme)', 'Crear Prodcuto')"  class="btn btn-success"> Registrar producto</a>
+        <a onclick="mostrarModalG('@Url.Action("CrearPro","Producto", "null", Context.Request.Scheme)', 'Crear Prodcuto')" class="btn btn-success"> Registrar producto</a>
     </p>
     <table class="table" id="tabla">
         <thead>

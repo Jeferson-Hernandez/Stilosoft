@@ -11,12 +11,12 @@ namespace Stilosoft.ViewModels.Usuarios
     {
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombre { get; set; }
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "El apellido es obligatorio")]
         public string Apellido { get; set; }
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "El celular es obligatorio")]
         public string Celular { get; set; }
         [DisplayName("Cédula")]
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "La cédula es obligatoria")]
         public string Cedula { get; set; }
         [Required(ErrorMessage = "El email es obligatorio")]
         [EmailAddress(ErrorMessage = "Email invalido")]

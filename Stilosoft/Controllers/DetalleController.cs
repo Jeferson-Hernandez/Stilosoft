@@ -10,9 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Stilosoft.ViewModels.Compras;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class DetalleController : Controller
     {
         private readonly IComprasService _comprasService;
