@@ -62,7 +62,7 @@ namespace Stilosoft.Controllers
                         return RedirectToAction("Index");
                     }
                     await _insumoService.RegistrarInsumo(insumo);
-                    TempData["Accion"] = "CrearInsu";
+                    TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Insumo creado exitosamente";
                     return RedirectToAction("Index");
                 }
@@ -119,12 +119,12 @@ namespace Stilosoft.Controllers
 
                     if (insumoExiste != null)
                     {
-                        TempData["Accion"] = "EditarInsuF";
-                        TempData["Mensaje"] = "Modificacion fallida";
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "Nombre del insumo ya existe";
                         return RedirectToAction("Index");
                     }
                     await _insumoService.EditarInsumo(insumo);
-                    TempData["Accion"] = "EditarInsu";
+                    TempData["Accion"] = "Editar";
                     TempData["Mensaje"] = "Modificacion exitosa";
                     return RedirectToAction("Index");
 
@@ -153,7 +153,7 @@ namespace Stilosoft.Controllers
                     if (Id != null)
                     {
                         await _insumoService.EliminarInsumo(Id.Value);
-                        TempData["Accion"] = "EliminarInsu";
+                        TempData["Accion"] = "Eliminar";
                         TempData["Mensaje"] = "Insumo eliminado correctamente";
                         return RedirectToAction("index");
                     }
@@ -185,11 +185,15 @@ namespace Stilosoft.Controllers
             try
             {
                 await _insumoService.EditarInsumo(insumo);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                throw;
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("Nndex");
             }
         }
     }

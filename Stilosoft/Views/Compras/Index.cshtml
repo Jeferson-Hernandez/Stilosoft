@@ -105,50 +105,25 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-    <script src="js-global/FancyZoom.js" type="text/javascript"></script>
-    <script src="js-global/FancyZoomHTML.js" type="text/javascript"></script>
     <script src="~/js/modals.js"></script>
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra"))
+    <script>
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear"))
     {<text>
-            Swal.fire({
-            title: "Registrar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
+            alertify.alert('Guardar compra', '@TempData["Mensaje"]', function () { alertify.success('Compra guardada'); });
     </text>
 }
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarCompra"))
-    {<text>
-            Swal.fire({
-            title: "Editar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
-    </text>
-}
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarCompra"))
-    {<text>
-            Swal.fire({
-            title: "Eliminar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
-    </text>
-}
-
     @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
     {<text>
-            Swal.fire({
-            title: "Error",
-            icon: 'error',
-            html: "@TempData["Mensaje"]"
-            });
+            alertify.alert('Error', '@TempData["Mensaje"]');
+    </text>
+}
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar"))
+    {<text>
+            alertify.alert('Eliminar compra', '@TempData["Mensaje"]', function () { alertify.error('Compra eliminada'); });
     </text>
 }
 
+    </script>
     <script type="text/javascript">
         function DeleteConfirm() {
             if (confirm("¿Quieres eliminar la compra?"))

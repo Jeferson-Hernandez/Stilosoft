@@ -1,24 +1,11 @@
 ﻿@model Stilosoft.ViewModels.Insumo.InsumoViewModel
 
 @{
-    ViewData["Title"] = "EditarInsu";
+    ViewData["Title"] = "Editar Insumo";
+    Layout = null;
 }
 
-<br />
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Proveedores</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Insumo" class="btn btn-secondary">Insumo</a>
-        </div>
-        <div class="col-md-5">
-            <a href="#" class="btn btn-primary">Compras</a>
-        </div>
-    </div>
-</div>
-<hr>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
@@ -49,7 +36,7 @@
         </div>
     </div>
 </div>
-
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }
