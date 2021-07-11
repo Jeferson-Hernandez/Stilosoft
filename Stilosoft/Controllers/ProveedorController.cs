@@ -108,7 +108,7 @@ namespace Stilosoft.Controllers
                 };
                 await _proveedorService.EditarProveedor(proveedor);
                 TempData["Accion"] = "Editar";
-                TempData["Mensaje"] = "Estilista editado correctamente";
+                TempData["Mensaje"] = "Proveedor editado correctamente";
                 return RedirectToAction("index");
             }
             TempData["Accion"] = "Error";
