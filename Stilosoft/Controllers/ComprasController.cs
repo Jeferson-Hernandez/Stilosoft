@@ -123,7 +123,9 @@ namespace Stilosoft.Controllers
             }
             else
             {
-                return View(comprasViewModel);
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error realizando la operación";
+                return RedirectToAction("Index");
             }
         }
        
