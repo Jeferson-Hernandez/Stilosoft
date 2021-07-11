@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Cita";
+    Layout = null;
 }
 <br />
 <div class="container-fluid align-content-center">    
@@ -72,5 +73,10 @@
         document.getElementById("ListaClientes").selectedIndex = -1;
     </script>
 
-
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+    </script>
 }

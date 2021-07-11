@@ -79,17 +79,24 @@ namespace Stilosoft.Controllers
                             Estado = true                            
                         };
                         await _clienteService.GuardarCliente(cliente);
+                        TempData["Accion"] = "Registrar";
+                        TempData["Mensaje"] = "Usuario registrado correctamente";
                         return RedirectToAction("login", "Usuarios");
-                    }
-                    else
-                        return View(usuarioViewModel);
+                    }                    
+                      TempData["Accion"] = "Error";
+                      TempData["Mensaje"] = "Ingresaste un valor inválido";
+                      return View(usuarioViewModel);
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("login", "Usuarios");
                 }
             }
-            return NotFound();
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("login", "Usuarios");
         }
 
         [HttpGet]
@@ -113,8 +120,12 @@ namespace Stilosoft.Controllers
                     _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
                     return RedirectToAction("index","Servicios");
                 }
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Correo o contraseña incorrecto";
                 return View();
             }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(loginViewModel);
         }
 

@@ -1,23 +1,24 @@
-﻿@model IEnumerable<Stilosoft.Model.Entities.Estilista>
+﻿@model IEnumerable<Stilosoft.Model.Entities.Cliente>
 
 @{
-    ViewData["Title"] = "Estilista";
+    ViewData["Title"] = "Clientes";
 }
+
 <br />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Productos</a>
-            <a asp-action="index" asp-controller="Estilistas" class="btn btn-secondary btn-lg mr-md-4">Estilistas</a>
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
-            <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
+            <a asp-action="index" asp-controller="Clientes" class="btn btn-secondary btn-lg mr-md-4">Clientes</a>
+            <a asp-action="index" asp-controller="Citas" class="btn btn-primary btn-lg mr-md-4">Citas</a>
+            <a href="#" class="btn btn-primary btn-lg mr-md-4">Solicitud de servicio</a>
+            <a href="#" class="btn btn-primary btn-lg">Ventas</a>
         </div>
     </div>
 </div>
 <hr>
 <section class="content">
     <p>
-        <a onclick="mostrarModalS('@Url.Action("Crear","Estilistas","null",Context.Request.Scheme)','Registrar estilista')" class="btn btn-success"> Registrar estilista</a>
+        <a onclick="mostrarModalS('@Url.Action("Crear","Clientes","null",Context.Request.Scheme)','Registrar cliente')" class="btn btn-success"> Registrar cliente</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -26,13 +27,16 @@
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.FechaNacimiento)
+                    @Html.DisplayNameFor(model => model.Apellido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Celular)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Cedula)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Celular)
+                    @Html.DisplayNameFor(model => model.IdentityUser.Email)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Estado)
@@ -50,31 +54,34 @@
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
                     <td>
-                        @( DateTime.Now.Year - item.FechaNacimiento.Year )
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cedula)
+                        @Html.DisplayFor(modelItem => item.Apellido)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Celular)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Cedula)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityUser.Email)
+                    </td>
+                    <td>
                         @if (item.Estado == true)
                         {
-                            <form asp-action="EditarEstado" asp-route-id="@item.EstilistaId">
+                            <form asp-action="EditarEstado" asp-route-id="@item.ClienteId">
                                 <button type="submit"><i class="fas fa-toggle-on"></i></button>
                             </form>
                         }
                         else if (item.Estado == false)
                         {
-                            <form asp-action="EditarEstado" asp-route-id="@item.EstilistaId">
+                            <form asp-action="EditarEstado" asp-route-id="@item.ClienteId">
                                 <button type="submit"><i class="fas fa-toggle-off"></i></button>
                             </form>
                         }
                     </td>
                     <td>
-                        <a onclick="mostrarModalS('@Url.Action("Editar","Estilistas", new {id = item.EstilistaId}, Context.Request.Scheme)', 'Editar estilista')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="Eliminar" asp-route-id="@item.EstilistaId" class="d-inline">
+                        <a asp-action="Editar" asp-route-id="@item.ClienteId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <form asp-action="Eliminar" asp-route-id="@item.ClienteId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
@@ -84,33 +91,26 @@
     </table>
 </section>
 
-
-
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
     <script src="~/js/modals.js"></script>
     <script>
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
-                  alertify.alert('Guardar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista guardado'); });
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Registrar")) { <text>
+        alertify.success('Registrado correctamente.');
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]'});
-                 </text>
-        }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
-        alertify.alert('Editar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista editado'); });
-                 </text>
-        }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
-        alertify.alert('Eliminar estilista', '@TempData["Mensaje"]', function () { alertify.error('Estilista eliminado'); });
+        alertify.alert('Error', '@TempData["Mensaje"]');
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
         alertify.success('Estado cambiado correctamente.');
                  </text>
         }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar cliente', '@TempData["Mensaje"]', function () { alertify.error('Cliente eliminado'); });
+                 </text>
+        }
     </script>
-
 }
