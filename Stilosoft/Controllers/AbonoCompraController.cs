@@ -46,9 +46,10 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> AgregarAbonoCompra(int Id, AbonoCompraViewModels abonoCompraViewModels)
         {
             if (ModelState.IsValid)
-            {                
+            {
+                DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
                 AbonoCompra abonoCompra = new()
-                {                    
+                {                 
                     CantAbono = abonoCompraViewModels.CantAbono,
                     FechaPago = abonoCompraViewModels.FechaPago,
                     PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
@@ -57,8 +58,6 @@ namespace Stilosoft.Controllers
                     CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
                     MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
                 };
-
-                DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
                 if (abonoCompra.PrecioTotal == 0)
                 {
                     abonoCompra.PrecioTotal = detalleCompra.Total - abonoCompra.CantAbono;
@@ -104,7 +103,7 @@ namespace Stilosoft.Controllers
                      if (Id != null)
                      {
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
-                         TempData["Accion"] = "Eliminar";
+                         TempData["Accion"] = "EliminarAbono";
                          TempData["Mensaje"] = "Abono eliminado correctamente";
                          return RedirectToAction("index", "Compras");
                     }
