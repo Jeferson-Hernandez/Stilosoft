@@ -71,7 +71,7 @@
                     <td>
                         <a onclick="mostrarModalG('@Url.Action("EditarProducto","Producto", new {id = item.ProductoId}, Context.Request.Scheme)', 'Editar Prodcuto')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
                         <form asp-action="EliminarProducto" asp-route-id="@item.ProductoId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.ProductoId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar Producto?');"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -82,52 +82,33 @@
 </section>
 
 @section Scripts{
-    <script src="~/js/modals.js"></script>
+
     <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
     <script>
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarProducto")) { <text>
-                  Swal.fire({
-                    title: "Registrar producto",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
+                  alertify.alert('Guardar Producto', '@TempData["Mensaje"]', function () { alertify.success('Producto guardado'); });
                  </text>
         }
-
-         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarProducto")) { <text>
-                  Swal.fire({
-                    title: "Editar producto",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
-
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarProducto")) { <text>
-                  Swal.fire({
-                    title: "Eliminar producto",
-                      icon: 'success',
-                    html: "@TempData["Mensaje"]"
-                  });
-                 </text>
-        }
-
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-                  Swal.fire({
-                    title: "Error",
-                      icon: 'error',
-                    html: "@TempData["Mensaje"]"
-                  });
+        alertify.alert('Error', '@TempData["Mensaje"]'});
                  </text>
         }
-
-    </script>
-    <script type="text/javascript">
-        function DeleteConfirm() {
-            if (confirm("¿Quieres Eliminar el Registro?"))
-                return true;
-            else
-                return false;
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarProducto")) { <text>
+        alertify.alert('Editar Producto', '@TempData["Mensaje"]', function () { alertify.success('Producto editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarProducto")) { <text>
+        alertify.alert('Eliminar Producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
+                 </text>
         }
     </script>
+<script type="text/javascript">
+    function DeleteConfirm() {
+        if (confirm("¿Quieres Eliminar el Producto?"))
+            return true;
+        else
+            return false;
+    }
+</script>
 }

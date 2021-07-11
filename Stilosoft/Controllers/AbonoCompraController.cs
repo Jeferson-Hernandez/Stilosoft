@@ -72,13 +72,18 @@ namespace Stilosoft.Controllers
                 {
                     abonoCompra.Cuotas -= 1;
                 }
-
+                if (abonoCompra.CantAbono < 0)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
+                    return RedirectToAction("index", "Compras");
+                }
                 try
                 {
                     // await _comprasService.RegistrarCompra(compra);
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
-                    TempData["Accion"] = "CrearInsu";
-                    TempData["Mensaje"] = "Insumo creado exitosamente";
+                    TempData["Accion"] = "Agregar";
+                    TempData["Mensaje"] = "Agregar abono exitosamente";
                     return RedirectToAction("index","Compras");
                 }
                 catch (Exception)
@@ -99,8 +104,8 @@ namespace Stilosoft.Controllers
                      if (Id != null)
                      {
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
-                         TempData["Accion"] = "EliminarInsu";
-                         TempData["Mensaje"] = "Insumo eliminado correctamente";
+                         TempData["Accion"] = "Eliminar";
+                         TempData["Mensaje"] = "Abono eliminado correctamente";
                          return RedirectToAction("index", "Compras");
                     }
 
