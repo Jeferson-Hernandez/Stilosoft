@@ -33,15 +33,23 @@
                     @Html.DisplayNameFor(model => model.ProveedorId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Cantidad)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.FechaFactura)
                 </th>
                 <th>
-
+                    @Html.DisplayNameFor(model => model.NoFactura)
                 </th>
-                @Html.DisplayNameFor(model => model.PrecioTotal)
+                <th>
+                    @Html.DisplayNameFor(model => model.FormaPago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaInicioPago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaRegistro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cuotas)
+                </th>
                 <th>
                     Factura
                 </th>
@@ -56,42 +64,47 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioTotal)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" onload="setupZomm()" />
-                        }
-                        else
-                        {
-                            <p>No hay factura asociada a la compra</p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="DetalleCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormaPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaInicioPago)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cuotas)
+                </td>
+                <td>
+                    @if (item.RutaImagen != null)
+                    {
+                        <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto"/>
+                    }                  
+                </td>
+                <td>
+                    <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+                </td>
+                <td>
+                    <a asp-action="Index" asp-controller="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                    </form>
 
-                    </td>
+                </td>
 
 
-                </tr>
+            </tr>
             }
         </tbody>
     </table>

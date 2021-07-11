@@ -11,6 +11,7 @@ namespace Stilosoft.ViewModels.AbonoCompra
     public class AbonoCompraViewModels
     {
         public int AbonoCompraId { get; set; }
+        public int CompraId { get; set; }
         [DisplayName("Abono")]
         [Required(ErrorMessage = "El abono es obligatorio")]
         public int CantAbono { get; set; }
@@ -18,6 +19,10 @@ namespace Stilosoft.ViewModels.AbonoCompra
         [DisplayName("Fecha de pago")]
         [Required(ErrorMessage = "La fecha es obligatoria")]
         public DateTime FechaPago { get; set; }
-        public int CompraId { get; set; }
+        public int Cuotas { get; set; }
+        public int CuotasPagadas { get; set; }
+        [DisplayName("Valor final")]
+        public long PrecioTotal { get; set; }
+        public long MontoAbonado { get; set; }
     }
 }

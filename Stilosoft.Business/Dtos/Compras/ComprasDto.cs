@@ -5,16 +5,19 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Stilosoft.ViewModels
+namespace Stilosoft.Business.Dtos.Compras
 {
-    public class ComprasViewModel
+    public class ComprasDto
     {
         public int CompraId { get; set; }
         [Required(ErrorMessage = "El proveedor es obligatorio")]
         [DisplayName("Proveedor")]
         public int ProveedorId { get; set; }
+        [Required(ErrorMessage = "La cantidad es obligatoria")]
+        public int Cantidad { get; set; }
         [Required(ErrorMessage = "El precio de la compra es obligatorio")]
         [DisplayName("Precio de la compra")]
         public long PrecioTotal { get; set; }
@@ -49,4 +52,5 @@ namespace Stilosoft.ViewModels
         [DisplayName("Factura")]
         public string RutaImagen { get; set; }
     }
+
 }

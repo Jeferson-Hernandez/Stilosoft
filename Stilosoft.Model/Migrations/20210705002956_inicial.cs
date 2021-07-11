@@ -267,8 +267,6 @@ namespace Stilosoft.Model.Migrations
                     CompraId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProveedorId = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     FechaFactura = table.Column<DateTime>(type: "Date", nullable: false),
                     NoFactura = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     FormaPago = table.Column<string>(type: "nvarchar(15)", nullable: false),
@@ -373,6 +371,10 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CantAbono = table.Column<int>(type: "int", nullable: false),
                     FechaPago = table.Column<DateTime>(type: "Date", nullable: false),
+                    Cuotas = table.Column<int>(type: "int", nullable: false),
+                    CuotasPagadas = table.Column<int>(type: "int", nullable: false),
+                    MontoAbonado = table.Column<long>(type: "bigint", nullable: false),
+                    PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     CompraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -594,7 +596,8 @@ namespace Stilosoft.Model.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_CompraId",
                 table: "DetalleCompra",
-                column: "CompraId");
+                column: "CompraId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_InsumoId",

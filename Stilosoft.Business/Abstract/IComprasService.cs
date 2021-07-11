@@ -10,9 +10,15 @@ namespace Stilosoft.Business.Abstract
     public interface IComprasService
     {
         Task<IEnumerable<Compra>> ObtenerListaCompras();
+        
         Task RegistrarCompra(Compra compra);
+        
         Task<Compra> ObtenerCompraPorId(int Id);
-        Task EditarCompra(Compra compra);
+       
         Task EliminarCompra(int Id);
+        Task<Compra> NoFacturaExiste(string NoFactura);
+
+        // Detalle
+
     }
 }

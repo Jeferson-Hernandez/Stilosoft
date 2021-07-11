@@ -228,8 +228,20 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cuotas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CuotasPagadas")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
+
+                    b.Property<long>("MontoAbonado")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrecioTotal")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
@@ -301,9 +313,6 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
 
@@ -327,9 +336,6 @@ namespace Stilosoft.Model.Migrations
                     b.Property<string>("Periodicidad")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<long>("PrecioTotal")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");
@@ -414,7 +420,8 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("DetalleCompraId");
 
-                    b.HasIndex("CompraId");
+                    b.HasIndex("CompraId")
+                        .IsUnique();
 
                     b.HasIndex("InsumoId");
 
@@ -817,8 +824,8 @@ namespace Stilosoft.Model.Migrations
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleCompra", b =>
                 {
                     b.HasOne("Stilosoft.Model.Entities.Compra", "Compra")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("CompraId")
+                        .WithOne("DetalleCompras")
+                        .HasForeignKey("Stilosoft.Model.Entities.DetalleCompra", "CompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

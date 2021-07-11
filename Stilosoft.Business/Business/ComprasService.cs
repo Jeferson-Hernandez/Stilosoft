@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Business
 {
-    public class ComprasService:IComprasService
+    public class ComprasService : IComprasService
     {
         private readonly AppDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Stilosoft.Business.Business
         }
         public async Task<IEnumerable<Compra>> ObtenerListaCompras()
         {
-            return await _context.Compra.Include(p=>p.Proveedor).ToListAsync();
+            return await _context.Compra.Include(p => p.Proveedor).Include(d => d.DetalleCompras).ToListAsync();
 
         }
         public async Task<Compra> ObtenerCompraPorId(int Id)
@@ -32,17 +32,20 @@ namespace Stilosoft.Business.Business
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditarCompra(Compra compra)
-        {
-            _context.Update(compra);
-            await _context.SaveChangesAsync();
-        }
+
 
         public async Task EliminarCompra(int Id)
         {
             var compra = await ObtenerCompraPorId(Id);
             _context.Remove(compra);
             await _context.SaveChangesAsync();
+        }
+
+        // DETALLE
+
+        public async Task<Compra> NoFacturaExiste(string NoFactura)
+        {
+            return await _context.Compra.FirstOrDefaultAsync(n => n.NoFactura == NoFactura);
         }
     }
 }
