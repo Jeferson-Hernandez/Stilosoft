@@ -117,7 +117,7 @@ namespace Stilosoft.Controllers
                     var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
 
                     _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
-                    return RedirectToAction("index","Servicios");
+                    return RedirectToAction("index","Usuarios");
                 }
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Correo o contraseña incorrecto";

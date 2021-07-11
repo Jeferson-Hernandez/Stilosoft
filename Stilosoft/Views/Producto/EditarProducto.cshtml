@@ -5,28 +5,11 @@
     Layout = null;
 }
 
-<br />
-<!--<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Productos</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Estilistas</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary">Servicios</a>
-        </div>
-        <div class="col-md-5">
-            <a href="#" class="btn btn-primary">Programación agenda</a>
-        </div>
-    </div>
-</div>-->
-<hr>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="EditarProducto" asp-route-id="@Model.ProductoId" enctype="multipart/form-data">
+            <form asp-action="EditarProducto" enctype="multipart/form-data">
                 <input type="hidden" asp-for="ProductoId" />
                 <input type="hidden" asp-for="RutaImagen" />
 
