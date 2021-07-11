@@ -36,6 +36,10 @@ namespace Stilosoft.Business.Business
         {
             return _context.AbonoCompra.Where(ci => ci.CompraId == Id).Min(c => c.Cuotas);
         }
+        public long ObtenerMontoAbonadoPorId(int Id)
+        {
+            return _context.AbonoCompra.Where(c => c.CompraId == Id).Sum(p => p.CantAbono);
+        }
         public async Task GuardarAbonoCompra(AbonoCompra abonoCompra)
         {
             _context.Add(abonoCompra);
