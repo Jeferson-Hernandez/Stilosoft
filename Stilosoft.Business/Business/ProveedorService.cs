@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Business
 {
-    public class ProveedorService:IProveedorService
+    public class ProveedorService: IProveedorService
     {
         private readonly AppDbContext _context;
 
@@ -47,9 +47,9 @@ namespace Stilosoft.Business.Business
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Proveedor> NombreProveedorExiste(string nombre)
+        public async Task<Proveedor> NitProveedorExiste(string nit)
         {
-            return await _context.Proveedor.FirstOrDefaultAsync(n => n.Nombre == nombre);
+            return await _context.Proveedor.FirstOrDefaultAsync(n => n.Nit == nit);
         }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model Stilosoft.ViewModels.Proveedor.ProveedorViewModels
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a asp-action="index" asp-controller="Proveedores" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="index" asp-controller="Insumos" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Crear" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label asp-for="Nit" class="control-label"></label>
+                    <input asp-for="Nit" class="form-control" />
+                    <span asp-validation-for="Nit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input type="date" asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Direccion" class="control-label"></label>
+                    <input asp-for="Direccion" class="form-control" />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefono" class="control-label"></label>
+                    <input asp-for="Telefono" class="form-control" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contacto" class="control-label"></label>
+                    <input asp-for="Contacto" class="form-control" />
+                    <span asp-validation-for="Contacto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TelefonoContacto" class="control-label"></label>
+                    <input asp-for="TelefonoContacto" class="form-control" />
+                    <span asp-validation-for="TelefonoContacto" class="text-danger"></span>
+                </div>                
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
