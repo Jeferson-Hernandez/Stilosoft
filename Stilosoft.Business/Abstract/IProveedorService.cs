@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Abstract
 {
-    public interface IProveedorService
-    {
-        Task<IEnumerable<Proveedor>> ObtenerListaProveedores();
+    interface IProveedorService
+    {        
+        Task<IEnumerable<Proveedor>> ObtenerListaProveedor();
+        Task<Proveedor> ObtenerProveedorPorId(int id);
+        Task GuardarProveedor(Proveedor proveedor);
+        Task EditarProveedor(Proveedor proveedor);
+        Task EliminarProveedor(int id);
+        Task<Proveedor> NombreProveedorExiste(string nombre);
     }
 }
