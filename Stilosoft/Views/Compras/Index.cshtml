@@ -89,7 +89,7 @@
                         <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
                     </td>
                     <td>
-                        <a asp-action="Index" asp-controller="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                        <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
                         <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                         </form>

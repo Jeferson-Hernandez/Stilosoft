@@ -112,8 +112,8 @@ namespace Stilosoft.Controllers
                     await _comprasService.RegistrarCompra(compra);
                     TempData["Accion"] = "RegistrarCompra";
                     TempData["Mensaje"] = "Compra guardada con éxito";
-                    //return RedirectToAction("DetalleIndex");
-                   return RedirectToAction(nameof(CrearDetalle), new { CompraId = compra.CompraId });
+                    return RedirectToAction("index");
+                    //return RedirectToAction(nameof(CrearDetalle), new { CompraId = compra.CompraId });
                 }
                 catch (Exception)
                 {

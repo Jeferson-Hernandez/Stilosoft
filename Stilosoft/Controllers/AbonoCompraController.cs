@@ -79,7 +79,7 @@ namespace Stilosoft.Controllers
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
                     TempData["Accion"] = "CrearInsu";
                     TempData["Mensaje"] = "Insumo creado exitosamente";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("index","Compras");
                 }
                 catch (Exception)
                 {
@@ -101,8 +101,8 @@ namespace Stilosoft.Controllers
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
                          TempData["Accion"] = "EliminarInsu";
                          TempData["Mensaje"] = "Insumo eliminado correctamente";
-                         return RedirectToAction("Index");
-                     }
+                         return RedirectToAction("index", "Compras");
+                    }
 
                      return NotFound();
                  }
