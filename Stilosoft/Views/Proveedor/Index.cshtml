@@ -6,10 +6,10 @@
 <br />
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10">            
+        <div class="col-md-10">
             <a asp-action="index" asp-controller="Proveedores" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
             <a asp-action="index" asp-controller="Insumos" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
-            <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>            
+            <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
 </div>
@@ -51,49 +51,73 @@
             @foreach (var item in Model)
             {
                 <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nit)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Contacto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelefonoContacto)
-                </td>                               
-                <td>
-                    @if (item.Estado == true)
-                    {
-                        <form asp-action="EditarEstado" asp-route-id="@item.ProveedorId">
-                            <button type="submit"><i class="fas fa-toggle-on"></i></button>
-                        </form>
-                    }
-                    else if (item.Estado == false)
-                    {
-                        <form asp-action="EditarEstado" asp-route-id="@item.ProveedorId">
-                            <button type="submit"><i class="fas fa-toggle-off"></i></button>
-                        </form>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Editar" asp-route-id="@item.ProveedorId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>                    
-                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contacto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TelefonoContacto)
+                    </td>
+                    <td>
+                        @if (item.Estado == true)
+                        {
+                            <form asp-action="EditarEstado" asp-route-id="@item.ProveedorId">
+                                <button type="submit"><i class="fas fa-toggle-on"></i></button>
+                            </form>
+                        }
+                        else if (item.Estado == false)
+                        {
+                            <form asp-action="EditarEstado" asp-route-id="@item.ProveedorId">
+                                <button type="submit"><i class="fas fa-toggle-off"></i></button>
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@item.ProveedorId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 </section>
 
-@section Scripts{ 
+
+@section Scripts{
 
     <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+        alertify.alert('Guardar proveedor', '@TempData["Mensaje"]', function () { alertify.success('proveedor guardado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar proveedor', '@TempData["Mensaje"]', function () { alertify.success('Proveedor editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar proveedor', '@TempData["Mensaje"]', function () { alertify.error('Proveedor eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
 
 }
