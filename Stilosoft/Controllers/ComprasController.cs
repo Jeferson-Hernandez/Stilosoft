@@ -207,7 +207,7 @@ namespace Stilosoft.Controllers
                     await _detalleCompraService.RegistrarDetalleCompra(detalleCompra);
                     TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Producto añadido con éxito";
-                    return View("Index");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
@@ -216,7 +216,7 @@ namespace Stilosoft.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction(nameof(DetalleIndex), new { CompraId = Id });
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
