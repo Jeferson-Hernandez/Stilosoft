@@ -59,6 +59,16 @@ namespace Stilosoft.Controllers
 
                     if (insumoExiste != null)
                     {
+                        
+                            TempData["Accion"] = "Error";
+                            TempData["Mensaje"] = "El insumo ya existe";
+                        return RedirectToAction("Index");
+                    }
+
+                    if (insumoViewModel.Cantidad <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cantidad no puede ser menor o igual a 0";
                         return RedirectToAction("Index");
                     }
                     await _insumoService.RegistrarInsumo(insumo);
@@ -115,14 +125,20 @@ namespace Stilosoft.Controllers
 
                 try
                 {
-                    var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
+                    if (insumoViewModel.Cantidad <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cantidad no puede ser menor o igual a 0";
+                        return RedirectToAction("Index");
+                    }
+                    /*var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
 
                     if (insumoExiste != null)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "Nombre del insumo ya existe";
                         return RedirectToAction("Index");
-                    }
+                    }*/
                     await _insumoService.EditarInsumo(insumo);
                     TempData["Accion"] = "Editar";
                     TempData["Mensaje"] = "Modificacion exitosa";

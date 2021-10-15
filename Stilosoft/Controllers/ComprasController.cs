@@ -201,6 +201,12 @@ namespace Stilosoft.Controllers
 
                 try
                 {
+                    if (compraDetalleViewModel.Cantidad <= 0 || compraDetalleViewModel.CantInsumo <= 0 || compraDetalleViewModel.CantProducto <=0 || compraDetalleViewModel.Costo <=0 || compraDetalleViewModel.Iva <=0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "Debe ser mayor a 0 las cantidades, el IVA y el costo";
+                        return RedirectToAction("Index");
+                    }
                     /*var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.ProductoId);
 
                     if (ProductoExiste != null)
