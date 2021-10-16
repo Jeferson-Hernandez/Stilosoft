@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Agregar categoría";
+    Layout = null;
+}
+
+<div class="container-fluid">
+    <form href="#" enctype="multipart/form-data">        
+        <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label mr-4">Nueva categoría:* </label>
+                <input class="form-control" />
+            </div>
+        </div>
+        <br />
+        <a class="btn btn-primary mr-2"> Agregar</a>
+        <a class="btn btn-primary"> Cancelar</a>
+    </form>
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+@section Scripts {
+
+}

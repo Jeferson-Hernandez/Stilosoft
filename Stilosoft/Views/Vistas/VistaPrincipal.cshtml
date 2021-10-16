@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Solicitud servicio";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a href="#" class="btn btn-primary btn-lg mr-md-4">Clientes</a>
+            <a asp-action="index" asp-controller="Citas" class="btn btn-primary btn-lg mr-md-4">Citas</a>
+            <a href="#" class="btn btn-secondary btn-lg mr-md-4">Solicitud de servicio</a>
+            <a href="#" class="btn btn-primary btn-lg">Ventas</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="index" asp-controller="Vistas" class="btn btn-success"> Crear servicio</a>
+    </p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Acción</th>
+                <th>No. Orden</th>
+                <th>Cliente</th>
+                <th>Fecha de servicio</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><p style="color: cornflowerblue;">Abrir</p></td>
+                <td>003221</td>
+                <td>Daniel Polo</td>
+                <td>29/04/2021</td>
+                <td>
+                    <select class="form-control">
+                        <option>Seleccionar</option>
+                        <option>Aprobado</option>
+                        <option>Finalizado</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><p style="color: cornflowerblue;">Abrir</p></td>
+                <td>001541</td>
+                <td>Camilo Herrera</td>
+                <td>15/06/2021</td>
+                <td>
+                    <select class="form-control">
+                        <option>Seleccionar</option>
+                        <option>Aprobado</option>
+                        <option>Finalizado</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

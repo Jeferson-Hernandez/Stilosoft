@@ -55,7 +55,7 @@ namespace Stilosoft.Controllers
                     }                    
                     await _proveedorService.GuardarProveedor(proveedor);
                     TempData["Accion"] = "Crear";
-                    TempData["Mensaje"] = "El NIT se ha registrado";
+                    TempData["Mensaje"] = "Proveedor registrado";
                     return RedirectToAction("index");
                 }
                 catch (Exception)
@@ -98,6 +98,7 @@ namespace Stilosoft.Controllers
             {
                 Proveedor proveedor = new()
                 {
+                    ProveedorId = proveedorViewModels.ProveedorId,
                     Nit = proveedorViewModels.Nit,
                     Nombre = proveedorViewModels.Nombre,
                     Direccion = proveedorViewModels.Direccion,
@@ -108,7 +109,7 @@ namespace Stilosoft.Controllers
                 };
                 await _proveedorService.EditarProveedor(proveedor);
                 TempData["Accion"] = "Editar";
-                TempData["Mensaje"] = "Estilista editado correctamente";
+                TempData["Mensaje"] = "Proveedor editado correctamente";
                 return RedirectToAction("index");
             }
             TempData["Accion"] = "Error";
