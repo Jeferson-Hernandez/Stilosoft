@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Agregar producto";
+    Layout = null;
+}
+
+<div class="container-fluid">
+    <form href="#" enctype="multipart/form-data">
+        <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label mr-5">Producto:* </label>
+                <select class="form-control">
+                    <option>Seleccionar</option>
+                    <option>Shampoo</option>
+                    <option>Esmalte</option>
+                    <option>Keratina</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label mr-4">Cantidad:* </label>
+                <input class="form-control" />
+            </div>
+        </div>
+        <br />
+        <p>Total: 23.000</p>
+        <br />
+        <a class="btn btn-primary mr-2"> Agregar</a>
+        <a class="btn btn-primary"> Cancelar</a>
+    </form>
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+@section Scripts {
+
+}
