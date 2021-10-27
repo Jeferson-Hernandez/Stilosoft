@@ -38,17 +38,21 @@ namespace Stilosoft.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var listaUsuarios = await _userManager.Users.ToListAsync();
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
             return View(listaUsuarios);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Registrar()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioViewModel usuarioViewModel)
         {
@@ -172,6 +176,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Correo o contraseña incorrecto";
             return RedirectToAction("index");
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Eliminar(string id)
         {
