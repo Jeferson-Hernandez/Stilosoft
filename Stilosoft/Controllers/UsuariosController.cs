@@ -120,6 +120,8 @@ namespace Stilosoft.Controllers
 
                     var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
 
+                    var rol = await _userManager.GetRolesAsync(usuario);
+
                     _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
                     return RedirectToAction("index","Usuarios");
                 }

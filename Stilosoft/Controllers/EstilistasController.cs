@@ -5,12 +5,14 @@ using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Estilistas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
     [Authorize]
+    [DisplayName("Manejo de estilistas")]
     public class EstilistasController : Controller
     {
         private readonly IEstilistaService _estilistaService;
@@ -19,6 +21,7 @@ namespace Stilosoft.Controllers
         {
             _estilistaService = estilistaService;
         }
+        [DisplayName("Listado de estilistas")]
         public async Task<IActionResult> Index()
         {            
             return View(await _estilistaService.ObtenerListaEstilistas());
