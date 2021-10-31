@@ -58,7 +58,7 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Celular = usuarioViewModel.Celular,
+                            Celular = usuarioViewModel.Numero,
                             Cedula = usuarioViewModel.Cedula,
                             Estado = true
                         };

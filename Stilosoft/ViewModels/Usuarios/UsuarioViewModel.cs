@@ -13,8 +13,8 @@ namespace Stilosoft.ViewModels.Usuarios
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El apellido es obligatorio")]
         public string Apellido { get; set; }
-        [Required(ErrorMessage = "El celular es obligatorio")]
-        public string Celular { get; set; }
+        [Required(ErrorMessage = "El Numero es obligatorio")]
+        public string Numero { get; set; }
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La cédula es obligatoria")]
         public string Cedula { get; set; }

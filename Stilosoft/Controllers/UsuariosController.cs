@@ -27,9 +27,10 @@ namespace Stilosoft.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly IUsuarioService _usuarioService;
         const string SesionNombre = "_Nombre";
 
-        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public UsuariosController(IClienteService clienteService, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IUsuarioService usuarioService)
         {
             _clienteService = clienteService;
             _userManager = userManager;
@@ -37,22 +38,23 @@ namespace Stilosoft.Controllers
             _httpContextAccessor = httpContextAccessor;
             _roleManager = roleManager;
             _configuration = configuration;
+            _usuarioService = usuarioService;
         }
-        [Authorize]
+   
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var listaUsuarios = await _userManager.Users.ToListAsync();
+            var listaUsuarios = await _usuarioService.ObtenerListaUsuarios();
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
             return View(listaUsuarios);
         }
-        [Authorize]
+   
         [HttpGet]
         public IActionResult Registrar()
         {
             return View();
         }
-        [Authorize]
+     
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioViewModel usuarioViewModel)
         {
@@ -77,7 +79,7 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Celular = usuarioViewModel.Celular,
+                            Celular = usuarioViewModel.Numero,
                             Cedula = usuarioViewModel.Cedula,
                             Estado = true                            
                         };
@@ -118,9 +120,9 @@ namespace Stilosoft.Controllers
                 {
                     var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
 
-                    var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
+                   // var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
 
-                    _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
+                    //_httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
                     return RedirectToAction("index","Usuarios");
                 }
                 TempData["Accion"] = "Error";
@@ -131,7 +133,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(loginViewModel);
         }
-        [Authorize]
+  
         [HttpGet]
         public async Task<IActionResult> CrearUsuario()
         {
@@ -141,7 +143,7 @@ namespace Stilosoft.Controllers
 
             return View();
         }
-        [Authorize]
+     
         [HttpPost]
         public async Task<IActionResult> CrearUsuario(CrearUsuarioViewModel crearUsuarioViewModel)
         {
@@ -152,6 +154,7 @@ namespace Stilosoft.Controllers
                     UserName = crearUsuarioViewModel.Email,
                     Email = crearUsuarioViewModel.Email
                 };
+             
                 try
                 {
                     var resultado = await _userManager.CreateAsync(identityUser, crearUsuarioViewModel.Password);
@@ -159,11 +162,39 @@ namespace Stilosoft.Controllers
                     {
                         var usuario = await _userManager.FindByEmailAsync(crearUsuarioViewModel.Email);
                         await _userManager.AddToRoleAsync(usuario, crearUsuarioViewModel.Rol);
-
+                        Usuario usuario1 = new()
+                        {
+                            UsuarioId = usuario.Id,
+                            Nombre = crearUsuarioViewModel.Nombre,
+                            Apellido = crearUsuarioViewModel.Apellido,
+                            Cedula = crearUsuarioViewModel.Cedula,
+                            Numero = crearUsuarioViewModel.Numero,
+                            Rol = crearUsuarioViewModel.Rol,
+                            Estado = true
+                        };
+                        if (crearUsuarioViewModel.Rol == "Cliente")
+                        {
+                            Cliente cliente = new()
+                            {
+                                ClienteId = usuario.Id,
+                                Nombre = crearUsuarioViewModel.Nombre,
+                                Apellido = crearUsuarioViewModel.Apellido,
+                                Cedula = crearUsuarioViewModel.Cedula,
+                                Celular = crearUsuarioViewModel.Numero,
+                                Estado = true
+                            };
+                           
+                            await _clienteService.GuardarCliente(cliente);
+                        }
+                        await _usuarioService.GuardarUsuario(usuario1);
                         TempData["Accion"] = "Crear";
                         TempData["Mensaje"] = "Usuario registrado correctamente";
                         return RedirectToAction("index");
                     }
+
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "El correo ya existe";
+                    return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
@@ -176,25 +207,86 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Correo o contraseña incorrecto";
             return RedirectToAction("index");
         }
+        [HttpGet]
+        public async Task<IActionResult> Editar(string id)
+        {
+            if (id != null)
+            {
+                Usuario usuario = await _usuarioService.ObtenerUsuarioPorId(id);
+                UsuarioDto usuarioDto = new()
+                {
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Cedula = usuario.Cedula,
+                    Numero = usuario.Numero,
+                    Estado = usuario.Estado
+                };
+                return View(usuarioDto);
+            }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Editar(UsuarioDto usuarioDto)
+        {
+            if (ModelState.IsValid)
+            {
+                Usuario usuario = new()
+                {
+                    Nombre = usuarioDto.Nombre,
+                    Apellido = usuarioDto.Apellido,
+                    Cedula = usuarioDto.Cedula,
+                    Numero = usuarioDto.Numero,
+                    Estado = usuarioDto.Estado
+                };
+                try
+                {
+                    await _usuarioService.EditarUsuario(usuario);
+                    TempData["Accion"] = "Editar";
+                    TempData["Mensaje"] = "Cliente editado correctamente";
+                    return RedirectToAction("index");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
+                }
+            }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
+        }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Eliminar(string id)
+        public async Task<IActionResult> EditarEstado(string id)
         {
-            var usuario = await _userManager.FindByIdAsync(id);
+            if (id == null)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
+            }
+            Usuario usuario = await _usuarioService.ObtenerUsuarioPorId(id);
             try
             {
-                await _userManager.DeleteAsync(usuario);
-                TempData["Accion"] = "Eliminar";
-                TempData["Mensaje"] = "Usuario eliminado correctamente";
+                if (usuario.Estado == true)
+                    usuario.Estado = false;
+                else if (usuario.Estado == false)
+                    usuario.Estado = true;
+
+                await _usuarioService.EditarUsuario(usuario);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
                 return RedirectToAction("index");
             }
             catch (Exception)
             {
                 TempData["Accion"] = "Error";
-                TempData["Mensaje"] = "Correo o contraseña incorrecto";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
                 return RedirectToAction("index");
             }
-            
         }
 
         [HttpGet]
