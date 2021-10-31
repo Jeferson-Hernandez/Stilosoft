@@ -1,3 +1,6 @@
+using DynamicAuthorization.Mvc.Core.Extensions;
+using DynamicAuthorization.Mvc.MsSqlServerStore;
+using DynamicAuthorization.Mvc.Ui;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -108,7 +111,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
+                    pattern: "{controller=Landing}/{action=Index}/{id?}");
             });
         }
     }
