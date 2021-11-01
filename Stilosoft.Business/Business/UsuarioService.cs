@@ -34,9 +34,9 @@ namespace Stilosoft.Business.Business
                 await _context.SaveChangesAsync();
             }
 
-            public async Task EditarUsuario(Usuario usuario)
+            public async Task EditarUsuario(Usuario usuario1)
             {
-                _context.Update(usuario);
+                _context.Update(usuario1);
                 await _context.SaveChangesAsync();
             }
 

@@ -11,7 +11,7 @@ namespace Stilosoft.Business.Abstract
     {
         Task<IEnumerable<Usuario>> ObtenerListaUsuarios();
         Task GuardarUsuario(Usuario usuario1);
-        Task EditarUsuario(Usuario usuario);
+        Task EditarUsuario(Usuario usuario1);
         Task<Usuario> ObtenerUsuarioPorId(string id);
     }
 }
