@@ -45,7 +45,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a asp-action="index" asp-controller="Proveedor" class="nav-link">
                                 <i class="fas fa-handshake"></i>
                                 <p>Proveedores</p>
                             </a>
@@ -92,6 +92,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a asp-action="VistaCategoria" asp-controller="Vistas" class="nav-link">
+                                <i class="fas fa-box"></i>
+                                <p>Categoría producto</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-calendar-check"></i>
                                 <p>Programación agenda</p>
@@ -121,7 +127,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a asp-action="VistaPrincipal" asp-controller="Vistas" class="nav-link">
                                 <i class="fas fa-calendar-plus"></i>
                                 <p>Solicitudes de servicios</p>
                             </a>

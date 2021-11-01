@@ -15,8 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
@@ -39,17 +38,21 @@ namespace Stilosoft.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var listaUsuariosClientes = await _clienteService.ObtenerListaClientes();
+            var listaUsuarios = await _userManager.Users.ToListAsync();
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
-            return View(listaUsuariosClientes);
+            return View(listaUsuarios);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Registrar()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioViewModel usuarioViewModel)
         {
@@ -114,11 +117,15 @@ namespace Stilosoft.Controllers
                 if (resultado.Succeeded)
                 {
                     var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                    var rol = await _userManager.GetRolesAsync(usuario);
 
+                    if (rol.Contains("Admin") || rol.Contains("Asistente"))
+                    {
+                        return RedirectToAction("index", "Usuarios");
+                    }
                     var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
-
                     _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
-                    return RedirectToAction("index","Servicios");
+                    return RedirectToAction("index", "Landing");
                 }
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Correo o contraseña incorrecto";
@@ -128,7 +135,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(loginViewModel);
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> CrearUsuario()
         {
@@ -138,7 +145,7 @@ namespace Stilosoft.Controllers
 
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CrearUsuario(CrearUsuarioViewModel crearUsuarioViewModel)
         {
@@ -157,17 +164,42 @@ namespace Stilosoft.Controllers
                         var usuario = await _userManager.FindByEmailAsync(crearUsuarioViewModel.Email);
                         await _userManager.AddToRoleAsync(usuario, crearUsuarioViewModel.Rol);
 
+                        TempData["Accion"] = "Crear";
+                        TempData["Mensaje"] = "Usuario registrado correctamente";
                         return RedirectToAction("index");
                     }
                 }
                 catch (Exception)
                 {
-                    throw;
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Correo o contraseña incorrecto";
+                    return RedirectToAction("index");
                 }
             }
-            return View(crearUsuarioViewModel);
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Correo o contraseña incorrecto";
+            return RedirectToAction("index");
         }
-
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(string id)
+        {
+            var usuario = await _userManager.FindByIdAsync(id);
+            try
+            {
+                await _userManager.DeleteAsync(usuario);
+                TempData["Accion"] = "Eliminar";
+                TempData["Mensaje"] = "Usuario eliminado correctamente";
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Correo o contraseña incorrecto";
+                return RedirectToAction("index");
+            }
+            
+        }
 
         [HttpGet]
         public IActionResult OlvidePassword()
@@ -263,7 +295,8 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CerrarSesion()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login","Usuarios");
+            _httpContextAccessor.HttpContext.Session.Clear();
+            return RedirectToAction("Index","Landing");
         }
     }
 }

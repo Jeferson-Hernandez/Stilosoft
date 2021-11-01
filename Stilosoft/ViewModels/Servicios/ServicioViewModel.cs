@@ -12,7 +12,7 @@ namespace Stilosoft.ViewModels.Servicios
     {
         public int ServicioId { get; set; }
         [DisplayName("Servicio")]
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "El servicio es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
         public string Nombre { get; set; }
         [DisplayName("Duración")]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class InsumoController:Controller
     { 
     private readonly IInsumoService _insumoService;
@@ -57,10 +59,20 @@ namespace Stilosoft.Controllers
 
                     if (insumoExiste != null)
                     {
+                        
+                            TempData["Accion"] = "Error";
+                            TempData["Mensaje"] = "El insumo ya existe";
+                        return RedirectToAction("Index");
+                    }
+
+                    if (insumoViewModel.Cantidad <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cantidad no puede ser menor o igual a 0";
                         return RedirectToAction("Index");
                     }
                     await _insumoService.RegistrarInsumo(insumo);
-                    TempData["Accion"] = "CrearInsu";
+                    TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Insumo creado exitosamente";
                     return RedirectToAction("Index");
                 }
@@ -113,16 +125,22 @@ namespace Stilosoft.Controllers
 
                 try
                 {
-                    var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
+                    if (insumoViewModel.Cantidad <= 0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "La cantidad no puede ser menor o igual a 0";
+                        return RedirectToAction("Index");
+                    }
+                    /*var insumoExiste = await _insumoService.NombreInsumoExiste(insumo.Nombre);
 
                     if (insumoExiste != null)
                     {
-                        TempData["Accion"] = "EditarInsuF";
-                        TempData["Mensaje"] = "Modificacion fallida";
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "Nombre del insumo ya existe";
                         return RedirectToAction("Index");
-                    }
+                    }*/
                     await _insumoService.EditarInsumo(insumo);
-                    TempData["Accion"] = "EditarInsu";
+                    TempData["Accion"] = "Editar";
                     TempData["Mensaje"] = "Modificacion exitosa";
                     return RedirectToAction("Index");
 
@@ -151,7 +169,7 @@ namespace Stilosoft.Controllers
                     if (Id != null)
                     {
                         await _insumoService.EliminarInsumo(Id.Value);
-                        TempData["Accion"] = "EliminarInsu";
+                        TempData["Accion"] = "Eliminar";
                         TempData["Mensaje"] = "Insumo eliminado correctamente";
                         return RedirectToAction("index");
                     }
@@ -183,11 +201,15 @@ namespace Stilosoft.Controllers
             try
             {
                 await _insumoService.EditarInsumo(insumo);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                throw;
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("Nndex");
             }
         }
     }

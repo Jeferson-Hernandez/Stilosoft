@@ -3,12 +3,10 @@
 @{
     ViewData["Title"] = "Detalle de la Compra";
 }
-<br />
-<hr>
 <form asp-route-id="@ViewBag.IdCompra">
     <section class="content">
-        <p>
-            <a asp-action="CrearDetalle" asp-controller="Compras" asp-route-Id="@ViewBag.IdCompra" class="btn btn-success"> Agregar insumos</a>
+        <p>            
+            <a onclick="mostrarModalS('@Url.Action("CrearDetalle","Compras", new {id = ViewBag.IdCompra}, Context.Request.Scheme)', 'Crear detalle compra')" class="btn btn-success"> Agregar insumos</a>
         </p>
 
         <table class="table" id="tabla">
@@ -41,9 +39,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Total)
                     </th>
-                    <th>
-                        Acciones
-                    </th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -79,9 +75,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => total)
                         </td>
-                        <td>
-                            <a asp-action="EditarDetalle" asp-controller="Compras" asp-route-id="@item.DetalleCompraId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                            
+                       <!-- <td>
+                            <a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar detalle')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                            <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </td>-->
                     </tr>
                 }
             </tbody>
@@ -92,7 +91,7 @@
     @section Scripts{
 
         <script src="~/js/tabla.js"></script>
-
+        <script src="~/js/modals.js"></script>
         <script>
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
         alertify.alert('Agregar producto', '@TempData["Mensaje"]', function () { alertify.success('Producto agregado'); });
@@ -110,9 +109,6 @@
         alertify.alert('Eliminar producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
-        alertify.success('Estado cambiado correctamente.');
-                 </text>
-        }
+       
         </script>
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Stilosoft.Model.Entities.Cliente>
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
 @{
     ViewData["Title"] = "Usuarios";
@@ -8,35 +8,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1">
-            <a href="#" class="btn btn-secondary btn-lg">Usuarios</a>
-        </div>        
+            <a asp-action="index" class="btn btn-secondary btn-lg">Usuarios</a>
+        </div>
     </div>
 </div>
 <hr>
 <section class="content">
     <p>
-        <a asp-action="CrearUsuario" class="btn btn-success"> Registrar usuario</a>
+        <a onclick="mostrarModalS('@Url.Action("CrearUsuario","Usuarios","null",Context.Request.Scheme)','Registrar usuario')" class="btn btn-success"> Registrar usuario</a>
     </p>
     <table class="table" id="tabla">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Apellido)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Celular)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cedula)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdentityUser.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estado)
+                    @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
                     Acciones
@@ -48,37 +33,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
+                        @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Apellido)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Celular)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cedula)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdentityUser.Email)
-                    </td>
-                    <td>
-                        @if (item.Estado == true)
-                        {
-                            <form asp-action="EditarEstado" asp-route-id="@item.ClienteId">
-                                <button type="submit"><i class="fas fa-toggle-on"></i></button>
-                            </form>
-                        }
-                        else if (item.Estado == false)
-                        {
-                            <form asp-action="EditarEstado" asp-route-id="@item.ClienteId">
-                                <button type="submit"><i class="fas fa-toggle-off"></i></button>
-                            </form>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="Editar" asp-route-id="@item.ClienteId" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="Eliminar" asp-route-id="@item.ClienteId" class="d-inline">
+                        <form asp-action="Eliminar" asp-route-id="@item.Id" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
@@ -87,10 +45,23 @@
         </tbody>
     </table>
 </section>
-
+<br />
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-
-
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+                  alertify.alert('Guardar usuario', '@TempData["Mensaje"]', function () { alertify.success('Usuario guardado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }        
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar Usuario', '@TempData["Mensaje"]', function () { alertify.error('Usuario eliminado'); });
+                 </text>
+        }        
+    </script>
 }

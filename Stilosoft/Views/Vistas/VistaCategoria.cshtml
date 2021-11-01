@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Categoría producto";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Productos</a>
+            <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
+            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
+            <a asp-action="VistaCategoria" asp-controller="Vistas" class="btn btn-secondary btn-lg mr-md-4">Categoría</a>
+            <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+        <div class="text-center">
+          <h2>Categoría producto</h2>
+        </div>        
+    
+
+    
+
+    <br />
+    <div class="container ">
+        <div class="row">
+            <div class="col-12 pb-3 text-right">
+                <a onclick="mostrarModalS('@Url.Action("VistaAgregarCategoria","Vistas","null",Context.Request.Scheme)','Agregar categoría')" class="btn btn-success"> Agregar categoría</a>
+            </div>
+        </div>
+        <table class="table table-bordered" id="tabla">
+            <thead>
+                <tr>
+                    <th>Categoría ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Keratinas</td>
+                    <td>
+                        <a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Esmaltes</td>
+                    <td>
+                        <a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+</section>
+
+
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+}

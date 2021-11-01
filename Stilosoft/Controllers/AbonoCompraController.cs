@@ -8,9 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Stilosoft.Model.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class AbonoCompraController : Controller
     {
         private readonly IAbonoCompraService _abonoCompraService;
@@ -28,12 +30,12 @@ namespace Stilosoft.Controllers
             ViewBag.IdCompra = Id;
             return View(await _abonoCompraService.ObtenerListaAbonoPorId(Id));       
         }
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> Index2(int Id)
         {
             ViewBag.IdCompra = Id;
             return View(await _abonoCompraService.ObtenerListaAbonoCompra());
-        }
+        }*/
         [HttpGet]
         public IActionResult AgregarAbonoCompra(int Id )
         {
@@ -44,19 +46,18 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> AgregarAbonoCompra(int Id, AbonoCompraViewModels abonoCompraViewModels)
         {
             if (ModelState.IsValid)
-            {                
+            {
+                DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
                 AbonoCompra abonoCompra = new()
-                {                    
+                {                 
                     CantAbono = abonoCompraViewModels.CantAbono,
                     FechaPago = abonoCompraViewModels.FechaPago,
                     PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
                     CompraId = Id,
                     Cuotas = _abonoCompraService.ObtenerCuotasPorId(Id),
-                    CuotasPagadas = 5,
-                    MontoAbonado = 10000
+                    CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
+                    MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
                 };
-
-                DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
                 if (abonoCompra.PrecioTotal == 0)
                 {
                     abonoCompra.PrecioTotal = detalleCompra.Total - abonoCompra.CantAbono;
@@ -70,14 +71,19 @@ namespace Stilosoft.Controllers
                 {
                     abonoCompra.Cuotas -= 1;
                 }
-
+                if (abonoCompra.CantAbono < 0)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
+                    return RedirectToAction("index", "Compras");
+                }
                 try
                 {
                     // await _comprasService.RegistrarCompra(compra);
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
-                    TempData["Accion"] = "CrearInsu";
-                    TempData["Mensaje"] = "Insumo creado exitosamente";
-                    return RedirectToAction("Index2");
+                    TempData["Accion"] = "Agregar";
+                    TempData["Mensaje"] = "Agregar abono exitosamente";
+                    return RedirectToAction("index","Compras");
                 }
                 catch (Exception)
                 {
@@ -97,10 +103,10 @@ namespace Stilosoft.Controllers
                      if (Id != null)
                      {
                          await _abonoCompraService.EliminarAbonoCompra(Id.Value);
-                         TempData["Accion"] = "EliminarInsu";
-                         TempData["Mensaje"] = "Insumo eliminado correctamente";
-                         return RedirectToAction("Index2");
-                     }
+                         TempData["Accion"] = "EliminarAbono";
+                         TempData["Mensaje"] = "Abono eliminado correctamente";
+                         return RedirectToAction("index", "Compras");
+                    }
 
                      return NotFound();
                  }

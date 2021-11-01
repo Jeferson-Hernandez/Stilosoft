@@ -95,7 +95,7 @@
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]'});
+        alertify.alert('Error', '@TempData["Mensaje"]');
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>

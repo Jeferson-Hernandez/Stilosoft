@@ -6,17 +6,10 @@
 <br />
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-secondary">Proveedor</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a href="#" class="btn btn-primary">Estilistas</a>
-        </div>
-        <div class="col-md-1 mr-md-4">
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary">Servicios</a>
-        </div>
-        <div class="col-md-5">
-            <a href="#" class="btn btn-primary">Programación agenda</a>
+        <div class="col-md-10">
+            <a asp-action="Index" asp-controller="Proveedor" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="Index" asp-controller="Insumo" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Compras" class="btn btn-secondary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
 </div>
@@ -63,45 +56,46 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NoFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FormaPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaInicioPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cuotas)
-                </td>
-                <td>
-                    @if (item.RutaImagen != null)
-                    {
-                        <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto"/>
-                    }                  
-                </td>
-                <td>
-                    <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                </td>
-                <td>
-                    <a asp-action="Index" asp-controller="AbonoCompra" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                    </form>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoFactura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormaPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicioPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaRegistro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cuotas)
+                    </td>
+                    <td>
+                        @if (item.RutaImagen != null)
+                        {
+                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                        }
+                    </td>
+                    <td>
+
+                        <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+                    </td>
+                    <td>
+                        <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                        </form>
                     </td>
 
-            </tr>
+                </tr>
             }
         </tbody>
     </table>
@@ -111,50 +105,33 @@
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>
-    <script src="js-global/FancyZoom.js" type="text/javascript"></script>
-    <script src="js-global/FancyZoomHTML.js" type="text/javascript"></script>
     <script src="~/js/modals.js"></script>
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("RegistrarCompra"))
+    <script>
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear"))
     {<text>
-            Swal.fire({
-            title: "Registrar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
+            alertify.alert('Guardar compra', '@TempData["Mensaje"]', function () { alertify.success('Compra guardada'); });
     </text>
 }
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarCompra"))
-    {<text>
-            Swal.fire({
-            title: "Editar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
-    </text>
-}
-
-    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarCompra"))
-    {<text>
-            Swal.fire({
-            title: "Eliminar compra",
-            icon: 'success',
-            html: "@TempData["Mensaje"]"
-            });
-    </text>
-}
-
     @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
     {<text>
-            Swal.fire({
-            title: "Error",
-            icon: 'error',
-            html: "@TempData["Mensaje"]"
-            });
+            alertify.alert('Error', '@TempData["Mensaje"]');
     </text>
 }
+    @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar"))
+    {<text>
+        alertify.alert('Eliminar compra', '@TempData["Mensaje"]', function () { alertify.error('Compra eliminada'); });
+    </text>
+}
+    @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Agregar")) { <text>
+                  alertify.alert('Agregar abono', '@TempData["Mensaje"]', function () { alertify.success('Abono Agregado'); });
+                 </text>
+        }    
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarAbono")) { <text>
+        alertify.alert('Eliminar abono', '@TempData["Mensaje"]', function () { alertify.error('Abono eliminado'); });
+                 </text>
+        }
 
+    </script>
     <script type="text/javascript">
         function DeleteConfirm() {
             if (confirm("¿Quieres eliminar la compra?"))

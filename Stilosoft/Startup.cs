@@ -1,3 +1,6 @@
+using DynamicAuthorization.Mvc.Core.Extensions;
+using DynamicAuthorization.Mvc.MsSqlServerStore;
+using DynamicAuthorization.Mvc.Ui;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +54,8 @@ namespace Stilosoft
             services.AddScoped<IAbonoCompraService, AbonoCompraService>();
             services.AddScoped<IDetalleCompraService, DetalleCompraService>();
             services.AddScoped<ICitaService, CitaService>();
+            services.AddScoped<IProveedorService, ProveedorService>();
+
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -105,7 +110,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Compras}/{action=Index}/{Id?}");
+                    pattern: "{controller=Landing}/{action=Index}/{id?}");
             });
         }
     }

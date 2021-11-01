@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Stilosoft.Business.Abstract;
+using Stilosoft.Business.Dtos.Clientes;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Usuarios;
 using System;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly IClienteService _clienteService;
@@ -66,7 +69,7 @@ namespace Stilosoft.Controllers
                     }
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "Ingresaste un valor inválido";
-                    return View(usuarioViewModel);
+                    return RedirectToAction("index");
                 }
                 catch (Exception)
                 {
@@ -131,6 +134,59 @@ namespace Stilosoft.Controllers
                 TempData["Mensaje"] = "Ingresaste un valor inválido";
                 return RedirectToAction("index");
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Editar(string id)
+        {
+            if (id != null)
+            {
+                Cliente cliente = await _clienteService.ObtenerClientePorId(id);
+                ClienteDto clienteDto = new()
+                {
+                    ClienteId = cliente.ClienteId,
+                    Nombre = cliente.Nombre,
+                    Apellido = cliente.Apellido,
+                    Cedula = cliente.Cedula,
+                    Celular = cliente.Celular,
+                    Estado = cliente.Estado
+                };
+                return View(clienteDto);
+            }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Editar(ClienteDto clienteDto)
+        {
+            if (ModelState.IsValid)
+            {
+                Cliente cliente = new()
+                {
+                    ClienteId = clienteDto.ClienteId,
+                    Nombre = clienteDto.Nombre,
+                    Apellido = clienteDto.Apellido,
+                    Cedula = clienteDto.Cedula,
+                    Celular = clienteDto.Celular,
+                    Estado = clienteDto.Estado
+                };
+                try
+                {
+                    await _clienteService.EditarCliente(cliente);
+                    TempData["Accion"] = "Editar";
+                    TempData["Mensaje"] = "Cliente editado correctamente";
+                    return RedirectToAction("index");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Ingresaste un valor inválido";
+                    return RedirectToAction("index");
+                }
+            }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
         }
     }
 }

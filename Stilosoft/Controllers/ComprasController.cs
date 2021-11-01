@@ -10,9 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Stilosoft.ViewModels.Compras;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
     public class ComprasController : Controller
     {
         private readonly IComprasService _comprasService;
@@ -45,7 +47,7 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearCompra()
         {
-            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedores(), "ProveedorId", "Nombre");
+            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedor(), "ProveedorId", "Nombre");
             return View(new ComprasViewModel());
         }
         [HttpPost]
@@ -72,7 +74,7 @@ namespace Stilosoft.Controllers
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "La compra ya se encuentra registrada";
-                    return View(comprasViewModel);
+                    return RedirectToAction("Index");
                 }
                 if (compra.Cuotas <= 0)
                 {
@@ -108,21 +110,23 @@ namespace Stilosoft.Controllers
                     }
 
                     await _comprasService.RegistrarCompra(compra);
-                    TempData["Accion"] = "RegistrarCompra";
-                    TempData["Mensaje"] = "Compra guardada con éxito";
+                    TempData["Accion"] = "Crear";
+                    TempData["Mensaje"] = "Compra guardada correctamente";
                     return RedirectToAction("Index");
-                   //return RedirectToAction(nameof(CrearDetalle), new { CompraId = compra.CompraId });
+                    //return RedirectToAction(nameof(CrearDetalle), new { CompraId = compra.CompraId });
                 }
                 catch (Exception)
                 {
                     TempData["Accion"] = "Error";
-                    TempData["Mensaje"] = "Error realizando la operación";
+                    TempData["Mensaje"] = "Ingresas un valor inválido";
                     return RedirectToAction("Index");
                 }
             }
             else
             {
-                return View(comprasViewModel);
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error realizando la operación";
+                return RedirectToAction("Index");
             }
         }
        
@@ -143,21 +147,21 @@ namespace Stilosoft.Controllers
                     }
 
                     await _comprasService.EliminarCompra(Id);
-                    TempData["Accion"] = "EliminarCompra";
+                    TempData["Accion"] = "Eliminar";
                     TempData["Mensaje"] = "Compra eliminada correctamente";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
                     TempData["Accion"] = "Error";
-                    TempData["Mensaje"] = "Ocurrió un error";
+                    TempData["Mensaje"] = "Error realizando la operación";
                     return RedirectToAction("Index");
                 }
             }
             else
             {
                 TempData["Accion"] = "Error";
-                TempData["Mensaje"] = "Ocurrió un error";
+                TempData["Mensaje"] = "Error realizando la operación";
                 return RedirectToAction("Index");
             }
 
@@ -168,6 +172,7 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CrearDetalle(int Id)
         {
             ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(), "ProductoId", "Nombre");
+            ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
             ViewBag.IdCompra = Id;
             return View(new CompraDetalleViewModel());
         }
@@ -196,6 +201,12 @@ namespace Stilosoft.Controllers
 
                 try
                 {
+                    if (compraDetalleViewModel.Cantidad <= 0 || compraDetalleViewModel.CantInsumo <= 0 || compraDetalleViewModel.CantProducto <=0 || compraDetalleViewModel.Costo <=0 || compraDetalleViewModel.Iva <=0)
+                    {
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "Debe ser mayor a 0 las cantidades, el IVA y el costo";
+                        return RedirectToAction("Index");
+                    }
                     /*var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.ProductoId);
 
                     if (ProductoExiste != null)
@@ -219,7 +230,7 @@ namespace Stilosoft.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> EditarDetalle(int Id)
         {
             DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
@@ -314,7 +325,7 @@ namespace Stilosoft.Controllers
                 return RedirectToAction("Index");
             }
 
-        }
+        }*/
 
     }
 }

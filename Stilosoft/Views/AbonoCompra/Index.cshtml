@@ -2,12 +2,11 @@
 
 @{
     ViewData["Title"] = "AbonoCompra";
+    Layout = null;
 }
-<br />
-<hr>
 <section class="content">
     <p>
-        <a asp-action="AgregarAbonoCompra" asp-route-Id="@ViewBag.IdCompra" class="btn btn-success"> Agregar abono</a>
+        <a onclick="mostrarModalS('@Url.Action("AgregarAbonoCompra","AbonoCompra",new {id = @ViewBag.IdCompra},Context.Request.Scheme)','Abono Compra')" class="btn btn-success"> Agregar abono</a>
     </p>
 
     <table class="table" id="tabla">
@@ -35,7 +34,7 @@
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {              
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Compra.DetalleCompras.Total)
@@ -54,10 +53,11 @@
                     </td>
                     <td>
                         <form asp-action="EliminarAbono" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar usuario?');"></i></button>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar Abono?');"></i></button>
                         </form>
                     </td>
                 </tr>
+
             }
         </tbody>
     </table>
@@ -73,3 +73,31 @@
 </text>
 }
 
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Agregar")) { <text>
+                  alertify.alert('Agregar abono', '@TempData["Mensaje"]', function () { alertify.success('Abono Agregado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarAbono")) { <text>
+        alertify.alert('Eliminar abono', '@TempData["Mensaje"]', function () { alertify.error('Abono eliminado'); });
+                 </text>
+        }
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres Eliminar el Abono?"))
+                return true;
+            else
+                return false;
+        }
+    </script>
+
+}

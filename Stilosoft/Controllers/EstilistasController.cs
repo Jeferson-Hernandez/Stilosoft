@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.Estilistas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
+    [Authorize]
+    [DisplayName("Manejo de estilistas")]
     public class EstilistasController : Controller
     {
         private readonly IEstilistaService _estilistaService;
@@ -17,6 +21,7 @@ namespace Stilosoft.Controllers
         {
             _estilistaService = estilistaService;
         }
+        [DisplayName("Listado de estilistas")]
         public async Task<IActionResult> Index()
         {            
             return View(await _estilistaService.ObtenerListaEstilistas());
@@ -46,13 +51,13 @@ namespace Stilosoft.Controllers
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La cédula ya se encuentra registrada";
-                        return View(estilistaViewModel);
+                        return RedirectToAction("index");
                     }
                     else if (estilista.FechaNacimiento.Year >= (DateTime.Now.Year - 15))
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La edad debe ser mayor de 15 años";
-                        return View(estilistaViewModel);
+                        return RedirectToAction("index");
                     }
                     await _estilistaService.GuardarEstilista(estilista);
                     TempData["Accion"] = "Crear";
@@ -68,7 +73,7 @@ namespace Stilosoft.Controllers
             }
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";
-            return View(estilistaViewModel);
+            return RedirectToAction("index");
         }
         [HttpGet]
         public async Task<IActionResult> Editar(int? id)
@@ -117,7 +122,7 @@ namespace Stilosoft.Controllers
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La edad debe ser mayor de 15 años";
-                        return View(estilistaViewModel);
+                        return RedirectToAction("index");
                     }
                     await _estilistaService.EditarEstilista(estilista);
                     TempData["Accion"] = "Editar";
@@ -133,7 +138,7 @@ namespace Stilosoft.Controllers
             }
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";
-            return View(estilistaViewModel);
+            return RedirectToAction("index");
         }
         [HttpPost]
         public async Task<IActionResult> Eliminar(int? id)
