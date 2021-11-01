@@ -240,7 +240,7 @@ a {
   text-decoration: underline;
 }
 a:hover {
-  color: #cca000;
+  color: #3ea3ef;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3030,9 +3030,9 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #ffc800;
-  border-color: #ffc800;
+    color: #fff;
+    background-color: #3876F1;
+    border-color: #3876F1;
 }
 .btn-primary:hover {
   color: #fff;
@@ -11410,7 +11410,7 @@ header.masthead {
     padding-bottom: 6rem;
     text-align: center;
     color: #fff;
-    background-image: url("../assets/img/header-bg.jpg");
+    background-image: url("../assets/img/header-bg.jpg") !important;
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;

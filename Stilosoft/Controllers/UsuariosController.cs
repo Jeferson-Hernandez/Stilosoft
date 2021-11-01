@@ -117,13 +117,15 @@ namespace Stilosoft.Controllers
                 if (resultado.Succeeded)
                 {
                     var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
-
-                    var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
-
                     var rol = await _userManager.GetRolesAsync(usuario);
 
+                    if (rol.Contains("Admin") || rol.Contains("Asistente"))
+                    {
+                        return RedirectToAction("index", "Usuarios");
+                    }
+                    var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
                     _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
-                    return RedirectToAction("index","Usuarios");
+                    return RedirectToAction("index", "Landing");
                 }
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Correo o contraseña incorrecto";
@@ -293,7 +295,8 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CerrarSesion()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login","Usuarios");
+            _httpContextAccessor.HttpContext.Session.Clear();
+            return RedirectToAction("Index","Landing");
         }
     }
 }
