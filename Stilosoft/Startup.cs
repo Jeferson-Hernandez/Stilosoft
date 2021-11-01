@@ -55,6 +55,7 @@ namespace Stilosoft
             services.AddScoped<IDetalleCompraService, DetalleCompraService>();
             services.AddScoped<ICitaService, CitaService>();
             services.AddScoped<IProveedorService, ProveedorService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
 
 
             services.Configure<IdentityOptions>(options =>
@@ -110,7 +111,7 @@ namespace Stilosoft
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Landing}/{action=Index}/{id?}");
+                    pattern: "{controller=usuarios}/{action=login}/{id?}");
             });
         }
     }

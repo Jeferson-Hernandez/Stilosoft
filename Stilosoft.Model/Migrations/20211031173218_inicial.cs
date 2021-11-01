@@ -261,6 +261,29 @@ namespace Stilosoft.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuario",
+                columns: table => new
+                {
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    Cedula = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Usuario_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Compra",
                 columns: table => new
                 {
@@ -684,6 +707,9 @@ namespace Stilosoft.Model.Migrations
 
             migrationBuilder.DropTable(
                 name: "DetalleServicioServicios");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
