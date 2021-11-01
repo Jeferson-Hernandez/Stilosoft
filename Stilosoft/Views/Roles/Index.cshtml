@@ -19,7 +19,7 @@
 
     <div class="container-fluid">
 
-        <h3 class="text-center">Aministrar Roles</h3>
+        <h3 class="text-center">Administrar Roles</h3>
         <hr />
 
         <div class="row">
@@ -31,7 +31,6 @@
                         <input type="text" id="rol" name="rol" class="form-control" placeholder="Nombre del rol" />
                         <br />
                         <input type="submit" value="Crear" class="btn btn-primary btn-block" />
-                        <a asp-action="Index" class="btn btn-danger btn-block">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -50,21 +49,23 @@
                         <thead class="bg-dark text-white">
                             <tr>
                                 <th>Rol</th>
+                                <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var r in Model)
+                            @foreach (var rol in Model)
                             {
-                                <tr>
-                                    <td>@r.Name</td>
-                                    <td>
-                                        <a name="rol" id="rol" class="btn btn-danger"
-                                           asp-route-rol="@r.Name"
-                                           asp-action="Eliminar"
-                                           onclick="return confirm('Desea eliminar este rol?')">Eliminar rol</a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>@rol.Name</td>
+                                <th><!--rol.Estado--></th>
+                                <td>
+                                    <a name="rol" id="rol" class="btn btn-danger"
+                                       asp-route-rol="@rol.Name"
+                                       asp-action="Eliminar"
+                                       onclick="return confirm('Desea eliminar este rol?')">Cambiar estado</a>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -75,5 +76,4 @@
 </div>
 
 @section Scripts{
-
 }

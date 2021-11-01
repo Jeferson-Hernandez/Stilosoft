@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Stilosoft.Model.Entities;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Model.DAL
 {
-    public class AppDbContext:IdentityDbContext
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):
             base(options)

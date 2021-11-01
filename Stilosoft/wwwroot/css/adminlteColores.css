@@ -1,25 +1,27 @@
 ﻿
 /*  NavBar  */
 .main-header {
-    background-color: #2f5cb6 !important;
+    background-color: #3876F1 !important;
 }
 .nav-item, a {
     color: aliceblue !important;
 }
 #cerrarSesion:hover{
     font-size: 17px;
-    color: burlywood;
+    color: aliceblue !important;
+    background-color: #d31d1d;
+    border-radius: 10px;
 }
 
 /*  Footer  */
 .main-footer {
-    background-color: #2f5cb6 !important;
+    background-color: #3876F1 !important;
     color: aliceblue !important;
 }
 
 /* SideBar  */
 #menu {
-    background-color: #2f5cb6 !important;
+    background-color: #3876F1 !important;
 }
 #menu-opciones {
     background-color: #333333 !important;
