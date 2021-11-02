@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Model.Entities
 {
-    class AplicationRole : IdentityRole
+    public class AplicationRole : IdentityRole
     {
-        public bool? Estado { get; set; }
+        public bool Estado { get; set; }
     }
 }

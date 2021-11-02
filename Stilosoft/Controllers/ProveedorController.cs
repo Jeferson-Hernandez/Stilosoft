@@ -40,8 +40,7 @@ namespace Stilosoft.Controllers
                     Nombre = proveedorViewModels.Nombre,
                     Direccion = proveedorViewModels.Direccion,
                     Telefono = proveedorViewModels.Telefono,
-                    Contacto = proveedorViewModels.Contacto,                    
-                    TelefonoContacto = proveedorViewModels.TelefonoContacto,                    
+                    Contacto = proveedorViewModels.Contacto,                  
                     Estado = true
                 };
                 try
@@ -86,7 +85,6 @@ namespace Stilosoft.Controllers
                 Direccion = proveedor.Direccion,
                 Telefono = proveedor.Telefono,
                 Contacto = proveedor.Contacto,
-                TelefonoContacto = proveedor.TelefonoContacto,
                 Estado = proveedor.Estado,
             };
             return View(proveedorViewModels);
@@ -104,7 +102,6 @@ namespace Stilosoft.Controllers
                     Direccion = proveedorViewModels.Direccion,
                     Telefono = proveedorViewModels.Telefono,
                     Contacto = proveedorViewModels.Contacto,
-                    TelefonoContacto = proveedorViewModels.TelefonoContacto,
                     Estado = proveedorViewModels.Estado
                 };
                 await _proveedorService.EditarProveedor(proveedor);

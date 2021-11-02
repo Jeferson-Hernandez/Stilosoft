@@ -46,13 +46,11 @@ namespace Stilosoft.Controllers
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
             return View(listaUsuarios);
         }
-        [Authorize]
         [HttpGet]
         public IActionResult Registrar()
         {
             return View();
         }
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioViewModel usuarioViewModel)
         {
@@ -77,8 +75,8 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Celular = usuarioViewModel.Celular,
-                            Cedula = usuarioViewModel.Cedula,
+                            Numero = usuarioViewModel.Celular,
+                            Documento = usuarioViewModel.Cedula,
                             Estado = true                            
                         };
                         await _clienteService.GuardarCliente(cliente);

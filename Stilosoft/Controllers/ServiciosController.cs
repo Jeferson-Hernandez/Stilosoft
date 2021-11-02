@@ -41,8 +41,6 @@ namespace Stilosoft.Controllers
                 {
                     Nombre = servicioViewModel.Nombre,
                     Duracion = servicioViewModel.Duracion,
-                    Costo = servicioViewModel.Costo,
-                    Categoria = servicioViewModel.Categoria,
                     Estado = true
                 };
                 
@@ -91,8 +89,6 @@ namespace Stilosoft.Controllers
                 ServicioId = servicio.ServicioId,
                 Nombre = servicio.Nombre,
                 Duracion = servicio.Duracion,
-                Costo = servicio.Costo,
-                Categoria = servicio.Categoria,
                 Estado = servicio.Estado
             };
 
@@ -109,8 +105,6 @@ namespace Stilosoft.Controllers
                     ServicioId = servicioViewModel.ServicioId,
                     Nombre = servicioViewModel.Nombre,
                     Duracion = servicioViewModel.Duracion,
-                    Costo = servicioViewModel.Costo,
-                    Categoria = servicioViewModel.Categoria,
                     Estado = servicioViewModel.Estado
                 };
 

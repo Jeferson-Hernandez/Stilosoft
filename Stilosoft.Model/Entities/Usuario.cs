@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,8 +11,8 @@ namespace Stilosoft.Model.Entities
 {
     public class Usuario
     {
-        [Key]
-        public int UsuarioId { get; set; }        
+        [Key, ForeignKey("IdentityUser")]
+        public string UsuarioId { get; set; }        
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
         public string Nombre { get; set; }
@@ -25,16 +26,13 @@ namespace Stilosoft.Model.Entities
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La Cédula es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
-        public string Cedula { get; set; }
+        public string Documento { get; set; }
         [Required(ErrorMessage = "El correo es obligatorio")]
         [Column(TypeName = "nvarchar(100)")]
         public string Correo { get; set; }
         [Required]
         public int RolId { get; set; }
-        [DisplayName("Contraseña")]
-        [Required(ErrorMessage = "La contraseña es obligatoria")]
-        public string Password { get; set; }
-
         public bool Estado { get; set; }
+        public virtual IdentityUser IdentityUser { get; set; }
     }
 }

@@ -61,7 +61,6 @@ namespace Stilosoft.Business.Business
                 {
                     ServicioId = s.ServicioId,
                     Nombre = s.Nombre,
-                    Costo = s.Costo,
                     Duracion = s.Duracion
                 };
                 listaServiciosDtos.Add(citaServiciosDto);
