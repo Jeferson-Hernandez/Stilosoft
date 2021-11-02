@@ -20,10 +20,10 @@ namespace Stilosoft.Business.Dtos.Usuarios
         [Required(ErrorMessage = "El número es obligatorio")]
         [Column(TypeName = "nvarchar(10)")]
         public string Numero { get; set; }    
-        [DisplayName("Cédula")]
-        [Required(ErrorMessage = "La Cédula es obligatoria")]
+        [DisplayName("Documento")]
+        [Required(ErrorMessage = "El documento es obligatorio")]
         [Column(TypeName = "nvarchar(15)")]
-        public string Cedula { get; set; }
+        public string Documento { get; set; }
         public string Rol { get; set; }
         public bool Estado { get; set; }
     }

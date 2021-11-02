@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
-   [Authorize]
+   //[Authorize]
     public class RolesController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;

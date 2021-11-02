@@ -655,6 +655,12 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rol")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RolId")
                         .HasColumnType("int");
 

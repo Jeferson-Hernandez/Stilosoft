@@ -10,7 +10,7 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211101234640_inicial")]
+    [Migration("20211102003655_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -629,6 +629,48 @@ namespace Stilosoft.Model.Migrations
                     b.ToTable("SolicitudServicio");
                 });
 
+            modelBuilder.Entity("Stilosoft.Model.Entities.Usuario", b =>
+                {
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Documento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rol")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UsuarioId");
+
+                    b.ToTable("Usuario");
+                });
+
             modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -829,6 +871,17 @@ namespace Stilosoft.Model.Migrations
                         .HasForeignKey("ClienteId1");
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("Stilosoft.Model.Entities.Usuario", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("Stilosoft.Model.Entities.Cita", b =>

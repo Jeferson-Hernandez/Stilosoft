@@ -77,8 +77,8 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Numero = usuarioViewModel.Celular,
-                            Documento = usuarioViewModel.Cedula,
+                            Numero = usuarioViewModel.Numero,
+                            Documento = usuarioViewModel.Documento,
                             Estado = true                            
                         };
                         await _clienteService.GuardarCliente(cliente);
@@ -119,10 +119,13 @@ namespace Stilosoft.Controllers
                     var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
                     var rol = await _userManager.GetRolesAsync(usuario);
 
-                   // var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
-
-                    //_httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
-                    return RedirectToAction("index","Usuarios");
+                    if (rol.Contains("Cliente"))
+                    {
+                        var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
+                        _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
+                        return RedirectToAction("index", "Landing");
+                    }
+                    return RedirectToAction("index", "Usuarios");
                 }
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Correo o contraseña incorrecto";
@@ -166,7 +169,7 @@ namespace Stilosoft.Controllers
                             UsuarioId = usuario.Id,
                             Nombre = crearUsuarioViewModel.Nombre,
                             Apellido = crearUsuarioViewModel.Apellido,
-                            Cedula = crearUsuarioViewModel.Cedula,
+                            Documento = crearUsuarioViewModel.Documento,
                             Numero = crearUsuarioViewModel.Numero,
                             Rol = crearUsuarioViewModel.Rol,
                             Estado = true
@@ -178,8 +181,8 @@ namespace Stilosoft.Controllers
                                 ClienteId = usuario.Id,
                                 Nombre = crearUsuarioViewModel.Nombre,
                                 Apellido = crearUsuarioViewModel.Apellido,
-                                Cedula = crearUsuarioViewModel.Cedula,
-                                Celular = crearUsuarioViewModel.Numero,
+                                Documento = crearUsuarioViewModel.Documento,
+                                Numero = crearUsuarioViewModel.Numero,
                                 Estado = true
                             };
                            
@@ -219,7 +222,7 @@ namespace Stilosoft.Controllers
                     UsuarioId = usuario.UsuarioId,
                     Nombre = usuario.Nombre,
                     Apellido = usuario.Apellido,
-                    Cedula = usuario.Cedula,
+                    Documento = usuario.Documento,
                     Numero = usuario.Numero,
                     Estado = usuario.Estado,
                     Rol  = usuario.Rol
@@ -241,7 +244,7 @@ namespace Stilosoft.Controllers
                     UsuarioId = usuarioDto.UsuarioId,
                     Nombre = usuarioDto.Nombre,
                     Apellido = usuarioDto.Apellido,
-                    Cedula = usuarioDto.Cedula,
+                    Documento = usuarioDto.Documento,
                     Numero = usuarioDto.Numero,
                     Estado = usuarioDto.Estado,                
                     Rol = usuarioDto.Rol
@@ -255,8 +258,8 @@ namespace Stilosoft.Controllers
                         ClienteId = usuario1.UsuarioId,
                         Nombre = usuarioDto.Nombre,
                         Apellido = usuarioDto.Apellido,
-                        Cedula = usuarioDto.Cedula,
-                        Celular = usuarioDto.Numero,
+                        Documento = usuarioDto.Documento,
+                        Numero = usuarioDto.Numero,
                         Estado = true
                     };
                     await _clienteService.GuardarCliente(cliente);
