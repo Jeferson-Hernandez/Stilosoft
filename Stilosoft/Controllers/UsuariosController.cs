@@ -79,8 +79,8 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Numero = usuarioViewModel.Numero,
-                            Documento = usuarioViewModel.Documento,
+                            Celular = usuarioViewModel.Numero,
+                            Cedula = usuarioViewModel.Cedula,
                             Estado = true                            
                         };
                         await _clienteService.GuardarCliente(cliente);
@@ -171,7 +171,7 @@ namespace Stilosoft.Controllers
                             UsuarioId = usuario.Id,
                             Nombre = crearUsuarioViewModel.Nombre,
                             Apellido = crearUsuarioViewModel.Apellido,
-                            Documento = crearUsuarioViewModel.Documento,
+                            Cedula = crearUsuarioViewModel.Cedula,
                             Numero = crearUsuarioViewModel.Numero,
                             Rol = crearUsuarioViewModel.Rol,
                             Estado = true
@@ -183,8 +183,8 @@ namespace Stilosoft.Controllers
                                 ClienteId = usuario.Id,
                                 Nombre = crearUsuarioViewModel.Nombre,
                                 Apellido = crearUsuarioViewModel.Apellido,
-                                Documento = crearUsuarioViewModel.Documento,
-                                Numero = crearUsuarioViewModel.Numero,
+                                Cedula = crearUsuarioViewModel.Cedula,
+                                Celular = crearUsuarioViewModel.Numero,
                                 Estado = true
                             };
                            
@@ -224,10 +224,10 @@ namespace Stilosoft.Controllers
                     UsuarioId = usuario.UsuarioId,
                     Nombre = usuario.Nombre,
                     Apellido = usuario.Apellido,
-                    Documento = usuario.Documento,
+                    Cedula = usuario.Cedula,
                     Numero = usuario.Numero,
                     Estado = usuario.Estado,
-                    Rol = usuario.Rol
+                    Rol  = usuario.Rol
                 };
                 return View(usuarioDto);
             }
@@ -246,7 +246,7 @@ namespace Stilosoft.Controllers
                     UsuarioId = usuarioDto.UsuarioId,
                     Nombre = usuarioDto.Nombre,
                     Apellido = usuarioDto.Apellido,
-                    Documento = usuarioDto.Documento,
+                    Cedula = usuarioDto.Cedula,
                     Numero = usuarioDto.Numero,
                     Estado = usuarioDto.Estado,                
                     Rol = usuarioDto.Rol
@@ -260,8 +260,8 @@ namespace Stilosoft.Controllers
                         ClienteId = usuario1.UsuarioId,
                         Nombre = usuarioDto.Nombre,
                         Apellido = usuarioDto.Apellido,
-                        Documento = usuarioDto.Documento,
-                        Numero = usuarioDto.Numero,
+                        Cedula = usuarioDto.Cedula,
+                        Celular = usuarioDto.Numero,
                         Estado = true
                     };
                     await _clienteService.GuardarCliente(cliente);

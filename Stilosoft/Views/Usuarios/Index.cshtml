@@ -30,7 +30,7 @@
                     @Html.DisplayNameFor(model => model.Numero)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Documento)
+                    @Html.DisplayNameFor(model => model.Cedula)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.IdentityUser.Email)
@@ -60,7 +60,7 @@
                     @Html.DisplayFor(modelItem => item.Numero)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Documento)
+                    @Html.DisplayFor(modelItem => item.Cedula)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IdentityUser.Email)
@@ -101,7 +101,7 @@
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]', function () {});
+        alertify.alert('Error', '@TempData["Mensaje"]'});
                  </text>
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>

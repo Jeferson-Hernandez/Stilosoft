@@ -261,6 +261,8 @@ namespace Stilosoft.Controllers
                 DetalleCompra detalleCompra = new()
                 {
                     DetalleCompraId = compraDetalleViewModel.DetalleCompraId,
+                    CompraId = compraDetalleViewModel.CompraId,
+                    InsumoId = compraDetalleViewModel.InsumoId,
                     ProductoId = compraDetalleViewModel.ProductoId,
                     Cantidad = compraDetalleViewModel.Cantidad,
                     CantInsumo = compraDetalleViewModel.CantInsumo,
@@ -295,7 +297,7 @@ namespace Stilosoft.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> EliminarDetalleCompra(int Id)
+        public async Task<IActionResult> EliminarDetalle(int Id)
         {
             if (ModelState.IsValid)
             {
@@ -305,20 +307,20 @@ namespace Stilosoft.Controllers
                     await _detalleCompraService.EliminarDetalleCompra(Id);
                     TempData["Accion"] = "Eliminar";
                     TempData["Mensaje"] = "Producto eliminado correctamente";
-                    return RedirectToAction("DetalleIndex");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "Ocurrió un error";
-                    return RedirectToAction("DetalleIndex");
+                    return RedirectToAction("Index");
                 }
             }
             else
             {
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Ocurrió un error";
-                return RedirectToAction("DetalleIndex");
+                return RedirectToAction("Index");
             }
 
         }*/

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stilosoft.Model.DAL;
 
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211101234640_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -627,53 +629,6 @@ namespace Stilosoft.Model.Migrations
                     b.ToTable("SolicitudServicio");
                 });
 
-            modelBuilder.Entity("Stilosoft.Model.Entities.Usuario", b =>
-                {
-                    b.Property<string>("UsuarioId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-<<<<<<< HEAD
-                    b.Property<string>("Cedula")
-=======
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Documento")
->>>>>>> master
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)");
-
-<<<<<<< HEAD
-                    b.Property<string>("Rol")
-                        .HasColumnType("nvarchar(max)");
-=======
-                    b.Property<int>("RolId")
-                        .HasColumnType("int");
->>>>>>> master
-
-                    b.HasKey("UsuarioId");
-
-                    b.ToTable("Usuario");
-                });
-
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -684,7 +639,6 @@ namespace Stilosoft.Model.Migrations
                     b.HasDiscriminator().HasValue("AplicationRole");
                 });
 
->>>>>>> master
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -875,17 +829,6 @@ namespace Stilosoft.Model.Migrations
                         .HasForeignKey("ClienteId1");
 
                     b.Navigation("Cliente");
-                });
-
-            modelBuilder.Entity("Stilosoft.Model.Entities.Usuario", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("Stilosoft.Model.Entities.Cita", b =>

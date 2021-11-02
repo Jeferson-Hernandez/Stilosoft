@@ -58,8 +58,8 @@ namespace Stilosoft.Controllers
                             ClienteId = usuario.Id,
                             Nombre = usuarioViewModel.Nombre,
                             Apellido = usuarioViewModel.Apellido,
-                            Numero = usuarioViewModel.Numero,
-                            Documento = usuarioViewModel.Documento,
+                            Numero = usuarioViewModel.Celular,
+                            Documento = usuarioViewModel.Cedula,
                             Estado = true
                         };
                         await _clienteService.GuardarCliente(cliente);

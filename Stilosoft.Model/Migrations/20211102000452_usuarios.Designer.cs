@@ -3,15 +3,22 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stilosoft.Model.DAL;
 
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
+    [Migration("20211031173218_inicial")]
+    partial class inicial
+=======
+    [Migration("20211102000452_usuarios")]
+    partial class usuarios
+>>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -636,7 +643,7 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-<<<<<<< HEAD
+<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
                     b.Property<string>("Cedula")
 =======
                     b.Property<string>("Correo")
@@ -644,7 +651,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Documento")
->>>>>>> master
+>>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
@@ -659,20 +666,20 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
-<<<<<<< HEAD
+<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
                     b.Property<string>("Rol")
                         .HasColumnType("nvarchar(max)");
 =======
                     b.Property<int>("RolId")
                         .HasColumnType("int");
->>>>>>> master
+>>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
 
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario");
                 });
 
-<<<<<<< HEAD
+<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
 =======
             modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
                 {
@@ -684,7 +691,7 @@ namespace Stilosoft.Model.Migrations
                     b.HasDiscriminator().HasValue("AplicationRole");
                 });
 
->>>>>>> master
+>>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
