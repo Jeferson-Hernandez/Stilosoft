@@ -10,13 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
-    [Migration("20211031173218_inicial")]
+    [Migration("20211102004141_inicial")]
     partial class inicial
-=======
-    [Migration("20211102000452_usuarios")]
-    partial class usuarios
->>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -643,15 +638,7 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
-                    b.Property<string>("Cedula")
-=======
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Documento")
->>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
@@ -666,21 +653,14 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
                     b.Property<string>("Rol")
                         .HasColumnType("nvarchar(max)");
-=======
-                    b.Property<int>("RolId")
-                        .HasColumnType("int");
->>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
 
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario");
                 });
 
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20211031173218_inicial.Designer.cs
-=======
             modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -691,7 +671,6 @@ namespace Stilosoft.Model.Migrations
                     b.HasDiscriminator().HasValue("AplicationRole");
                 });
 
->>>>>>> master:Stilosoft.Model/Migrations/20211102000452_usuarios.Designer.cs
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)

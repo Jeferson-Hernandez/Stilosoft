@@ -24,7 +24,6 @@ namespace Stilosoft.Model.DAL
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Cita> Cita { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<AbonoCompra> AbonoCompra { get; set; }
         public DbSet<Compra> Compra { get; set; }
         public DbSet<DetalleCita> DetalleCita { get; set; }

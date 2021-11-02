@@ -27,11 +27,7 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La Cédula es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
         public string Documento { get; set; }
-        [Required(ErrorMessage = "El correo es obligatorio")]
-        [Column(TypeName = "nvarchar(100)")]
-        public string Correo { get; set; }
-        [Required]
-        public int RolId { get; set; }
+        public string Rol { get; set; }
         public bool Estado { get; set; }
         public virtual IdentityUser IdentityUser { get; set; }
     }
