@@ -38,7 +38,7 @@ namespace Stilosoft.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -133,7 +133,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Ingresaste un valor inválido";
             return View(loginViewModel);
         }
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> CrearUsuario()
         {
@@ -178,7 +178,7 @@ namespace Stilosoft.Controllers
             TempData["Mensaje"] = "Correo o contraseña incorrecto";
             return RedirectToAction("index");
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> Eliminar(string id)
         {

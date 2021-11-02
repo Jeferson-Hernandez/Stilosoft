@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Controllers
 {
-   [Authorize]
+   //[Authorize]
     public class RolesController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -30,10 +30,28 @@ namespace Stilosoft.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Crear(string rol)
+
         {
-            await _roleManager.CreateAsync(new IdentityRole(rol));
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(rol));
+                    TempData["Accion"] = "CrearRol";
+                    TempData["Mensaje"] = "Rol creado exitosamente";
+                    return RedirectToAction("index");
+                }
+                catch (Exception)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Este rol ya existe";
+                    return RedirectToAction("index");
+                }
+                
+            }
             return RedirectToAction("index");
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Eliminar(string rol)

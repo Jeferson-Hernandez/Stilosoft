@@ -63,7 +63,7 @@
                                     <a name="rol" id="rol" class="btn btn-danger"
                                        asp-route-rol="@rol.Name"
                                        asp-action="Eliminar"
-                                       onclick="return confirm('Desea eliminar este rol?')">Cambiar estado</a>
+                                       onclick="return confirm('Desea eliminar este rol?')">Eliminar</a>
                                 </td>
                             </tr>
                             }
@@ -76,4 +76,27 @@
 </div>
 
 @section Scripts{
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Registrar")) { <text>
+        alertify.success('Registrado correctamente.');
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]');
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("CrearRol")) { <text>
+        alertify.success('Rol creado exitosamente');
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar cliente', '@TempData["Mensaje"]', function () { alertify.error('Cliente eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar cliente', '@TempData["Mensaje"]', function () { alertify.success('Cliente editado'); });
+                 </text>
+        }
+    </script>
+
 }
