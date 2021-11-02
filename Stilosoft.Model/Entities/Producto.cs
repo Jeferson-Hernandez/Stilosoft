@@ -21,15 +21,15 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La cantidad es obligatoria")]
         public int Cantidad { get; set; }
 
-        [DisplayName("Categoría")]
-        [Required(ErrorMessage = "La categoria es obligatoria")]
-        [Column(TypeName = "nvarchar(50)")]
-        public string Categoria { get; set; }
-
         [Required(ErrorMessage = "El precio es obligatorio")]
         public long Precio { get; set; }
         [DisplayName("Imagen")]
         public string RutaImagen { get; set; }
+
+        [DisplayName("Descripción")]
+        [Required(ErrorMessage = "La descripción es obligatoria")]
+        [Column(TypeName = "nvarchar(500)")]
+        public string Descripcion { get; set; }
         public virtual List<DetalleCompra> DetalleCompras { get; set; }
         public virtual List<DetalleServicioProductos> DetalleServicioProductos { get; set; }
     }

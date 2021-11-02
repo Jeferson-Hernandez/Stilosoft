@@ -12,6 +12,8 @@ namespace Stilosoft.Model.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -64,22 +66,6 @@ namespace Stilosoft.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Insumo",
-                columns: table => new
-                {
-                    InsumoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Medida = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Insumo", x => x.InsumoId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Producto",
                 columns: table => new
                 {
@@ -87,9 +73,9 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Precio = table.Column<long>(type: "bigint", nullable: false),
-                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,7 +93,6 @@ namespace Stilosoft.Model.Migrations
                     Direccion = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(10)", nullable: true),
                     Contacto = table.Column<string>(type: "nvarchar(25)", nullable: false),
-                    TelefonoContacto = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -123,8 +108,6 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Duracion = table.Column<int>(type: "int", nullable: false),
-                    Costo = table.Column<long>(type: "bigint", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -245,8 +228,8 @@ namespace Stilosoft.Model.Migrations
                     ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Apellido = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Celular = table.Column<string>(type: "nvarchar(10)", nullable: true),
-                    Cedula = table.Column<string>(type: "nvarchar(15)", nullable: true),
+                    Numero = table.Column<string>(type: "nvarchar(10)", nullable: true),
+                    Documento = table.Column<string>(type: "nvarchar(15)", nullable: true),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -255,29 +238,6 @@ namespace Stilosoft.Model.Migrations
                     table.ForeignKey(
                         name: "FK_Cliente_AspNetUsers_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuario",
-                columns: table => new
-                {
-                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Numero = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    Cedula = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
-                    table.ForeignKey(
-                        name: "FK_Usuario_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -307,35 +267,6 @@ namespace Stilosoft.Model.Migrations
                         column: x => x.ProveedorId,
                         principalTable: "Proveedor",
                         principalColumn: "ProveedorId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetalleServicioInsumo",
-                columns: table => new
-                {
-                    DetalleServInsumoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ServicioId = table.Column<int>(type: "int", nullable: false),
-                    InsumoId = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Medida = table.Column<string>(type: "nvarchar(20)", nullable: true),
-                    Precio = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetalleServicioInsumo", x => x.DetalleServInsumoId);
-                    table.ForeignKey(
-                        name: "FK_DetalleServicioInsumo_Insumo_InsumoId",
-                        column: x => x.InsumoId,
-                        principalTable: "Insumo",
-                        principalColumn: "InsumoId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetalleServicioInsumo_Servicio_ServicioId",
-                        column: x => x.ServicioId,
-                        principalTable: "Servicio",
-                        principalColumn: "ServicioId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -394,10 +325,6 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CantAbono = table.Column<int>(type: "int", nullable: false),
                     FechaPago = table.Column<DateTime>(type: "Date", nullable: false),
-                    Cuotas = table.Column<int>(type: "int", nullable: false),
-                    CuotasPagadas = table.Column<int>(type: "int", nullable: false),
-                    MontoAbonado = table.Column<long>(type: "bigint", nullable: false),
-                    PrecioTotal = table.Column<long>(type: "bigint", nullable: false),
                     CompraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -437,12 +364,6 @@ namespace Stilosoft.Model.Migrations
                         column: x => x.CompraId,
                         principalTable: "Compra",
                         principalColumn: "CompraId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetalleCompra_Insumo_InsumoId",
-                        column: x => x.InsumoId,
-                        principalTable: "Insumo",
-                        principalColumn: "InsumoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DetalleCompra_Producto_ProductoId",
@@ -522,7 +443,7 @@ namespace Stilosoft.Model.Migrations
                     SolicitudServicioId = table.Column<int>(type: "int", nullable: false),
                     ServicioId = table.Column<int>(type: "int", nullable: false),
                     EstilistaId = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<long>(type: "bigint", nullable: false)
+                    Precio = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -623,24 +544,9 @@ namespace Stilosoft.Model.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DetalleCompra_InsumoId",
-                table: "DetalleCompra",
-                column: "InsumoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_ProductoId",
                 table: "DetalleCompra",
                 column: "ProductoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleServicioInsumo_InsumoId",
-                table: "DetalleServicioInsumo",
-                column: "InsumoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleServicioInsumo_ServicioId",
-                table: "DetalleServicioInsumo",
-                column: "ServicioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleServicioProductos_ProductoId",
@@ -700,16 +606,10 @@ namespace Stilosoft.Model.Migrations
                 name: "DetalleCompra");
 
             migrationBuilder.DropTable(
-                name: "DetalleServicioInsumo");
-
-            migrationBuilder.DropTable(
                 name: "DetalleServicioProductos");
 
             migrationBuilder.DropTable(
                 name: "DetalleServicioServicios");
-
-            migrationBuilder.DropTable(
-                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -719,9 +619,6 @@ namespace Stilosoft.Model.Migrations
 
             migrationBuilder.DropTable(
                 name: "Compra");
-
-            migrationBuilder.DropTable(
-                name: "Insumo");
 
             migrationBuilder.DropTable(
                 name: "Producto");

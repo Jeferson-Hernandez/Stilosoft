@@ -20,16 +20,14 @@ namespace Stilosoft.Controllers
         private readonly IComprasService _comprasService;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IProveedorService _proveedorService;
-        private readonly IInsumoService _insumoService;
         private readonly IProductoService _productoService;
         private readonly IDetalleCompraService _detalleCompraService;
 
-        public ComprasController(IComprasService comprasService, IWebHostEnvironment hostEnvironment, IProveedorService proveedorService, IProductoService productoService, IInsumoService insumoService, IDetalleCompraService detalleCompraService)
+        public ComprasController(IComprasService comprasService, IWebHostEnvironment hostEnvironment, IProveedorService proveedorService, IProductoService productoService, IDetalleCompraService detalleCompraService)
         {
             _comprasService = comprasService;
             _hostEnvironment = hostEnvironment;
             _proveedorService = proveedorService;
-            _insumoService = insumoService;
             _productoService = productoService;
             _detalleCompraService = detalleCompraService;
         }
@@ -172,7 +170,7 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CrearDetalle(int Id)
         {
             ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(), "ProductoId", "Nombre");
-            ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
+            //ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
             ViewBag.IdCompra = Id;
             return View(new CompraDetalleViewModel());
         }

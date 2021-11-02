@@ -14,7 +14,7 @@ namespace Stilosoft.Model.Entities
         public int SolicitudServicioId { get; set; }
         public int ServicioId { get; set; }
         public int EstilistaId { get; set; }
-        public long Total { get; set; }
+        public long Precio { get; set; }
         public virtual SolicitudServicio SolicitudServicio { get; set; }
         public virtual Servicio Servicio { get; set; }
         public virtual Estilista Estilista { get; set; }
