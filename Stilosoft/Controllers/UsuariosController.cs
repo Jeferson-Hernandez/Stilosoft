@@ -64,7 +64,6 @@ namespace Stilosoft.Controllers
                 {
                     UserName = usuarioViewModel.Email,
                     Email = usuarioViewModel.Email
-                    
                 };
 
                 try
@@ -125,8 +124,12 @@ namespace Stilosoft.Controllers
                     {
                         return RedirectToAction("index", "Usuarios");
                     }
-                    var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
-                    _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
+                    else if (rol.Contains("Cliente"))
+                    {
+                        var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
+                        _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
+                        return RedirectToAction("index", "Landing");
+                    }
                     return RedirectToAction("index", "Landing");
                 }
                 TempData["Accion"] = "Error";
@@ -142,7 +145,7 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CrearUsuario()
         {
             //var listaRoles = await _roleManager.Roles.ToListAsync();
-            var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Administrador").ToListAsync();
+            var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
             ViewBag.Roles = new SelectList(listaRoles, "Name", "Name");
 
             return View();
