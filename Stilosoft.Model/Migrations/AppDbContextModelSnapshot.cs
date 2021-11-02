@@ -636,15 +636,7 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-<<<<<<< HEAD
-                    b.Property<string>("Cedula")
-=======
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Documento")
->>>>>>> master
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
@@ -659,21 +651,14 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
-<<<<<<< HEAD
                     b.Property<string>("Rol")
                         .HasColumnType("nvarchar(max)");
-=======
-                    b.Property<int>("RolId")
-                        .HasColumnType("int");
->>>>>>> master
 
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -684,7 +669,6 @@ namespace Stilosoft.Model.Migrations
                     b.HasDiscriminator().HasValue("AplicationRole");
                 });
 
->>>>>>> master
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)

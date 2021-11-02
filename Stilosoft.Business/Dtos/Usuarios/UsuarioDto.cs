@@ -23,7 +23,7 @@ namespace Stilosoft.Business.Dtos.Usuarios
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La Cédula es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
-        public string Cedula { get; set; }
+        public string Documento { get; set; }
         public string Rol { get; set; }
         public bool Estado { get; set; }
     }

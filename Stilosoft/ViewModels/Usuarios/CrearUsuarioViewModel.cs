@@ -21,7 +21,7 @@ namespace Stilosoft.ViewModels.Usuarios
         [DisplayName("Cédula")]
         [Required(ErrorMessage = "La Cédula es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
-        public string Cedula { get; set; }
+        public string Documento { get; set; }
         [Required(ErrorMessage = "El email es obligatorio")]
         [EmailAddress(ErrorMessage = "Email invalido")]
         public string Email { get; set; }
