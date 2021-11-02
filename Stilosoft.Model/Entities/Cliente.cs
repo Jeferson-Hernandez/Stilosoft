@@ -20,10 +20,10 @@ namespace Stilosoft.Model.Entities
         [Column(TypeName = "nvarchar(50)")]
         public string Apellido { get; set; }
         [Column(TypeName = "nvarchar(10)")]
-        public string Celular { get; set; }
+        public string Numero { get; set; }
         [DisplayName("Cédula")]
         [Column(TypeName = "nvarchar(15)")]
-        public string Cedula { get; set; }
+        public string Documento { get; set; }
         public bool Estado { get; set; }  
         public virtual IdentityUser IdentityUser { get; set; }
     }

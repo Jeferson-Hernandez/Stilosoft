@@ -72,7 +72,6 @@ namespace Stilosoft.Business.Business
                   CitaDetalleAsignarEstilistaDto citaDetalleEstilista = new()
                   {
                       CitaId = s.CitaId,
-                      CostoServicio = s.Servicio.Costo,
                       DetalleCitaId = s.DetalleCitaId,
                       NombreServicio = s.Servicio.Nombre,
                       ServicioId = s.ServicioId

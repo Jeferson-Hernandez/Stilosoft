@@ -52,13 +52,13 @@ namespace Stilosoft.Controllers
                 {                 
                     CantAbono = abonoCompraViewModels.CantAbono,
                     FechaPago = abonoCompraViewModels.FechaPago,
-                    PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
+                    //PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
                     CompraId = Id,
-                    Cuotas = _abonoCompraService.ObtenerCuotasPorId(Id),
-                    CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
-                    MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
+                    //Cuotas = _abonoCompraService.ObtenerCuotasPorId(Id),
+                    //CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
+                    //MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
                 };
-                if (abonoCompra.PrecioTotal == 0)
+                /*if (abonoCompra.PrecioTotal == 0)
                 {
                     abonoCompra.PrecioTotal = detalleCompra.Total - abonoCompra.CantAbono;
                 }
@@ -70,7 +70,7 @@ namespace Stilosoft.Controllers
                 if (abonoCompra != null)
                 {
                     abonoCompra.Cuotas -= 1;
-                }
+                }*/
                 if (abonoCompra.CantAbono < 0)
                 {
                     TempData["Accion"] = "Error";

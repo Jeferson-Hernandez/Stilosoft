@@ -31,6 +31,5 @@ namespace Stilosoft.Model.Entities
         public long Total { get; set; }
         public virtual Compra Compra { get; set; }
         public virtual Producto Producto { get; set; }
-        public virtual Insumo Insumo { get; set; }
     }
 }

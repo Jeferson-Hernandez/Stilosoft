@@ -28,6 +28,10 @@ namespace Stilosoft.Model.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -44,6 +48,8 @@ namespace Stilosoft.Model.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -228,20 +234,8 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Cuotas")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CuotasPagadas")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
-
-                    b.Property<long>("MontoAbonado")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PrecioTotal")
-                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
@@ -289,17 +283,17 @@ namespace Stilosoft.Model.Migrations
                     b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Cedula")
+                    b.Property<string>("Documento")
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("Celular")
-                        .HasColumnType("nvarchar(10)");
 
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Numero")
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("ClienteId");
 
@@ -423,42 +417,9 @@ namespace Stilosoft.Model.Migrations
                     b.HasIndex("CompraId")
                         .IsUnique();
 
-                    b.HasIndex("InsumoId");
-
                     b.HasIndex("ProductoId");
 
                     b.ToTable("DetalleCompra");
-                });
-
-            modelBuilder.Entity("Stilosoft.Model.Entities.DetalleServicioInsumo", b =>
-                {
-                    b.Property<int>("DetalleServInsumoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InsumoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Medida")
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<long>("Precio")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ServicioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DetalleServInsumoId");
-
-                    b.HasIndex("InsumoId");
-
-                    b.HasIndex("ServicioId");
-
-                    b.ToTable("DetalleServicioInsumo");
                 });
 
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleServicioProductos", b =>
@@ -499,14 +460,14 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("EstilistaId")
                         .HasColumnType("int");
 
+                    b.Property<long>("Precio")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("ServicioId")
                         .HasColumnType("int");
 
                     b.Property<int>("SolicitudServicioId")
                         .HasColumnType("int");
-
-                    b.Property<long>("Total")
-                        .HasColumnType("bigint");
 
                     b.HasKey("ServicioServiciosId");
 
@@ -549,32 +510,6 @@ namespace Stilosoft.Model.Migrations
                     b.ToTable("Estilista");
                 });
 
-            modelBuilder.Entity("Stilosoft.Model.Entities.Insumo", b =>
-                {
-                    b.Property<int>("InsumoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Medida")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("InsumoId");
-
-                    b.ToTable("Insumo");
-                });
-
             modelBuilder.Entity("Stilosoft.Model.Entities.Producto", b =>
                 {
                     b.Property<int>("ProductoId")
@@ -585,9 +520,9 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<string>("Categoria")
+                    b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -633,10 +568,6 @@ namespace Stilosoft.Model.Migrations
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("TelefonoContacto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("ProveedorId");
 
                     b.ToTable("Proveedor");
@@ -648,13 +579,6 @@ namespace Stilosoft.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("Costo")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("Duracion")
                         .HasColumnType("int");
@@ -712,7 +636,15 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
+<<<<<<< HEAD
                     b.Property<string>("Cedula")
+=======
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Documento")
+>>>>>>> master
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
@@ -727,14 +659,32 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
+<<<<<<< HEAD
                     b.Property<string>("Rol")
                         .HasColumnType("nvarchar(max)");
+=======
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+>>>>>>> master
 
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario");
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("Stilosoft.Model.Entities.AplicationRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("AplicationRole");
+                });
+
+>>>>>>> master
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -861,12 +811,6 @@ namespace Stilosoft.Model.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Stilosoft.Model.Entities.Insumo", "Insumo")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("InsumoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Stilosoft.Model.Entities.Producto", "Producto")
                         .WithMany("DetalleCompras")
                         .HasForeignKey("ProductoId")
@@ -875,28 +819,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.Navigation("Compra");
 
-                    b.Navigation("Insumo");
-
                     b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("Stilosoft.Model.Entities.DetalleServicioInsumo", b =>
-                {
-                    b.HasOne("Stilosoft.Model.Entities.Insumo", "Insumo")
-                        .WithMany("DetalleServicioInsumos")
-                        .HasForeignKey("InsumoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Stilosoft.Model.Entities.Servicio", "Servicio")
-                        .WithMany("DetalleServicioInsumos")
-                        .HasForeignKey("ServicioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Insumo");
-
-                    b.Navigation("Servicio");
                 });
 
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleServicioProductos", b =>
@@ -982,13 +905,6 @@ namespace Stilosoft.Model.Migrations
                     b.Navigation("DetalleServicioServicios");
                 });
 
-            modelBuilder.Entity("Stilosoft.Model.Entities.Insumo", b =>
-                {
-                    b.Navigation("DetalleCompras");
-
-                    b.Navigation("DetalleServicioInsumos");
-                });
-
             modelBuilder.Entity("Stilosoft.Model.Entities.Producto", b =>
                 {
                     b.Navigation("DetalleCompras");
@@ -999,8 +915,6 @@ namespace Stilosoft.Model.Migrations
             modelBuilder.Entity("Stilosoft.Model.Entities.Servicio", b =>
                 {
                     b.Navigation("DetalleCitas");
-
-                    b.Navigation("DetalleServicioInsumos");
 
                     b.Navigation("DetalleServicioServicios");
                 });
