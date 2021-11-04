@@ -108,5 +108,9 @@
         alertify.alert('Eliminar Usuario', '@TempData["Mensaje"]', function () { alertify.error('Usuario eliminado'); });
                  </text>
         }
+          @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+    alertify.alert('Editar', '@TempData["Mensaje"]', function () {});
+                 </text>
+        }
     </script>
 }
