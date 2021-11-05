@@ -269,6 +269,7 @@ namespace Stilosoft.Controllers
                     };
                     await _clienteService.GuardarCliente(cliente);
                     }
+
                    try
                     {
                     await _usuarioService.EditarUsuario(usuario1);

@@ -1,23 +1,22 @@
 ﻿@model IEnumerable<Stilosoft.Model.Entities.Producto>
 
 @{
-    ViewData["Title"] = "Producto";
+    ViewData["Title"] = "Insumo";
 }
 <br />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a asp-action="index" asp-controller="Producto" class="btn btn-secondary btn-lg mr-md-4">Productos</a>
-            <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
-            <a asp-action="index" asp-controller="Servicios" class="btn btn-primary btn-lg mr-md-4">Servicios</a>
-            <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
+            <a asp-action="index" asp-controller="Proveedores" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
 </div>
 <hr>
 <section class="content">
     <p>
-        <a onclick="mostrarModalS('@Url.Action("CrearPro","Producto", "null", Context.Request.Scheme)', 'Crear Prodcuto')" class="btn btn-success"> Registrar producto</a>
+        <a onclick="mostrarModalS('@Url.Action("CrearPro","Producto", "null", Context.Request.Scheme)', 'Crear Prodcuto')" class="btn btn-success"> Registrar insumo</a>
     </p>
     <table class="table" id="tabla">
         <thead>
@@ -30,6 +29,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.RutaImagen)
@@ -51,6 +53,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
                     </td>
                     <td>
                         @if (item.RutaImagen != null)

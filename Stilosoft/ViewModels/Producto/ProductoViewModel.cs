@@ -13,7 +13,7 @@ namespace Stilosoft.ViewModels
     {
         public int ProductoId { get; set; }
 
-        [DisplayName("Producto")]
+        [DisplayName("Insumo")]
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
         public string Nombre { get; set; }
@@ -21,13 +21,12 @@ namespace Stilosoft.ViewModels
         [Required(ErrorMessage = "La cantidad es obligatoria")]
         public int Cantidad { get; set; }
 
-        [DisplayName("Categoría")]
-        [Required(ErrorMessage = "La categoria es obligatoria")]
-        [Column(TypeName = "nvarchar(50)")]
-        public string Categoria { get; set; }
-
         [Required(ErrorMessage = "El precio es obligatorio")]
         public long Precio { get; set; }
+
+        [DisplayName("Descripción")]
+        [Required(ErrorMessage = "La descripción es obligatoria")]
+        public string Descripcion { get; set; }
 
         public IFormFile Imagen { get; set; }
         [DisplayName("Imagen")]
