@@ -252,16 +252,8 @@ namespace Stilosoft.Model.Migrations
                     Apellido = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Numero = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     Documento = table.Column<string>(type: "nvarchar(15)", nullable: false),
-<<<<<<< HEAD:Stilosoft.Model/Migrations/20211102011841_inicial.cs
-                    Correo = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    RolId = table.Column<int>(type: "int", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: true)
-=======
                     Rol = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
->>>>>>> master:Stilosoft.Model/Migrations/20211102034119_inicial.cs
                 },
                 constraints: table =>
                 {
@@ -377,12 +369,8 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompraId = table.Column<int>(type: "int", nullable: false),
                     ProductoId = table.Column<int>(type: "int", nullable: false),
-                    InsumoId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    CantInsumo = table.Column<int>(type: "int", nullable: false),
-                    CantProducto = table.Column<int>(type: "int", nullable: false),
                     Costo = table.Column<long>(type: "bigint", nullable: false),
-                    Medida = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     SubTotal = table.Column<long>(type: "bigint", nullable: false),
                     Iva = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<long>(type: "bigint", nullable: false)
