@@ -35,6 +35,6 @@ namespace Stilosoft.ViewModels.Proveedor
         [Required(ErrorMessage = "El contacto es obligatorio")]
         [Column(TypeName = "nvarchar(25)")]
         public string Contacto { get; set; }
-        public bool Estado { get; internal set; }
+        public bool Estado { get; set; }
     }
 }
