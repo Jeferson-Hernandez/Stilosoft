@@ -16,15 +16,8 @@ namespace Stilosoft.Model.Entities
         public int CompraId { get; set; }
         [DisplayName("Producto")]
         public int ProductoId { get; set; }
-        public int InsumoId { get; set; }
         public int Cantidad { get; set; }
-        [DisplayName("Insumos")]
-        public int CantInsumo { get; set; }
-        [DisplayName("Productos")]
-        public int CantProducto { get; set; }
         public long Costo { get; set; }
-        [Column(TypeName = "nvarchar(20)")]
-        public string Medida { get; set; }
         [DisplayName("Subtotal")]
         public long SubTotal { get; set; }
         public int Iva { get; set; }

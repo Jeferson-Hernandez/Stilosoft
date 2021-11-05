@@ -48,11 +48,13 @@ namespace Stilosoft.Controllers
             //var listaUsuarios = await _userManager.Users.Include(c=>c.Cliente).ToListAsync();            
             return View(listaUsuarios);
         }
+   
         [HttpGet]
         public IActionResult Registrar()
         {
             return View();
         }
+     
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioViewModel usuarioViewModel)
         {
@@ -62,7 +64,6 @@ namespace Stilosoft.Controllers
                 {
                     UserName = usuarioViewModel.Email,
                     Email = usuarioViewModel.Email
-                    
                 };
 
                 try
@@ -121,11 +122,15 @@ namespace Stilosoft.Controllers
 
                     if (rol.Contains("Cliente"))
                     {
+                        return RedirectToAction("index", "Usuarios");
+                    }
+                    else if (rol.Contains("Cliente"))
+                    {
                         var cliente = await _clienteService.ObtenerClientePorId(usuario.Id);
                         _httpContextAccessor.HttpContext.Session.SetString(SesionNombre, cliente.Nombre);
                         return RedirectToAction("index", "Landing");
                     }
-                    return RedirectToAction("index", "Usuarios");
+                    return RedirectToAction("index", "Landing");
                 }
                 TempData["Accion"] = "Error";
                 TempData["Mensaje"] = "Correo o contraseña incorrecto";
@@ -140,7 +145,7 @@ namespace Stilosoft.Controllers
         public async Task<IActionResult> CrearUsuario()
         {
             //var listaRoles = await _roleManager.Roles.ToListAsync();
-            var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Administrador").ToListAsync();
+            var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
             ViewBag.Roles = new SelectList(listaRoles, "Name", "Name");
 
             return View();
@@ -225,7 +230,7 @@ namespace Stilosoft.Controllers
                     Documento = usuario.Documento,
                     Numero = usuario.Numero,
                     Estado = usuario.Estado,
-                    Rol  = usuario.Rol
+                    Rol = usuario.Rol
                 };
                 return View(usuarioDto);
             }
@@ -264,6 +269,7 @@ namespace Stilosoft.Controllers
                     };
                     await _clienteService.GuardarCliente(cliente);
                     }
+
                    try
                     {
                     await _usuarioService.EditarUsuario(usuario1);

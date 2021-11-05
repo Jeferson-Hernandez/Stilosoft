@@ -184,12 +184,8 @@ namespace Stilosoft.Controllers
                 {
                     CompraId = Id,
                     ProductoId = compraDetalleViewModel.ProductoId,
-                    InsumoId = compraDetalleViewModel.InsumoId,
                     Cantidad = compraDetalleViewModel.Cantidad,
-                    CantInsumo = compraDetalleViewModel.CantInsumo,
-                    CantProducto = compraDetalleViewModel.CantProducto,
                     Costo = compraDetalleViewModel.Costo,
-                    Medida = compraDetalleViewModel.Medida,
                     SubTotal = 0,
                     Iva = compraDetalleViewModel.Iva,
                     Total = 0

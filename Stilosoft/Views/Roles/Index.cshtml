@@ -42,10 +42,9 @@
                 {
                     <br />
                     <h3 class="text-center">No se encontraron roles</h3>
-                }
-                else
+                }else
                 {
-                    <table class="table">
+                    <table class="table" id="tabla">
                         <thead class="bg-dark text-white">
                             <tr>
                                 <th>Rol</th>
@@ -56,16 +55,24 @@
                         <tbody>
                             @foreach (var rol in Model)
                             {
-                            <tr>
-                                <td>@rol.Name</td>
-                                <th><!--rol.Estado--></th>
-                                <td>
-                                    <a name="rol" id="rol" class="btn btn-danger"
-                                       asp-route-rol="@rol.Name"
-                                       asp-action="Eliminar"
-                                       onclick="return confirm('Desea eliminar este rol?')">Cambiar estado</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@rol.Name</td>
+                                    <td></td>
+                                    <td>
+                                        @if (rol.Name.Contains("Admin") || rol.Name.Contains("Cliente"))
+                                        {
+                                            <h5>No se puede alterar el rol</h5>
+                                        }
+                                        else
+                                        {
+                                            <a name="rol" id="rol" class="btn btn-info" onclick="mostrarModalS('@Url.Action("Editar","Roles", new {id = rol.Id}, Context.Request.Scheme)', 'Editar rol')">Editar</a>
+                                            <a name="rol" id="rol" class="btn btn-danger"
+                                               asp-route-rol="@rol.Name"
+                                               asp-action="Eliminar"
+                                               onclick="return confirm('Desea eliminar este rol?')">Eliminar</a>
+                                        }
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -76,4 +83,30 @@
 </div>
 
 @section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+        alertify.alert('Guardar Rol', '@TempData["Mensaje"]', function () { alertify.success('Rol guardado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar Rol', '@TempData["Mensaje"]', function () { alertify.success('Rol editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Eliminar")) { <text>
+        alertify.alert('Eliminar Rol', '@TempData["Mensaje"]', function () { alertify.error('Rol eliminado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
+
 }
