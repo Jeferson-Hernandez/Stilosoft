@@ -46,7 +46,10 @@
                     Factura
                 </th>
                 <th>
-                    Ver detalle compra
+                    Agregar<br />producto
+                </th>
+                <th>
+                    Detalle
                 </th>
                 <th>
                     Acciones
@@ -61,7 +64,7 @@
                         @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
+                        @Html.DisplayFor(modelItem => item.FechaFactura.Date)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NoFactura)
@@ -69,23 +72,42 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.FormaPago)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaInicioPago)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaRegistro)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cuotas)
-                    </td>
+                    @if (item.FormaPago == "Contado")
+                    {
+                        <td>
+                            N/A
+                        </td>
+                        <td>
+                            N/A
+                        </td>
+                        <td>
+                            N/A
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaInicioPago.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaRegistro.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cuotas)
+                        </td>
+                    }
+                    
                     <td>
                         @if (item.RutaImagen != null)
                         {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                            //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img w-25 h-25" />
+                            <a href="#" class="btn btn-secondary"><i class="fas fa-image"></i></a>
                         }
                     </td>
                     <td>
-
+                        <a href="#" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                    </td>
+                    <td>
                         <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
                     </td>
                     <td>

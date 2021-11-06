@@ -74,7 +74,7 @@ namespace Stilosoft.Controllers
                     TempData["Mensaje"] = "La compra ya se encuentra registrada";
                     return RedirectToAction("Index");
                 }
-                if (compra.Cuotas <= 0)
+                if (compra.FormaPago == "Crédito" && compra.Cuotas <= 0)
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "Las cuotas deben ser mayor a 0";
