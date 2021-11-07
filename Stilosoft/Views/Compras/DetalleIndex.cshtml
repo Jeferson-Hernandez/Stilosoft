@@ -5,9 +5,6 @@
 }
 <form asp-route-id="@ViewBag.IdCompra">
     <section class="content">
-        <p>            
-            <a onclick="mostrarModalS('@Url.Action("CrearDetalle","Compras", new {id = ViewBag.IdCompra}, Context.Request.Scheme)', 'Crear detalle compra')" class="btn btn-success"> Agregar insumos</a>
-        </p>
 
         <table class="table" id="tabla">
             <thead>
@@ -36,8 +33,10 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    var subtotal = item.Cantidad * item.Costo;
-                    var total = subtotal * item.Iva;
+                    long subtotal = item.Cantidad * item.Costo;
+                    long iva = item.Iva /100;
+                    long subtotal2 = subtotal * iva;
+                    long total = subtotal + subtotal2;
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Producto.Nombre)
@@ -52,7 +51,7 @@
                             @Html.DisplayFor(modelItem => subtotal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Iva)
+                            @Html.DisplayFor(modelItem => iva)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => total)
