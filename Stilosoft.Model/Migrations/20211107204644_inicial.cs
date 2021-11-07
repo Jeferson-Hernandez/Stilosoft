@@ -559,8 +559,7 @@ namespace Stilosoft.Model.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_CompraId",
                 table: "DetalleCompra",
-                column: "CompraId",
-                unique: true);
+                column: "CompraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_ProductoId",

@@ -12,11 +12,8 @@
                 <div asp-validation-summary="ModelOnly"></div>
                 <input type="hidden" asp-for="ProveedorId" />
                 <input type="hidden" asp-for="Estado" />
-                <div class="form-group">
-                    <label asp-for="Nit" class="control-label"></label>
-                    <input asp-for="Nit" class="form-control" />
-                    <span asp-validation-for="Nit" class="text-danger"></span>
-                </div>
+                <input type="hidden" asp-for="Nit" />
+                
                 <div class="form-group">
                     <label asp-for="Nombre" class="control-label"></label>
                     <input asp-for="Nombre" class="form-control" />

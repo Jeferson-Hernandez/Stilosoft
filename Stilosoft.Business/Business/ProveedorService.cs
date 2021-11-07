@@ -47,9 +47,9 @@ namespace Stilosoft.Business.Business
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Proveedor> NitProveedorExiste(string nit)
+        public async Task<Proveedor> NitProveedorExiste(string Nit)
         {
-            return await _context.Proveedor.FirstOrDefaultAsync(n => n.Nit == nit);
+            return await _context.Proveedor.FirstOrDefaultAsync(n => n.Nit == Nit);
         }
     }
 }

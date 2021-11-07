@@ -50,12 +50,12 @@ namespace Stilosoft.Controllers
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "El NIT ya se encuentra registrado";
-                        return View(proveedorViewModels);
+                        return RedirectToAction("Index");
                     }
                     await _proveedorService.GuardarProveedor(proveedor);
                     TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Proveedor registrado";
-                    return RedirectToAction("index");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {

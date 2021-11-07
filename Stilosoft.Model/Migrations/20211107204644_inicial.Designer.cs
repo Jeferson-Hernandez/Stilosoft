@@ -10,7 +10,7 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211105220051_inicial")]
+    [Migration("20211107204644_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -404,8 +404,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("DetalleCompraId");
 
-                    b.HasIndex("CompraId")
-                        .IsUnique();
+                    b.HasIndex("CompraId");
 
                     b.HasIndex("ProductoId");
 
@@ -780,8 +779,8 @@ namespace Stilosoft.Model.Migrations
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleCompra", b =>
                 {
                     b.HasOne("Stilosoft.Model.Entities.Compra", "Compra")
-                        .WithOne("DetalleCompras")
-                        .HasForeignKey("Stilosoft.Model.Entities.DetalleCompra", "CompraId")
+                        .WithMany("DetalleCompras")
+                        .HasForeignKey("CompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -96,10 +96,11 @@
         alertify.alert('Guardar proveedor', '@TempData["Mensaje"]', function () { alertify.success('proveedor guardado'); });
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]'});
-                 </text>
-        }
+        @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
+    {<text>
+            alertify.alert('Error', '@TempData["Mensaje"]');
+    </text>
+}
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
         alertify.alert('Editar proveedor', '@TempData["Mensaje"]', function () { alertify.success('Proveedor editado'); });
                  </text>
