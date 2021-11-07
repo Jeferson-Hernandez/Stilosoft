@@ -44,6 +44,6 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La factura es obligatoria")]
         public string RutaImagen { get; set; }
         public virtual Proveedor Proveedor { get; set; }
-        public virtual DetalleCompra DetalleCompras { get; set; }
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
     }
 }

@@ -317,5 +317,12 @@ namespace Stilosoft.Controllers
 
         }*/
 
+        [HttpGet]
+        public IActionResult mostrarFactura(string rutaImagen)
+        {
+            ViewBag.RutaImagen = rutaImagen;
+            return View();
+        }
+
     }
 }

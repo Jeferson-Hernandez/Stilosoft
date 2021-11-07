@@ -101,7 +101,7 @@
                         @if (item.RutaImagen != null)
                         {
                             //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img w-25 h-25" />
-                            <a href="#" class="btn btn-secondary"><i class="fas fa-image"></i></a>
+                            <a onclick="mostrarModalG('@Url.Action("mostrarFactura","Compras", new {rutaImagen = item.RutaImagen}, Context.Request.Scheme)', 'Factura')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
                         }
                     </td>
                     <td>
