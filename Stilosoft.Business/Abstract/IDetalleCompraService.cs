@@ -15,7 +15,7 @@ namespace Stilosoft.Business.Abstract
         Task RegistrarDetalleCompra(DetalleCompra detalleCompra);
         Task EditarDetalle(DetalleCompra detalleCompra);
         Task EliminarDetalleCompra(int Id);
-        Task<DetalleCompra> ProductoExiste(int Producto);
+        Task<DetalleCompra> ProductoExiste(int compraId, int Producto);
 
 
     }

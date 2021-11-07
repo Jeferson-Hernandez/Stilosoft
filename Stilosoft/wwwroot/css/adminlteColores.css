@@ -26,3 +26,19 @@
 #menu-opciones {
     background-color: #333333 !important;
 }
+
+.btn btn-primary {
+    background-color: #3876F1 !important;
+}
+
+.btn btn-info {
+    background-color: #EFD361 !important;
+}
+
+.btn btn-danger {
+    background-color: #C22A09 !important;
+}
+
+h2 h3 h1 {
+    font-family: 'Acme', sans-serif !important;
+}

@@ -80,6 +80,7 @@ namespace Stilosoft.Controllers
             Proveedor proveedor = await _proveedorService.ObtenerProveedorPorId(id.Value);
             ProveedorViewModels proveedorViewModels = new()
             {
+                ProveedorId = proveedor.ProveedorId,
                 Nit = proveedor.Nit,
                 Nombre = proveedor.Nombre,
                 Direccion = proveedor.Direccion,

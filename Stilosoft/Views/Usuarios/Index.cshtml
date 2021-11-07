@@ -108,8 +108,12 @@
         alertify.alert('Eliminar Usuario', '@TempData["Mensaje"]', function () { alertify.error('Usuario eliminado'); });
                  </text>
         }
-          @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
-    alertify.alert('Editar', '@TempData["Mensaje"]', function () {});
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar estilista', '@TempData["Mensaje"]', function () { alertify.success('Estilista editado'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
                  </text>
         }
     </script>

@@ -15,16 +15,14 @@ namespace Stilosoft.ViewModels
         [Required(ErrorMessage = "El proveedor es obligatorio")]
         [DisplayName("Proveedor")]
         public int ProveedorId { get; set; }
-        [Required(ErrorMessage = "El precio de la compra es obligatorio")]
-        [DisplayName("Precio de la compra")]
-        public long PrecioTotal { get; set; }
         [Required(ErrorMessage = "La fecha de la facutra es obligatoria")]
         [Column(TypeName = "Date")]
-        [DisplayName("Fecha de la factura")]
+        [DisplayName("Fecha de factura")]
         public DateTime FechaFactura { get; set; }
         [Required(ErrorMessage = "El número de la factura es obligatorio")]
         [Column(TypeName = "nvarchar(20)")]
-        [DisplayName("Número de la factura")]
+        [DisplayName("Número de factura")]
+        [StringLength(15, ErrorMessage = "Máximo 15 caracteres")]
         public string NoFactura { get; set; }
         [Required(ErrorMessage = "La forma de pago es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
@@ -32,7 +30,7 @@ namespace Stilosoft.ViewModels
         public string FormaPago { get; set; }
         [Required(ErrorMessage = "La fecha de inicio del pago es obligatoria")]
         [Column(TypeName = "Date")]
-        [DisplayName("Fecha de inicio del pago")]
+        [DisplayName("Inicio de pago")]
         public DateTime FechaInicioPago { get; set; }
         [Required(ErrorMessage = "La fecha de registro es obligatoria")]
         [Column(TypeName = "Date")]
@@ -42,6 +40,7 @@ namespace Stilosoft.ViewModels
         [Column(TypeName = "nvarchar(20)")]
         public string Periodicidad { get; set; }
         [Required(ErrorMessage = "Las cuotas son obligatorias")]
+        [Range(1,30, ErrorMessage = "En rango de las cuotas es de 1 a 30")]
         public int Cuotas { get; set; }
         [DisplayName("Factura")]
         [Required(ErrorMessage = "La factura es obligatoria")]

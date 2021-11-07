@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-10">
             <a asp-action="Index" asp-controller="Proveedor" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
-            <a asp-action="Index" asp-controller="Insumo" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
             <a asp-action="Index" asp-controller="Compras" class="btn btn-secondary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
@@ -46,7 +46,10 @@
                     Factura
                 </th>
                 <th>
-                    Ver detalle compra
+                    Agregar<br />Productos
+                </th>
+                <th>
+                    Detalle
                 </th>
                 <th>
                     Acciones
@@ -61,7 +64,7 @@
                         @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura)
+                        @Html.DisplayFor(modelItem => item.FechaFactura.Date)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NoFactura)
@@ -69,23 +72,42 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.FormaPago)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaInicioPago)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaRegistro)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cuotas)
-                    </td>
+                    @if (item.FormaPago == "Contado")
+                    {
+                        <td>
+                            N/A
+                        </td>
+                        <td>
+                            N/A
+                        </td>
+                        <td>
+                            N/A
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaInicioPago.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaRegistro.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cuotas)
+                        </td>
+                    }
+                    
                     <td>
                         @if (item.RutaImagen != null)
                         {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-fluid w-25 h-auto" />
+                            //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img w-25 h-25" />
+                            <a onclick="mostrarModalG('@Url.Action("mostrarFactura","Compras", new {rutaImagen = item.RutaImagen}, Context.Request.Scheme)', 'Factura')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
                         }
                     </td>
                     <td>
-
+                        <a onclick="mostrarModalG('@Url.Action("CrearDetalle","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Agregar producto a la compra')" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                    </td>
+                    <td>
                         <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
                     </td>
                     <td>

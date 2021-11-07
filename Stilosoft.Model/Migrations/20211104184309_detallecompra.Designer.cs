@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211102004141_inicial")]
-    partial class inicial
+    [Migration("20211104184309_detallecompra")]
+    partial class detallecompra
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -381,12 +381,6 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CantInsumo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CantProducto")
-                        .HasColumnType("int");
-
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
@@ -396,14 +390,8 @@ namespace Stilosoft.Model.Migrations
                     b.Property<long>("Costo")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("InsumoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Iva")
                         .HasColumnType("int");
-
-                    b.Property<string>("Medida")
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");

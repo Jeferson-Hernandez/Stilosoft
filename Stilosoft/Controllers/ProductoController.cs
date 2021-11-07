@@ -47,6 +47,7 @@ namespace Stilosoft.Controllers
                     Nombre = productoViewModel.Nombre,
                     Cantidad = productoViewModel.Cantidad,
                     Precio = productoViewModel.Precio,
+                    Descripcion = productoViewModel.Descripcion
                 };
                 if (producto.Cantidad <= 0)
                 {
@@ -114,6 +115,7 @@ namespace Stilosoft.Controllers
                 Nombre = producto.Nombre,
                 Cantidad = producto.Cantidad,
                 Precio = producto.Precio,
+                Descripcion = producto.Descripcion,
                 RutaImagen = producto.RutaImagen
             };
             return View(productoViewModel);
@@ -129,7 +131,8 @@ namespace Stilosoft.Controllers
                         ProductoId = productoViewModel.ProductoId,
                         Nombre = productoViewModel.Nombre,
                         Cantidad = productoViewModel.Cantidad,
-                        Precio = productoViewModel.Precio
+                        Precio = productoViewModel.Precio,
+                        Descripcion = productoViewModel.Descripcion
                     };
                     if (producto.Cantidad <= 0)
                     {

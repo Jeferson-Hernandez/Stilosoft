@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stilosoft.Model.DAL;
 
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211102034119_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -379,6 +381,12 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CantInsumo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CantProducto")
+                        .HasColumnType("int");
+
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
@@ -388,8 +396,14 @@ namespace Stilosoft.Model.Migrations
                     b.Property<long>("Costo")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("InsumoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Iva")
                         .HasColumnType("int");
+
+                    b.Property<string>("Medida")
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
@@ -402,7 +416,8 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("DetalleCompraId");
 
-                    b.HasIndex("CompraId");
+                    b.HasIndex("CompraId")
+                        .IsUnique();
 
                     b.HasIndex("ProductoId");
 
@@ -777,8 +792,8 @@ namespace Stilosoft.Model.Migrations
             modelBuilder.Entity("Stilosoft.Model.Entities.DetalleCompra", b =>
                 {
                     b.HasOne("Stilosoft.Model.Entities.Compra", "Compra")
-                        .WithMany("DetalleCompras")
-                        .HasForeignKey("CompraId")
+                        .WithOne("DetalleCompras")
+                        .HasForeignKey("Stilosoft.Model.Entities.DetalleCompra", "CompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

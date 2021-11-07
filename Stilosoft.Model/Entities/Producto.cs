@@ -13,7 +13,7 @@ namespace Stilosoft.Model.Entities
         [Key]
         public int ProductoId { get; set; }
 
-        [DisplayName("Producto")]
+        [DisplayName("Insumo")]
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [Column(TypeName = "nvarchar(50)")]
         public string Nombre { get; set; }

@@ -29,27 +29,31 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="FormaPago" class="control-label"></label>
-                    <input asp-for="FormaPago" class="form-control" />
+                    <select asp-for="FormaPago" class="form-control" id="select">
+                        <option value="" selected hidden>Seleccione el método de pago</option>
+                        <option value="Contado">Contado</option>
+                        <option value="Crédito">Crédito</option>
+                    </select>
                     <span asp-validation-for="FormaPago" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group credito">
                     <label asp-for="FechaInicioPago" class="control-label"></label>
                     <input type="date" asp-for="FechaInicioPago" class="form-control" />
                     <span asp-validation-for="FechaInicioPago" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group credito">
                     <label asp-for="FechaRegistro" class="control-label"></label>
                     <input type="date" asp-for="FechaRegistro" class="form-control" />
                     <span asp-validation-for="FechaRegistro" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group credito" >
                     <label asp-for="Periodicidad" class="control-label"></label>
-                    <input asp-for="Periodicidad" class="form-control" />
+                    <input asp-for="Periodicidad" class="form-control" id="periodicidad" />
                     <span asp-validation-for="Periodicidad" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group credito">
                     <label asp-for="Cuotas" class="control-label"></label>
-                    <input asp-for="Cuotas" class="form-control" />
+                    <input asp-for="Cuotas" type="number" class="form-control" />
                     <span asp-validation-for="Cuotas" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -67,5 +71,19 @@
 </div>
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @section Scripts {
-
+    
 }
+<script>
+    $(document).ready(function () {
+        $(".credito").hide();
+        $("#select").change(function () {
+            var select = $("#select").val();
+            if (select === "Contado") {
+                $(".credito").hide();
+                $("#periodicidad").val("N/A");
+            } else if (select === "Crédito") {
+                $(".credito").show();
+            }
+        })
+    });
+</script>

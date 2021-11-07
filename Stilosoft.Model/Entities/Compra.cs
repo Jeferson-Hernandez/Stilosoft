@@ -21,7 +21,7 @@ namespace Stilosoft.Model.Entities
         public DateTime FechaFactura { get; set; }
         [Required(ErrorMessage = "El número de la factura es obligatorio")]
         [Column(TypeName = "nvarchar(20)")]
-        [DisplayName("Número de la factura")]
+        [DisplayName("Número de factura")]
         public string NoFactura { get; set; }
         [Required(ErrorMessage = "La forma de pago es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
@@ -29,7 +29,7 @@ namespace Stilosoft.Model.Entities
         public string FormaPago { get; set; }
         [Required(ErrorMessage = "La fecha de inicio del pago es obligatoria")]
         [Column(TypeName = "Date")]
-        [DisplayName("Fecha de inicio de pago")]
+        [DisplayName("Inicio de pago")]
         public DateTime FechaInicioPago { get; set; }
         [Required(ErrorMessage = "La fecha de registro es obligatoria")]
         [Column(TypeName = "Date")]
@@ -44,6 +44,6 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La factura es obligatoria")]
         public string RutaImagen { get; set; }
         public virtual Proveedor Proveedor { get; set; }
-        public virtual DetalleCompra DetalleCompras { get; set; }
+        public virtual List<DetalleCompra> DetalleCompras { get; set; }
     }
 }
