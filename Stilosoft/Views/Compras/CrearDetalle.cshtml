@@ -5,51 +5,81 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-9">
-            <form asp-action="CrearDetalle" asp-route-Id="@ViewBag.IdCompra" enctype="multipart/form-data">
+            <form asp-action="CrearDetalle" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly"></div>
-                <div class="form-group">
-                    <label class="control-label">Producto</label>
-                    <select asp-items="ViewBag.ListarProducto" asp-for="ProductoId" class="form-control"></select>
-                    <span asp-validation-for="ProductoId" class="text-danger"></span>
+                <input type="hidden" asp-for="CompraId"/>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Producto</label>
+                            <select asp-items="ViewBag.ListarProducto" asp-for="ProductoId" class="form-control"></select>
+                            <span asp-validation-for="ProductoId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="Cantidad" class="control-label"></label>
+                            <input asp-for="Cantidad" class="form-control" id="cantidadInsumo" />
+                            <span asp-validation-for="Cantidad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="Costo" class="control-label"></label>
+                            <input asp-for="Costo" class="form-control" id="costoInsumo" />
+                            <span asp-validation-for="Costo" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-            
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="SubTotal" class="control-label"></label>
+                            <input asp-for="SubTotal" class="form-control" readonly id="subTotal" />
+                            <span asp-validation-for="SubTotal" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="Iva" class="control-label"></label>
+                            <input asp-for="Iva" class="form-control" id="iva" readonly/>
+                            <span asp-validation-for="Iva" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="Total" class="control-label"></label>
+                            <input asp-for="Total" class="form-control" readonly id="totalCompra"/>
+                            <span asp-validation-for="Total" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div><br />
                 <div class="form-group">
-                    <label asp-for="Cantidad" class="control-label"></label>
-                    <input asp-for="Cantidad" class="form-control" />
-                    <span asp-validation-for="Cantidad" class="text-danger"></span>
-                </div>
-
-            
-                <div class="form-group">
-                    <label asp-for="CantProducto" class="control-label"></label>
-                    <input asp-for="CantProducto" class="form-control" />
-                    <span asp-validation-for="CantProducto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Costo" class="control-label"></label>
-                    <input asp-for="Costo" class="form-control" />
-                    <span asp-validation-for="Costo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Medida" class="control-label"></label>
-                    <input asp-for="Medida" class="form-control" />
-                    <span asp-validation-for="Medida" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Iva" class="control-label"></label>
-                    <input asp-for="Iva" class="form-control" />
-                    <span asp-validation-for="Iva" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Registrar compra" class="btn btn-primary" />
+                    <input type="submit" value="Agregar producto" class="btn btn-primary" />
                 </div>
             </form>
-        </div>
-    </div>
+        
 </div>
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @section Scripts {
 
 }
+<script>
+    $(document).ready(function () {        
+        $("#costoInsumo").change(function () {
+            var cantidadInsumo = $("#cantidadInsumo").val();
+            var costoInsumo = $("#costoInsumo").val();
+            $("#subTotal").val(cantidadInsumo * costoInsumo);
+            if ($("#subTotal").val() >= 1) {
+                $("#iva").prop('readonly', false);
+            } else {
+                $("#iva").prop('readonly', true);
+            }
+        })
+        $("#iva").change(function () {
+            var iva = $("#iva").val() * 0.01;
+            var subtotalIva = $("#subTotal").val() * iva;
+            $("#totalCompra").val(parseInt($("#subTotal").val()) + subtotalIva);
+        })
+    })
+</script>

@@ -13,5 +13,6 @@ namespace Stilosoft.Business.Abstract
         Task<Producto> ObtenerProductoPorId(int id);
         Task EditarProducto(Producto producto);
         Task EliminarProducto(int id);
+        Task AgregarCantidad(int productoId, int cantidad);
     }
 }
