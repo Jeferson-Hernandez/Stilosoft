@@ -43,5 +43,13 @@ namespace Stilosoft.Business.Business
             _context.Remove(producto);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AgregarCantidad(int productoId, int cantidad)
+        {
+            var producto = await ObtenerProductoPorId(productoId);
+            producto.Cantidad += cantidad;
+            _context.Update(producto);
+            await _context.SaveChangesAsync();
+        }
     }
 }

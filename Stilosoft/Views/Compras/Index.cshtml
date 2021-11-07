@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-10">
             <a asp-action="Index" asp-controller="Proveedor" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
-            <a asp-action="Index" asp-controller="Insumo" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
             <a asp-action="Index" asp-controller="Compras" class="btn btn-secondary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
@@ -46,7 +46,7 @@
                     Factura
                 </th>
                 <th>
-                    Agregar<br />producto
+                    Agregar<br />Productos
                 </th>
                 <th>
                     Detalle
@@ -105,7 +105,7 @@
                         }
                     </td>
                     <td>
-                        <a href="#" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                        <a onclick="mostrarModalG('@Url.Action("CrearDetalle","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Agregar producto a la compra')" class="btn btn-info"><i class="fas fa-plus"></i></a>
                     </td>
                     <td>
                         <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>

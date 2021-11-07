@@ -50,9 +50,9 @@ namespace Stilosoft.Business.Business
             await _context.SaveChangesAsync();
         }
 
-        public async Task<DetalleCompra> ProductoExiste(int Producto)
+        public async Task<DetalleCompra> ProductoExiste(int compraId,int Producto)
         {
-            return await _context.DetalleCompra.FirstOrDefaultAsync(n => n.ProductoId == Producto);
+            return await _context.DetalleCompra.Where(c=>c.CompraId == compraId).FirstOrDefaultAsync(n => n.ProductoId == Producto);
         }
     }
 }

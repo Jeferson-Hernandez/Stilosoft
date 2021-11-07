@@ -22,6 +22,7 @@ namespace Stilosoft.ViewModels
         [Required(ErrorMessage = "El número de la factura es obligatorio")]
         [Column(TypeName = "nvarchar(20)")]
         [DisplayName("Número de factura")]
+        [StringLength(15, ErrorMessage = "Máximo 15 caracteres")]
         public string NoFactura { get; set; }
         [Required(ErrorMessage = "La forma de pago es obligatoria")]
         [Column(TypeName = "nvarchar(15)")]
@@ -39,6 +40,7 @@ namespace Stilosoft.ViewModels
         [Column(TypeName = "nvarchar(20)")]
         public string Periodicidad { get; set; }
         [Required(ErrorMessage = "Las cuotas son obligatorias")]
+        [Range(1,30, ErrorMessage = "En rango de las cuotas es de 1 a 30")]
         public int Cuotas { get; set; }
         [DisplayName("Factura")]
         [Required(ErrorMessage = "La factura es obligatoria")]

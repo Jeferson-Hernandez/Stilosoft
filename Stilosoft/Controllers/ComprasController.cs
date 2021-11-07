@@ -167,49 +167,45 @@ namespace Stilosoft.Controllers
 
         // --------------------------------------------------- DETALLE ---------------------------------------------
         [HttpGet]
-        public async Task<IActionResult> CrearDetalle(int Id)
+        public async Task<IActionResult> CrearDetalle(int id)
         {
             ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(), "ProductoId", "Nombre");
             //ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
-            ViewBag.IdCompra = Id;
-            return View(new CompraDetalleViewModel());
+            CompraDetalleViewModel compraDetalleViewModel = new()
+            {
+                CompraId = id
+            };
+            return View(compraDetalleViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearDetalle(int Id, CompraDetalleViewModel compraDetalleViewModel)
+        public async Task<IActionResult> CrearDetalle(CompraDetalleViewModel compraDetalleViewModel)
         {
             if (ModelState.IsValid)
             {
                 DetalleCompra detalleCompra = new()
                 {
-                    CompraId = Id,
+                    CompraId = compraDetalleViewModel.CompraId,
                     ProductoId = compraDetalleViewModel.ProductoId,
                     Cantidad = compraDetalleViewModel.Cantidad,
                     Costo = compraDetalleViewModel.Costo,
-                    SubTotal = 0,
+                    SubTotal = compraDetalleViewModel.SubTotal,
                     Iva = compraDetalleViewModel.Iva,
-                    Total = 0
-
-
+                    Total = compraDetalleViewModel.Total
                 };
 
                 try
-                {
-                    if (compraDetalleViewModel.Cantidad <= 0 || compraDetalleViewModel.CantInsumo <= 0 || compraDetalleViewModel.CantProducto <=0 || compraDetalleViewModel.Costo <=0 || compraDetalleViewModel.Iva <=0)
-                    {
-                        TempData["Accion"] = "Error";
-                        TempData["Mensaje"] = "Debe ser mayor a 0 las cantidades, el IVA y el costo";
-                        return RedirectToAction("Index");
-                    }
-                    /*var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.ProductoId);
+                {                    
+                    var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.CompraId ,detalleCompra.ProductoId);
 
                     if (ProductoExiste != null)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "El producto ya se encuentra registrado";
-                        return View("DetalleIndex");
-                    }*/
+                        return RedirectToAction("Index");
+                    }
                     await _detalleCompraService.RegistrarDetalleCompra(detalleCompra);
+                    await _productoService.AgregarCantidad(detalleCompra.ProductoId, detalleCompra.Cantidad);
                     TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Producto añadido con éxito";
                     return RedirectToAction("Index");
@@ -221,6 +217,8 @@ namespace Stilosoft.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Alguno de los valores no comple con los requisitos";
             return RedirectToAction("Index");
         }
 
