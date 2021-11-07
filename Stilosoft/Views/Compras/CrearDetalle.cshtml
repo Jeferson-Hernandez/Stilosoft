@@ -14,22 +14,14 @@
                     <select asp-items="ViewBag.ListarProducto" asp-for="ProductoId" class="form-control"></select>
                     <span asp-validation-for="ProductoId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Insumo</label>
-                    <select asp-items="ViewBag.ListarInsumo" asp-for="InsumoId" class="form-control"></select>
-                    <span asp-validation-for="InsumoId" class="text-danger"></span>
-                </div>
+            
                 <div class="form-group">
                     <label asp-for="Cantidad" class="control-label"></label>
                     <input asp-for="Cantidad" class="form-control" />
                     <span asp-validation-for="Cantidad" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="CantInsumo" class="control-label"></label>
-                    <input asp-for="CantInsumo" class="form-control" />
-                    <span asp-validation-for="CantInsumo" class="text-danger"></span>
-                </div>
+            
                 <div class="form-group">
                     <label asp-for="CantProducto" class="control-label"></label>
                     <input asp-for="CantProducto" class="form-control" />
