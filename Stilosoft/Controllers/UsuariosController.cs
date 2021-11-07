@@ -165,7 +165,7 @@ namespace Stilosoft.Controllers
                 try
                 {
                     //Corregir error 
-                    //Si creamos un usuario e ingresamos todos las datos y uno de esos estan malos
+                    //Si creamos un usuario e ingresamos todos las datos y uno de esos esta malo
                     //No pasan los datos del usuario pero si se crea el identity user
                     var resultado = await _userManager.CreateAsync(identityUser, crearUsuarioViewModel.Password);
                     if (resultado.Succeeded)
@@ -293,10 +293,10 @@ namespace Stilosoft.Controllers
                         
                     var usuario = await _userManager.FindByIdAsync(id);
                     var rol = await _userManager.GetRolesAsync(usuario);
-                          
-                     await _userManager.RemoveFromRolesAsync(usuario, rol);
-                     await _userManager.AddToRoleAsync(usuario, usuarioDto.Rol);
-                                
+
+                        await _userManager.RemoveFromRolesAsync(usuario, rol);
+                        await _userManager.AddToRoleAsync(usuario, usuarioDto.Rol);
+                                                       
                     await _usuarioService.EditarUsuario(usuario1);
                     TempData["Accion"] = "Editar";
                     TempData["Mensaje"] = "Usuario editado correctamente";
@@ -314,7 +314,7 @@ namespace Stilosoft.Controllers
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";
             return RedirectToAction("index");
-        }
+        }       
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditarEstado(string id)
