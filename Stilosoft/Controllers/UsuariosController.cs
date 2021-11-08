@@ -120,7 +120,7 @@ namespace Stilosoft.Controllers
                     var usuario = await _userManager.FindByEmailAsync(loginViewModel.Email);
                     var rol = await _userManager.GetRolesAsync(usuario);
 
-                    if (rol.Contains("Cliente"))
+                    if (rol.Contains("Admin") || rol.Contains("Asistente"))
                     {
                         return RedirectToAction("index", "Usuarios");
                     }
@@ -219,7 +219,7 @@ namespace Stilosoft.Controllers
         {           
             if (id != null)
             {
-                var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Administrador").ToListAsync();
+                var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
                 ViewBag.Roles = new SelectList(listaRoles, "Name", "Name");
                 Usuario usuario = await _usuarioService.ObtenerUsuarioPorId(id);
                 UsuarioDto usuarioDto = new()

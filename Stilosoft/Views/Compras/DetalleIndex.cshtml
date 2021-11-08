@@ -4,9 +4,8 @@
     ViewData["Title"] = "Detalle de la Compra";
     Layout = null;
 }
-<form asp-route-id="@ViewBag.IdCompra">
-    <section class="content">
 
+    <section class="content">
         <table class="table" id="tabla">
             <thead>
                 <tr>
@@ -35,12 +34,14 @@
                 </tr>
             </thead>
             <tbody>
+                @{ double totalCompra = 0;}
                 @foreach (var item in Model)
                 {
                     long subtotal = item.Cantidad * item.Costo;
-                    long iva = item.Iva / 100;
-                    long subtotal2 = subtotal * iva;
-                    long total = subtotal + subtotal2;
+                    double iva = item.Iva * 0.01;
+                    double subtotal2 = subtotal * iva;
+                    double total = subtotal + subtotal2;
+                    totalCompra += total;
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Producto.Nombre)
@@ -55,30 +56,28 @@
                             @Html.DisplayFor(modelItem => subtotal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => iva)
+                            @Html.DisplayFor(modelItem => item.Iva)%
                         </td>
-                        <td>
+                        <td id="total">
                             @Html.DisplayFor(modelItem => total)
                         </td>
                         <td>
-                            <a></a>
-                            <form asp-action="EliminarDetalle"  asp-route-id="@item.DetalleCompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                            <form asp-controller="Compras" asp-action="EliminarDetalle"  asp-route-id="@item.DetalleCompraId" onclick="return  DeleteConfirm()"  class="d-inline">
                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                             </form>
                         </td>
-                        <!-- <td>
-                             <a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar detalle')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                             <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
-                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                             </form>
-                         </td>-->
                     </tr>
                 }
+                <tr>
+                    <td colspan="7">
+                        Total de la compra: @(totalCompra)
+                    </td>
+                </tr>
             </tbody>
-        </table>
-
+        </table><br />
+        <p id="mostrarTotal"></p>
     </section>
-</form>
+
 @section Scripts{
 
     <script src="~/js/tabla.js"></script>

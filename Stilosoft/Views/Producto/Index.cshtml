@@ -7,8 +7,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a asp-action="index" asp-controller="Proveedores" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
-            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="index" asp-controller="Proveedores" class="btn btn-primary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="index" asp-controller="Producto" class="btn btn-secondary btn-lg mr-md-4">Insumos</a>
             <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
@@ -100,12 +100,12 @@
                  </text>
         }
     </script>
-<script type="text/javascript">
-    function DeleteConfirm() {
-        if (confirm("¿Quieres Eliminar el Producto?"))
-            return true;
-        else
-            return false;
-    }
-</script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres Eliminar el Producto?"))
+                return true;
+            else
+                return false;
+        }
+    </script>
 }
