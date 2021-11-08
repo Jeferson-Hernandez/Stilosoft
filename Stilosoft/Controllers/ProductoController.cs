@@ -241,6 +241,35 @@ namespace Stilosoft.Controllers
 
         }
 
+        public async Task<IActionResult> EditarEstado(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
+            }
+            Producto producto = await _productoService.ObtenerProductoPorId(id.Value);
+            try
+            {
+                if (producto.Estado == true)
+                    proveedor.Estado = false;
+                else if (proveedor.Estado == false)
+                    proveedor.Estado = true;
+
+                await _proveedorService.EditarProveedor(proveedor);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
+            }
+        }
+
         [HttpGet]
         public IActionResult mostrarInsumo(string rutaImagen)
         {

@@ -27,6 +27,8 @@ namespace Stilosoft.ViewModels
         [DisplayName("Descripción")]
         [Required(ErrorMessage = "La descripción es obligatoria")]
         public string Descripcion { get; set; }
+        [Required]
+        public bool Estado { get; set; }
 
         public IFormFile Imagen { get; set; }
         [DisplayName("Imagen")]
