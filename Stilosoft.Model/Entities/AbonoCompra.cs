@@ -13,11 +13,18 @@ namespace Stilosoft.Model.Entities
     {
         [Key]
         public int AbonoCompraId { get; set; }
+        [ForeignKey("Compra")]
+        public int CompraId { get; set; }
         public int CantAbono { get; set; }
         [Column(TypeName = "Date")]
         public DateTime FechaPago { get; set; }
-        public int CompraId { get; set; }
+        
+        [Required(ErrorMessage = "Las cuotas son obligatorias")]
+        public int Cuotas { get; set; }
+        public long ValorInicial { get; set; }
+        public long ValorFinal { get; set; }
         public virtual Compra Compra { get; set; }
+        public virtual DetalleCompra DetalleCompra { get; set; }
 
     }
 }

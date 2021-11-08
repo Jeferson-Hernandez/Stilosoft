@@ -13,10 +13,10 @@
         <thead>
             <tr>
                 <th>
-                    Html.DisplayNameFor(model => model.Compra.DetalleCompras.Total)
+                    @Html.DisplayNameFor(model => model.ValorInicial)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Compra.Cuotas)
+                    @Html.DisplayNameFor(model => model.Cuotas)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CantAbono)
@@ -25,7 +25,7 @@
                     @Html.DisplayNameFor(model => model.FechaPago)
                 </th>
                 <th>
-                    <!--Html.DisplayNameFor(model => model.PrecioTotal)-->
+                    @Html.DisplayNameFor(model => model.ValorFinal)
                 </th>
                 <th>
                     Acciones
@@ -37,11 +37,11 @@
             {
                 <tr>
                     <td>
-                        Html.DisplayFor(modelItem => item.Compra.DetalleCompras.Total)
-                    </td>
-                    <td>
-                        <!--Html.DisplayFor(modelItem => item.Cuotas)-->
-                    </td>
+                        @Html.DisplayFor(modelItem => item.ValorInicial)
+                    </td>             
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Cuotas)
+                    </th>
                     <td>
                         @Html.DisplayFor(modelItem => item.CantAbono)
                     </td>
@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.FechaPago)
                     </td>
                     <td>
-                        <!--Html.DisplayFor(modelItem => item.PrecioTotal)-->
+                        @Html.DisplayFor(modelItem => item.ValorFinal)
                     </td>
                     <td>
                         <form asp-action="EliminarAbono" asp-route-id="@item.AbonoCompraId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.AbonoCompraId" class="d-inline">

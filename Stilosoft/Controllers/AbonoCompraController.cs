@@ -37,9 +37,17 @@ namespace Stilosoft.Controllers
             return View(await _abonoCompraService.ObtenerListaAbonoCompra());
         }*/
         [HttpGet]
-        public IActionResult AgregarAbonoCompra(int Id )
+        public async Task<IActionResult> AgregarAbonoCompra(int Id)
         {
-            ViewBag.IdCompra = Id;           
+            ViewBag.IdCompra = Id;
+            DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
+            Compra compra = await _comprasService.ObtenerCompraPorId(Id);
+            AbonoCompraViewModels abonoCompraViewModels = new()
+            {
+                Cuotas = compra.Cuotas,
+                ValorInicial = detalleCompra.Total
+            };
+
             return View(new AbonoCompraViewModels());
         }
         [HttpPost]
@@ -48,20 +56,30 @@ namespace Stilosoft.Controllers
             if (ModelState.IsValid)
             {
                 DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
+                Compra compra = await _comprasService.ObtenerCompraPorId(Id);
+                AbonoCompra abonoCompra1 = await _abonoCompraService.ObtenerAbonoCompraId(Id);
                 AbonoCompra abonoCompra = new()
-                {                 
+                {                             
                     CantAbono = abonoCompraViewModels.CantAbono,
                     FechaPago = abonoCompraViewModels.FechaPago,
-                    //PrecioTotal = _abonoCompraService.ObtenerAbonoPorId(Id),
+                    ValorInicial = abonoCompraViewModels.ValorInicial,
+                    Cuotas = abonoCompraViewModels.Cuotas,
                     CompraId = Id,
                     //Cuotas = _abonoCompraService.ObtenerCuotasPorId(Id),
                     //CuotasPagadas = _abonoCompraService.ObtenerCuotasPorId(Id),
                     //MontoAbonado = _abonoCompraService.ObtenerMontoAbonadoPorId(Id)
                 };
-                /*if (abonoCompra.PrecioTotal == 0)
+
+                if(abonoCompra.ValorInicial == 0)
                 {
-                    abonoCompra.PrecioTotal = detalleCompra.Total - abonoCompra.CantAbono;
+                    abonoCompra.ValorInicial = detalleCompra.Total;
                 }
+                 
+               if(abonoCompra.Cuotas == 0)
+                {
+                    abonoCompra.Cuotas = compra.Cuotas;
+                }
+                /*
                 else if (abonoCompra.PrecioTotal > 0)
                 {
                     abonoCompra.PrecioTotal = abonoCompra.PrecioTotal - abonoCompra.CantAbono;

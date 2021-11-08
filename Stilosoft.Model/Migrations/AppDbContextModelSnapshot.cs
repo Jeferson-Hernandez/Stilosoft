@@ -234,12 +234,26 @@ namespace Stilosoft.Model.Migrations
                     b.Property<int>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Cuotas")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DetalleCompraId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
+
+                    b.Property<long>("ValorFinal")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ValorInicial")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AbonoCompraId");
 
                     b.HasIndex("CompraId");
+
+                    b.HasIndex("DetalleCompraId");
 
                     b.ToTable("AbonoCompra");
                 });
@@ -715,7 +729,13 @@ namespace Stilosoft.Model.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Stilosoft.Model.Entities.DetalleCompra", "DetalleCompra")
+                        .WithMany()
+                        .HasForeignKey("DetalleCompraId");
+
                     b.Navigation("Compra");
+
+                    b.Navigation("DetalleCompra");
                 });
 
             modelBuilder.Entity("Stilosoft.Model.Entities.Cita", b =>

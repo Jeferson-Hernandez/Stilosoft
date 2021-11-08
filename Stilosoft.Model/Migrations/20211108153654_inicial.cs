@@ -341,27 +341,6 @@ namespace Stilosoft.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbonoCompra",
-                columns: table => new
-                {
-                    AbonoCompraId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CantAbono = table.Column<int>(type: "int", nullable: false),
-                    FechaPago = table.Column<DateTime>(type: "Date", nullable: false),
-                    CompraId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbonoCompra", x => x.AbonoCompraId);
-                    table.ForeignKey(
-                        name: "FK_AbonoCompra_Compra_CompraId",
-                        column: x => x.CompraId,
-                        principalTable: "Compra",
-                        principalColumn: "CompraId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DetalleCompra",
                 columns: table => new
                 {
@@ -369,12 +348,8 @@ namespace Stilosoft.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompraId = table.Column<int>(type: "int", nullable: false),
                     ProductoId = table.Column<int>(type: "int", nullable: false),
-                    InsumoId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    CantInsumo = table.Column<int>(type: "int", nullable: false),
-                    CantProducto = table.Column<int>(type: "int", nullable: false),
                     Costo = table.Column<long>(type: "bigint", nullable: false),
-                    Medida = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     SubTotal = table.Column<long>(type: "bigint", nullable: false),
                     Iva = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<long>(type: "bigint", nullable: false)
@@ -491,10 +466,46 @@ namespace Stilosoft.Model.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AbonoCompra",
+                columns: table => new
+                {
+                    AbonoCompraId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompraId = table.Column<int>(type: "int", nullable: false),
+                    CantAbono = table.Column<int>(type: "int", nullable: false),
+                    FechaPago = table.Column<DateTime>(type: "Date", nullable: false),
+                    Cuotas = table.Column<int>(type: "int", nullable: false),
+                    ValorInicial = table.Column<long>(type: "bigint", nullable: false),
+                    ValorFinal = table.Column<long>(type: "bigint", nullable: false),
+                    DetalleCompraId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbonoCompra", x => x.AbonoCompraId);
+                    table.ForeignKey(
+                        name: "FK_AbonoCompra_Compra_CompraId",
+                        column: x => x.CompraId,
+                        principalTable: "Compra",
+                        principalColumn: "CompraId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AbonoCompra_DetalleCompra_DetalleCompraId",
+                        column: x => x.DetalleCompraId,
+                        principalTable: "DetalleCompra",
+                        principalColumn: "DetalleCompraId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AbonoCompra_CompraId",
                 table: "AbonoCompra",
                 column: "CompraId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbonoCompra_DetalleCompraId",
+                table: "AbonoCompra",
+                column: "DetalleCompraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -563,8 +574,7 @@ namespace Stilosoft.Model.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_CompraId",
                 table: "DetalleCompra",
-                column: "CompraId",
-                unique: true);
+                column: "CompraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCompra_ProductoId",
@@ -626,9 +636,6 @@ namespace Stilosoft.Model.Migrations
                 name: "DetalleCita");
 
             migrationBuilder.DropTable(
-                name: "DetalleCompra");
-
-            migrationBuilder.DropTable(
                 name: "DetalleServicioProductos");
 
             migrationBuilder.DropTable(
@@ -638,16 +645,13 @@ namespace Stilosoft.Model.Migrations
                 name: "Usuario");
 
             migrationBuilder.DropTable(
+                name: "DetalleCompra");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Cita");
-
-            migrationBuilder.DropTable(
-                name: "Compra");
-
-            migrationBuilder.DropTable(
-                name: "Producto");
 
             migrationBuilder.DropTable(
                 name: "Estilista");
@@ -659,10 +663,16 @@ namespace Stilosoft.Model.Migrations
                 name: "SolicitudServicio");
 
             migrationBuilder.DropTable(
-                name: "Proveedor");
+                name: "Compra");
+
+            migrationBuilder.DropTable(
+                name: "Producto");
 
             migrationBuilder.DropTable(
                 name: "Cliente");
+
+            migrationBuilder.DropTable(
+                name: "Proveedor");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
