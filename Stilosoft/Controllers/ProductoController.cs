@@ -61,6 +61,13 @@ namespace Stilosoft.Controllers
                     TempData["Mensaje"] = "El precio debe ser mayor a 0";
                     return RedirectToAction("index");
                 }
+                var NomExiste = await _productoService.NombreInsumoExiste(producto.Nombre);
+                if (NomExiste != null)
+                {
+                    TempData["Accion"] = "Error";
+                    TempData["Mensaje"] = "Este insumo ya existe";
+                    return RedirectToAction("Index");
+                }
                 string path = null;
                 string wwwRootPath = null;
 
@@ -234,5 +241,11 @@ namespace Stilosoft.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult mostrarInsumo(string rutaImagen)
+        {
+            ViewBag.RutaImagen = rutaImagen;
+            return View();
+        }
     }
 }

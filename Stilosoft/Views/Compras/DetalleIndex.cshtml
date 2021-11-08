@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Detalle de la Compra";
+    Layout = null;
 }
 <form asp-route-id="@ViewBag.IdCompra">
     <section class="content">
@@ -27,14 +28,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Total)
                     </th>
-                    
+                    <th>
+                        Acciones
+                    </th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     long subtotal = item.Cantidad * item.Costo;
-                    long iva = item.Iva /100;
+                    long iva = item.Iva / 100;
                     long subtotal2 = subtotal * iva;
                     long total = subtotal + subtotal2;
                     <tr>
@@ -56,12 +60,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => total)
                         </td>
-                       <!-- <td>
-                            <a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar detalle')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                            <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        <td>
+                            <a></a>
+                            <form asp-action="EliminarDetalle"  asp-route-id="@item.DetalleCompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                             </form>
-                        </td>-->
+                        </td>
+                        <!-- <td>
+                             <a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar detalle')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                             <form asp-action="Eliminar" asp-route-id="@item.DetalleCompraId" class="d-inline">
+                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                             </form>
+                         </td>-->
                     </tr>
                 }
             </tbody>
@@ -69,11 +79,11 @@
 
     </section>
 </form>
-    @section Scripts{
+@section Scripts{
 
-        <script src="~/js/tabla.js"></script>
-        <script src="~/js/modals.js"></script>
-        <script>
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+    <script>
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
         alertify.alert('Agregar producto', '@TempData["Mensaje"]', function () { alertify.success('Producto agregado'); });
                  </text>
@@ -90,6 +100,14 @@
         alertify.alert('Eliminar producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
                  </text>
         }
-       
-        </script>
-    }
+
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirm() {
+            if (confirm("¿Quieres eliminar la compra?"))
+                return true;
+            else
+                return false;
+        }
+    </script>
+}

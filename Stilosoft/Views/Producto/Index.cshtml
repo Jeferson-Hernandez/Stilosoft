@@ -34,7 +34,7 @@
                     @Html.DisplayNameFor(model => model.Descripcion)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RutaImagen)
+                    Imagen
                 </th>
                 <th>
                     Acciones
@@ -60,11 +60,8 @@
                     <td>
                         @if (item.RutaImagen != null)
                         {
-                            <img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-circle w-25 h-10" />
-                        }
-                        else
-                        {
-                            <p>No hay imagen asociada al producto</p>
+                            //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-circle w-25 h-10" />-->
+                            <a onclick="mostrarModalG('@Url.Action("mostrarInsumo", "Producto", new { rutaImagen = item.RutaImagen }, Context.Request.Scheme)', 'Imagen')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
                         }
                     </td>
                     <td>
@@ -89,10 +86,11 @@
                   alertify.alert('Guardar Producto', '@TempData["Mensaje"]', function () { alertify.success('Producto guardado'); });
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]'});
-                 </text>
-        }
+        @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
+    {<text>
+            alertify.alert('Error', '@TempData["Mensaje"]');
+    </text>
+}
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarProducto")) { <text>
         alertify.alert('Editar Producto', '@TempData["Mensaje"]', function () { alertify.success('Producto editado'); });
                  </text>

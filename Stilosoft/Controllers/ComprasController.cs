@@ -290,6 +290,7 @@ namespace Stilosoft.Controllers
                 return RedirectToAction("DetalleIndex");
             }
         }
+        */
         [HttpPost]
         public async Task<IActionResult> EliminarDetalle(int Id)
         {
@@ -317,7 +318,7 @@ namespace Stilosoft.Controllers
                 return RedirectToAction("Index");
             }
 
-        }*/
+        }
 
         [HttpGet]
         public IActionResult mostrarFactura(string rutaImagen)

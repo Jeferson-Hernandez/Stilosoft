@@ -51,5 +51,9 @@ namespace Stilosoft.Business.Business
             _context.Update(producto);
             await _context.SaveChangesAsync();
         }
+        public async Task<Producto> NombreInsumoExiste(string Nombre)
+        {
+            return await _context.Producto.FirstOrDefaultAsync(n => n.Nombre == Nombre);
+        }
     }
 }

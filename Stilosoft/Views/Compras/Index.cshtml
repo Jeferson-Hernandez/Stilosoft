@@ -59,65 +59,69 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaFactura.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormaPago)
+                </td>
+                @if (item.FormaPago == "Contado")
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
+                        N/A
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FechaFactura.Date)
+                        N/A
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NoFactura)
+                        N/A
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicioPago.Date)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FormaPago)
-                    </td>
-                    @if (item.FormaPago == "Contado")
-                    {
-                        <td>
-                            N/A
-                        </td>
-                        <td>
-                            N/A
-                        </td>
-                        <td>
-                            N/A
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaInicioPago.Date)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaRegistro.Date)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cuotas)
-                        </td>
-                    }
-                    
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img w-25 h-25" />
-                            <a onclick="mostrarModalG('@Url.Action("mostrarFactura","Compras", new {rutaImagen = item.RutaImagen}, Context.Request.Scheme)', 'Factura')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
-                        }
+                        @Html.DisplayFor(modelItem => item.FechaRegistro.Date)
                     </td>
                     <td>
-                        <a onclick="mostrarModalG('@Url.Action("CrearDetalle","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Agregar producto a la compra')" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                        @Html.DisplayFor(modelItem => item.Cuotas)
                     </td>
-                    <td>
-                        <a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
-                    </td>
-                    <td>
-                        <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                        <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                        </form>
-                    </td>
+                }
 
-                </tr>
+                <td>
+                    @if (item.RutaImagen != null)
+                    {
+                        //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img w-25 h-25" />
+                        <a onclick="mostrarModalG('@Url.Action("mostrarFactura","Compras", new {rutaImagen = item.RutaImagen}, Context.Request.Scheme)', 'Factura')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
+                    }
+                </td>
+                <td>
+                    <a onclick="mostrarModalG('@Url.Action("CrearDetalle","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Agregar producto a la compra')" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                </td>
+                <td>
+                    
+                    <!--<a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>-->
+                    <a onclick="mostrarModalG('@Url.Action("DetalleIndex","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Detalle compra')" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
+
+                </td>
+
+                <td>
+                    <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                    </form>
+                </td>
+
+            </tr>
             }
         </tbody>
     </table>
