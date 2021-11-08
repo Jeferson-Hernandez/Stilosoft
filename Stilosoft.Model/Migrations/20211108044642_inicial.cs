@@ -75,7 +75,8 @@ namespace Stilosoft.Model.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<long>(type: "bigint", nullable: false),
                     RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(500)", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

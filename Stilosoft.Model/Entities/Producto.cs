@@ -30,6 +30,8 @@ namespace Stilosoft.Model.Entities
         [Required(ErrorMessage = "La descripción es obligatoria")]
         [Column(TypeName = "nvarchar(500)")]
         public string Descripcion { get; set; }
+        [Required]
+        public bool Estado { get; set; }
         public virtual List<DetalleCompra> DetalleCompras { get; set; }
         public virtual List<DetalleServicioProductos> DetalleServicioProductos { get; set; }
     }
