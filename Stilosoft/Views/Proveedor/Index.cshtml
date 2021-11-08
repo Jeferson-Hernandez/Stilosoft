@@ -7,9 +7,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a asp-action="index" asp-controller="Proveedores" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
-            <a asp-action="index" asp-controller="Insumos" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
-            <a asp-action="index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
+            <a asp-action="Index" asp-controller="Proveedor" class="btn btn-secondary btn-lg mr-md-4">Proveedores</a>
+            <a asp-action="Index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Insumos</a>
+            <a asp-action="Index" asp-controller="Compras" class="btn btn-primary btn-lg mr-md-4">Compras</a>
         </div>
     </div>
 </div>
@@ -78,7 +78,7 @@
                         }
                     </td>
                     <td>
-                        <a onclick="mostrarModalS('@Url.Action("Editar","Proveedor", new {id = item.ProveedorId}, Context.Request.Scheme)', 'Editar estilista')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                        <a onclick="mostrarModalS('@Url.Action("Editar","Proveedor", new {id = item.ProveedorId}, Context.Request.Scheme)', 'Editar proveedor')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
                     </td>
                 </tr>
             }
@@ -96,10 +96,11 @@
         alertify.alert('Guardar proveedor', '@TempData["Mensaje"]', function () { alertify.success('proveedor guardado'); });
                  </text>
         }
-        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
-        alertify.alert('Error', '@TempData["Mensaje"]'});
-                 </text>
-        }
+        @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
+    {<text>
+            alertify.alert('Error', '@TempData["Mensaje"]');
+    </text>
+}
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
         alertify.alert('Editar proveedor', '@TempData["Mensaje"]', function () { alertify.success('Proveedor editado'); });
                  </text>

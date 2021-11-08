@@ -13,6 +13,6 @@ namespace Stilosoft.Business.Abstract
         Task GuardarProveedor(Proveedor proveedor);
         Task EditarProveedor(Proveedor proveedor);
         Task EliminarProveedor(int id);
-        Task<Proveedor> NitProveedorExiste(string nit);
+        Task<Proveedor> NitProveedorExiste(string Nit);
     }
 }

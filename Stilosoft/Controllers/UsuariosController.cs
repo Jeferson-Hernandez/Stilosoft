@@ -222,7 +222,7 @@ namespace Stilosoft.Controllers
         {           
             if (id != null)
             {
-                var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Administrador").ToListAsync();
+                var listaRoles = await _roleManager.Roles.Where(r => r.Name != "Admin").ToListAsync();
                 ViewBag.Roles = new SelectList(listaRoles, "Name", "Name");
                 Usuario usuario = await _usuarioService.ObtenerUsuarioPorId(id);
                 UsuarioDto usuarioDto = new()

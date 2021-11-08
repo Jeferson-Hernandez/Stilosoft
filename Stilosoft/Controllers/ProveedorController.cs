@@ -40,7 +40,7 @@ namespace Stilosoft.Controllers
                     Nombre = proveedorViewModels.Nombre,
                     Direccion = proveedorViewModels.Direccion,
                     Telefono = proveedorViewModels.Telefono,
-                    Contacto = proveedorViewModels.Contacto,                  
+                    Contacto = proveedorViewModels.Contacto,
                     Estado = true
                 };
                 try
@@ -50,12 +50,12 @@ namespace Stilosoft.Controllers
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "El NIT ya se encuentra registrado";
-                        return View(proveedorViewModels);
-                    }                    
+                        return RedirectToAction("Index");
+                    }
                     await _proveedorService.GuardarProveedor(proveedor);
                     TempData["Accion"] = "Crear";
                     TempData["Mensaje"] = "Proveedor registrado";
-                    return RedirectToAction("index");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
@@ -112,7 +112,38 @@ namespace Stilosoft.Controllers
             }
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";
-            return View(proveedorViewModels);
-        }       
+            return View("index");
+        }
+
+
+        public async Task<IActionResult> EditarEstado(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
+            }
+            Proveedor proveedor = await _proveedorService.ObtenerProveedorPorId(id.Value);
+            try
+            {
+                if (proveedor.Estado == true)
+                    proveedor.Estado = false;
+                else if (proveedor.Estado == false)
+                    proveedor.Estado = true;
+
+                await _proveedorService.EditarProveedor(proveedor);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
+            }
+        }
     }
 }
+
