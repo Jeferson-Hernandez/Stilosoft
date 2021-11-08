@@ -45,7 +45,7 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearCompra()
         {
-            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedor(), "ProveedorId", "Nombre");
+            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedorEstado(), "ProveedorId", "Nombre");
             return View(new ComprasViewModel());
         }
         [HttpPost]
@@ -169,7 +169,7 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearDetalle(int id)
         {
-            ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(), "ProductoId", "Nombre");
+            ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductosEstado(), "ProductoId", "Nombre");
             //ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
             CompraDetalleViewModel compraDetalleViewModel = new()
             {

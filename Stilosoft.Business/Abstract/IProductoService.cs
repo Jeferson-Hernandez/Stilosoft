@@ -9,6 +9,7 @@ namespace Stilosoft.Business.Abstract
     public interface IProductoService
     {
         Task<IEnumerable<Producto>> ObtenerListaProductos();
+        Task<IEnumerable<Producto>> ObtenerListaProductosEstado();
         Task RegistrarProducto(Producto producto);
         Task<Producto> ObtenerProductoPorId(int id);
         Task EditarProducto(Producto producto);

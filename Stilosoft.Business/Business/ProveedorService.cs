@@ -22,6 +22,10 @@ namespace Stilosoft.Business.Business
         {
             return await _context.Proveedor.ToListAsync();
         }
+        public async Task<IEnumerable<Proveedor>> ObtenerListaProveedorEstado()
+        {
+            return await _context.Proveedor.Where(s => s.Estado == true).ToListAsync();
+        }
 
         public async Task<Proveedor> ObtenerProveedorPorId(int id)
         {

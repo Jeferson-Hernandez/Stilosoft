@@ -21,6 +21,11 @@ namespace Stilosoft.Business.Business
         {
             return await _context.Producto.ToListAsync();
         }
+            
+        public async Task<IEnumerable<Producto>> ObtenerListaProductosEstado()
+        {
+            return await _context.Producto.Where(s => s.Estado == true).ToListAsync();
+        }
         public async Task<Producto> ObtenerProductoPorId(int Id)
         {
             return await _context.Producto.FirstOrDefaultAsync(s => s.ProductoId == Id);
