@@ -37,6 +37,9 @@
                     Imagen
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
                     Acciones
                 </th>
             </tr>
@@ -44,33 +47,47 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cantidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                    <td>
-                        @if (item.RutaImagen != null)
-                        {
-                            //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-circle w-25 h-10" />-->
-                            <a onclick="mostrarModalG('@Url.Action("mostrarInsumo", "Producto", new { rutaImagen = item.RutaImagen }, Context.Request.Scheme)', 'Imagen')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
-                        }
-                    </td>
-                    <td>
-                        <a onclick="mostrarModalS('@Url.Action("EditarProducto","Producto", new {id = item.ProductoId}, Context.Request.Scheme)', 'Editar Prodcuto')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="EliminarProducto" asp-route-id="@item.ProductoId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.ProductoId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar Producto?');"></i></button>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @if (item.RutaImagen != null)
+                    {
+                        //<img src="@("~/imagenes/" + item.RutaImagen)" asp-append-version="true" class="img-circle w-25 h-10" />-->
+                        <a onclick="mostrarModalG('@Url.Action("mostrarInsumo", "Producto", new { rutaImagen = item.RutaImagen }, Context.Request.Scheme)', 'Imagen')" class="btn btn-secondary"><i class="fas fa-image"></i></a>
+                    }
+                </td>
+                <td>
+                    @if (item.Estado == true)
+                    {
+                        <form asp-action="EditarEstado" asp-route-id="@item.ProductoId">
+                            <button type="submit"><i class="fas fa-toggle-on"></i></button>
                         </form>
-                    </td>
-                </tr>
+                    }
+                    else if (item.Estado == false)
+                    {
+                        <form asp-action="EditarEstado" asp-route-id="@item.ProductoId">
+                            <button type="submit"><i class="fas fa-toggle-off"></i></button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    <a onclick="mostrarModalS('@Url.Action("EditarProducto","Producto", new {id = item.ProductoId}, Context.Request.Scheme)', 'Editar Prodcuto')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
+                    <!--<form asp-action="EliminarProducto" asp-route-id="@item.ProductoId" onclick="return  DeleteConfirm()" href="/Productos/index/@item.ProductoId" class="d-inline">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar Producto?');"></i></button>
+                    </form>-->
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -97,6 +114,10 @@
         }
         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EliminarProducto")) { <text>
         alertify.alert('Eliminar Producto', '@TempData["Mensaje"]', function () { alertify.error('Prodcuto eliminado'); });
+                 </text>
+        }
+         @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
                  </text>
         }
     </script>
