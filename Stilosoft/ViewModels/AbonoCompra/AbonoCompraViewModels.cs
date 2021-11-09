@@ -20,6 +20,7 @@ namespace Stilosoft.ViewModels.AbonoCompra
         public DateTime FechaPago { get; set; }
         public int Cuotas { get; set; }
         public long ValorInicial { get; set; }
+        public long ValorFinal { get; set; }
 
     }
 }

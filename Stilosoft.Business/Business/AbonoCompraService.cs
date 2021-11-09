@@ -28,14 +28,18 @@ namespace Stilosoft.Business.Business
         {
             return await _context.AbonoCompra.Include(c => c.Compra).Where(s => s.CompraId == Id).ToListAsync();
         }
-        /*public long ObtenerAbonoPorId(int Id)
+        public long ObtenerAbonoPorId(int Id)
         {
-            return  _context.AbonoCompra.Where(c => c.CompraId == Id).Min(p => p.PrecioTotal);
+            return  _context.AbonoCompra.Where(c => c.CompraId == Id).Min(p => p.ValorFinal);
+        }
+        public int ObtenerAbonoCuotaPorId(int Id)
+        {
+            return _context.AbonoCompra.Where(c => c.CompraId == Id).Min(p => p.Cuotas);
         }
         public int ObtenerCuotasPorId(int Id)
         {
             return _context.AbonoCompra.Where(ci => ci.CompraId == Id).Min(c => c.Cuotas);
-        }*/
+        }
         public long ObtenerMontoAbonadoPorId(int Id)
         {
             return _context.AbonoCompra.Where(c => c.CompraId == Id).Sum(p => p.CantAbono);

@@ -11,7 +11,8 @@ namespace Stilosoft.Business.Abstract
     {
         Task<IEnumerable<AbonoCompra>> ObtenerListaAbonoCompra();
         Task GuardarAbonoCompra(AbonoCompra abonoCompra);
-        //long ObtenerAbonoPorId(int Id);
+        long ObtenerAbonoPorId(int Id);
+        int ObtenerAbonoCuotaPorId(int Id);
         //int ObtenerCuotasPorId(int Id);
         long ObtenerMontoAbonadoPorId(int Id);
         Task<IEnumerable<AbonoCompra>> ObtenerListaAbonoPorId(int Id);

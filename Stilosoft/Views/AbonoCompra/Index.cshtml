@@ -7,6 +7,9 @@
 <section class="content">
     <p>
         <a onclick="mostrarModalS('@Url.Action("AgregarAbonoCompra","AbonoCompra",new {id = @ViewBag.IdCompra},Context.Request.Scheme)','Abono Compra')" class="btn btn-success"> Agregar abono</a>
+        <a>
+
+        </a>
     </p>
 
     <table class="table" id="tabla">
@@ -35,10 +38,11 @@
         <tbody>
             @foreach (var item in Model)
             {
+                var PrecioFijo = item.Compra.Cuotas;
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.ValorInicial)
-                    </td>             
+                    </td>
                     <th>
                         @Html.DisplayFor(modelItem => item.Cuotas)
                     </th>
@@ -57,10 +61,15 @@
                         </form>
                     </td>
                 </tr>
-
             }
         </tbody>
     </table>
+    @foreach (var item2 in Model)
+    {
+        <p><strong>Precio a pagar: </strong> @Html.DisplayFor(modelItem => item2.ValorInicial)</p>
+        <p><strong>Cuotas en total: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>        
+        break;
+    }
 </section>
 
 @if (TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error"))
