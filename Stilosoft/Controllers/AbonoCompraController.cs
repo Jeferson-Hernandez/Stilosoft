@@ -58,6 +58,7 @@ namespace Stilosoft.Controllers
         [HttpPost]
         public async Task<IActionResult> AgregarAbonoCompra(int Id, AbonoCompraViewModels abonoCompraViewModels )
         {
+            ////Poner un mensaje de alerta, que el pago por abonos fue completado
             if (ModelState.IsValid)
             {
                 DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
@@ -82,27 +83,17 @@ namespace Stilosoft.Controllers
                 {
                     abonoCompra.Cuotas = _abonoCompraService.ObtenerAbonoCuotaPorId(Id);
                     abonoCompra.ValorInicial = _abonoCompraService.ObtenerAbonoPorId(Id);
-                }
-
-                ////Cliente existe            
+                }       
                 if (abonoCompra.CantAbono > 0)
                 {
                     abonoCompra.ValorFinal = abonoCompra.ValorInicial - abonoCompra.CantAbono;
                 }
-
                 if(abonoCompra.Cuotas > 0)
                 {
                    abonoCompra.Cuotas -= 1;
                 }
-                if (abonoCompra.CantAbono < 0)
-                {
-                    TempData["Accion"] = "Error";
-                    TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
-                    return RedirectToAction("index", "Compras");
-                }
                 try
-                {
-                    // await _comprasService.RegistrarCompra(compra);
+                {            
                     await _abonoCompraService.GuardarAbonoCompra(abonoCompra);
                     TempData["Accion"] = "Agregar";
                     TempData["Mensaje"] = "Agregar abono exitosamente";
@@ -144,7 +135,6 @@ namespace Stilosoft.Controllers
                  return NotFound();
              }
          }
-
         private bool AbonoCompraExists(int id)
         {
             return _context.AbonoCompra.Where(c => c.CompraId == id).Any(e => e.ValorFinal > 0);

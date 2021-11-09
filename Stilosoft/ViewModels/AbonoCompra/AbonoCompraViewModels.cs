@@ -13,6 +13,7 @@ namespace Stilosoft.ViewModels.AbonoCompra
         public int AbonoCompraId { get; set; }
         [DisplayName("Abono")]
         [Required(ErrorMessage = "El abono es obligatorio")]
+        [Range(10000, 10000000, ErrorMessage = "El minimo de abono es 10000")]
         public int CantAbono { get; set; }
         [Column(TypeName = "Date")]
         [DisplayName("Fecha de pago")]
