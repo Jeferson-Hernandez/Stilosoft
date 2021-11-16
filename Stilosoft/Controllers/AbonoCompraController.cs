@@ -76,7 +76,7 @@ namespace Stilosoft.Controllers
 
                 if (!AbonoCompraExists(abonoCompra.CompraId))
                 {
-                    abonoCompra.ValorInicial = detalleCompra.Total;
+                    abonoCompra.ValorInicial = _abonoCompraService.ObtenerTotalDetalleCompraPorId(Id);
                     abonoCompra.Cuotas = compra.Cuotas;
                 }
                 else

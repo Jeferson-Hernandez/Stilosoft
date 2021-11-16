@@ -14,11 +14,13 @@ namespace Stilosoft.Business.Business
     {
         private readonly AppDbContext _context;
         private readonly IComprasService _comprasService;
+        private readonly IDetalleCompraService _detalleCompraService;
 
-        public AbonoCompraService(AppDbContext context, IComprasService comprasService)
+        public AbonoCompraService(AppDbContext context, IComprasService comprasService, IDetalleCompraService detalleCompraService)
         {
             _context = context;
             _comprasService = comprasService;
+            _detalleCompraService = detalleCompraService;
         }
         public async Task<IEnumerable<AbonoCompra>> ObtenerListaAbonoCompra()
         {
@@ -43,6 +45,10 @@ namespace Stilosoft.Business.Business
         public long ObtenerMontoAbonadoPorId(int Id)
         {
             return _context.AbonoCompra.Where(c => c.CompraId == Id).Sum(p => p.CantAbono);
+        }
+        public long ObtenerTotalDetalleCompraPorId(int Id)
+        {
+            return _context.DetalleCompra.Where(c => c.CompraId == Id).Sum(t => t.Total);
         }
         public async Task GuardarAbonoCompra(AbonoCompra abonoCompra)
         {

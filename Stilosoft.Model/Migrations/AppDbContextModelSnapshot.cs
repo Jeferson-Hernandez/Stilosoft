@@ -243,9 +243,6 @@ namespace Stilosoft.Model.Migrations
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("Date");
 
-                    b.Property<long>("MontoAbonandoTotal")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ValorFinal")
                         .HasColumnType("bigint");
 

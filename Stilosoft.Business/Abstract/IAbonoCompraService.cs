@@ -15,6 +15,7 @@ namespace Stilosoft.Business.Abstract
         int ObtenerAbonoCuotaPorId(int Id);
         //int ObtenerCuotasPorId(int Id);
         long ObtenerMontoAbonadoPorId(int Id);
+        long ObtenerTotalDetalleCompraPorId(int Id);
         Task<IEnumerable<AbonoCompra>> ObtenerListaAbonoPorId(int Id);
         Task<AbonoCompra> ObtenerAbonoCompraId(int Id);
         Task EliminarAbonoCompra(int Id);
