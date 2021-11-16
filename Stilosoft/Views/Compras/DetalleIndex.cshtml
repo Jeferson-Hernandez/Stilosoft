@@ -4,7 +4,6 @@
     ViewData["Title"] = "Detalle de la Compra";
     Layout = null;
 }
-
     <section class="content">
         <table class="table" id="tabla">
             <thead>
@@ -62,7 +61,8 @@
                             @Html.DisplayFor(modelItem => total)
                         </td>
                         <td>
-                            <form asp-controller="Compras" asp-action="EliminarDetalle"  asp-route-id="@item.DetalleCompraId" onclick="return  DeleteConfirm()"  class="d-inline">
+                            @*<a onclick="mostrarModalS('@Url.Action("EditarDetalle","Compras", new {id = item.DetalleCompraId}, Context.Request.Scheme)', 'Editar producto')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>*@
+                            <form asp-controller="Compras" asp-action="EliminarDetalle" asp-route-id="@item.DetalleCompraId" onclick="return  DeleteConfirm()" class="d-inline">
                                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
                             </form>
                         </td>
