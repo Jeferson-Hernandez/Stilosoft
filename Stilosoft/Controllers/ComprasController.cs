@@ -45,7 +45,7 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearCompra()
         {
-            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedor(), "ProveedorId", "Nombre");
+            ViewBag.ListarProveedor = new SelectList(await _proveedorService.ObtenerListaProveedorEstado(), "ProveedorId", "Nombre");
             return View(new ComprasViewModel());
         }
         [HttpPost]
@@ -169,33 +169,39 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> CrearDetalle(int id)
         {
-            ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductos(), "ProductoId", "Nombre");
-            //ViewBag.ListarInsumo = new SelectList(await _insumoService.ObtenerListaInsumos(), "InsumoId", "Nombre");
-            CompraDetalleViewModel compraDetalleViewModel = new()
+            ViewBag.ListarProducto = new SelectList(await _productoService.ObtenerListaProductosEstado(), "ProductoId", "Nombre");
+            CompraInsumosViewModel compraInsumos = new()
             {
-                CompraId = id
+                compraId = id
             };
-            return View(compraDetalleViewModel);
+
+            return View(compraInsumos);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearDetalle(CompraDetalleViewModel compraDetalleViewModel)
+        public async Task<IActionResult> CrearDetalle(CompraInsumosViewModel compraInsumosViewModel)
         {
             if (ModelState.IsValid)
             {
-                DetalleCompra detalleCompra = new()
-                {
-                    CompraId = compraDetalleViewModel.CompraId,
-                    ProductoId = compraDetalleViewModel.ProductoId,
-                    Cantidad = compraDetalleViewModel.Cantidad,
-                    Costo = compraDetalleViewModel.Costo,
-                    SubTotal = compraDetalleViewModel.SubTotal,
-                    Iva = compraDetalleViewModel.Iva,
-                    Total = compraDetalleViewModel.Total
-                };
-
                 try
                 {                    
+                    int compra = compraInsumosViewModel.compraId;
+                    foreach (var item in compraInsumosViewModel.CompraInsumos)
+                    {
+                        DetalleCompra detalleCompra = new()
+                        {
+                            CompraId = compra,
+                            ProductoId = item.ProductoId,
+                            Cantidad = item.Cantidad,
+                            Costo = item.Costo,
+                            SubTotal = item.SubTotal,
+                            Iva = item.Iva,
+                            Total = item.Total
+                        };
+                        await _detalleCompraService.RegistrarDetalleCompra(detalleCompra);
+                        await _productoService.AgregarCantidad(detalleCompra.ProductoId, detalleCompra.Cantidad);
+                    }
+                    /*
                     var ProductoExiste = await _detalleCompraService.ProductoExiste(detalleCompra.CompraId ,detalleCompra.ProductoId);
 
                     if (ProductoExiste != null)
@@ -205,9 +211,9 @@ namespace Stilosoft.Controllers
                         return RedirectToAction("Index");
                     }
                     await _detalleCompraService.RegistrarDetalleCompra(detalleCompra);
-                    await _productoService.AgregarCantidad(detalleCompra.ProductoId, detalleCompra.Cantidad);
+                    await _productoService.AgregarCantidad(detalleCompra.ProductoId, detalleCompra.Cantidad);*/
                     TempData["Accion"] = "Crear";
-                    TempData["Mensaje"] = "Producto añadido con éxito";
+                    TempData["Mensaje"] = "Productos añadido con éxito";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)

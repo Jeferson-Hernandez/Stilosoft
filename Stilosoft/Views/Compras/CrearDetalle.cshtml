@@ -1,65 +1,101 @@
-﻿@model Stilosoft.ViewModels.Compras.CompraDetalleViewModel
+﻿@model Stilosoft.ViewModels.Compras.CompraInsumosViewModel
 @{
     ViewData["Title"] = "Agregar insumos";
     Layout = null;
 }
 
 <div class="container-fluid">
-            <form asp-action="CrearDetalle" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-12">
                 <div asp-validation-summary="ModelOnly"></div>
-                <input type="hidden" asp-for="CompraId"/>
+                
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <label class="control-label">Producto</label>
-                            <select asp-items="ViewBag.ListarProducto" asp-for="ProductoId" class="form-control"></select>
-                            <span asp-validation-for="ProductoId" class="text-danger"></span>
+                            <select asp-items="ViewBag.ListarProducto" class="form-control" id="insumo"></select>
+                            @*<span asp-validation-for="ProductoId" class="text-danger"></span>*@
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label asp-for="Cantidad" class="control-label"></label>
-                            <input asp-for="Cantidad" class="form-control" id="cantidadInsumo" />
-                            <span asp-validation-for="Cantidad" class="text-danger"></span>
+                            <label class="control-label">Cantidad</label>
+                            <input class="form-control" id="cantidadInsumo" />
+                            @*<span asp-validation-for="Cantidad" class="text-danger"></span>*@
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label asp-for="Costo" class="control-label"></label>
-                            <input asp-for="Costo" class="form-control" id="costoInsumo" />
-                            <span asp-validation-for="Costo" class="text-danger"></span>
+                            <label class="control-label">Precio</label>
+                            <input class="form-control" id="costoInsumo" />
+                            @*<span asp-validation-for="Costo" class="text-danger"></span>*@
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label asp-for="SubTotal" class="control-label"></label>
-                            <input asp-for="SubTotal" class="form-control" readonly id="subTotal" />
-                            <span asp-validation-for="SubTotal" class="text-danger"></span>
+                            <label class="control-label">Subtotal</label>
+                            <input class="form-control" readonly id="subTotal" />
+                            @*<span asp-validation-for="SubTotal" class="text-danger"></span>*@
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label asp-for="Iva" class="control-label"></label>
-                            <input asp-for="Iva" class="form-control" id="iva" readonly/>
-                            <span asp-validation-for="Iva" class="text-danger"></span>
+                            <label class="control-label">Iva</label>
+                            <input class="form-control" id="iva" readonly />
+                            @*<span asp-validation-for="Iva" class="text-danger"></span>*@
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <label asp-for="Total" class="control-label"></label>
-                            <input asp-for="Total" class="form-control" readonly id="totalCompra"/>
-                            <span asp-validation-for="Total" class="text-danger"></span>
+                            <label class="control-label">Total</label>
+                            <input class="form-control" readonly id="total" />
+                            @*<span asp-validation-for="Total" class="text-danger"></span>*@
                         </div>
                     </div>
                 </div><br />
                 <div class="form-group">
-                    <input type="submit" value="Agregar producto" class="btn btn-primary" />
+                    <input onclick="agregarInsumo()" type="submit" value="Agregar producto" class="btn btn-primary" />
                 </div>
+            
+        </div>
+    </div>     
+    <br /><hr /><br />
+    <div class="row">
+        <div class="col-12">
+            <h2>Lista de insumos</h2>
+            <form asp-action="CrearDetalle" asp-controller="Compras" method="post">
+                <input type="hidden" asp-for="compraId"/>
+                <input type="hidden" asp-route-insumoIndex="" id="listaInsumos"/>
+                <table id="tablaInsumos" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Insumo</td>
+                            <td>Cantidad</td>
+                            <td>Valor</td>
+                            <td>Subtotal</td>
+                            <td>Iva</td>
+                            <td>Precio</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <h3>Total: <span id="totalCompra"></span></h3>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <input id="agregar" type="submit" value="Guardar compra" class="btn btn-block btn-secondary" />
             </form>
-        
+        </div>
+    </div>
 </div>
+
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @section Scripts {
 
@@ -79,7 +115,71 @@
         $("#iva").change(function () {
             var iva = $("#iva").val() * 0.01;
             var subtotalIva = $("#subTotal").val() * iva;
-            $("#totalCompra").val(parseInt($("#subTotal").val()) + subtotalIva);
+            $("#total").val(parseInt($("#subTotal").val()) + subtotalIva);
         })
     })
+
+    var totalCompra = 0;
+    var cont = 0;
+    function agregarInsumo() {
+        let insumoId = $("#insumo option:selected").val();
+        let insumoText = $("#insumo option:selected").text();
+        let cantidad = $("#cantidadInsumo").val();
+        let precio = $("#costoInsumo").val();
+        let subtotal = $("#subTotal").val();
+        let iva = $("#iva").val();
+        let total = $("#total").val();
+            
+        if (total != 0) {
+            $("#tablaInsumos").append(`
+            <tr id="${cont}">
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].ProductoId" value="${insumoId}" />     
+                    ${insumoText}
+                </td>
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].Cantidad" value="${cantidad}" />
+                    ${cantidad}
+                </td>
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].Costo" value="${precio}" />
+                    ${precio}
+                </td>
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].SubTotal" value="${subtotal}" />
+                    ${subtotal}
+                </td>
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].Iva" value="${iva}" />
+                    ${iva}
+                </td>
+                <td>
+                    <input type="hidden" name="CompraInsumos[${cont}].Total" value="${total}" />
+                    ${total}                                          
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclick="eliminarInsumo(${cont}, ${total})"></i></button>                                          
+                </td>
+            </tr>
+            `);
+            cont++;
+            totalCompra = parseInt(totalCompra) + parseInt(total);
+            $("#totalCompra").text(totalCompra);
+            $("#cantidadInsumo").val('');
+            $("#costoInsumo").val('');
+            $("#subTotal").val('');
+            $("#iva").val('');
+            $("#total").val('');
+        }
+    }
+
+    function eliminarInsumo(cont, total) {
+        totalCompra = parseInt(totalCompra) - parseInt(total);
+        $("#totalCompra").text(totalCompra);
+        @*let insumosIndex = [];
+        insumosIndex.push(cont);
+        $("#listaInsumos").attr("asp-route-insumoIndex", insumosIndex)*@
+        $("#" + cont).remove();
+
+    }
 </script>

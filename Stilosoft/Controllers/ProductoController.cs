@@ -47,7 +47,8 @@ namespace Stilosoft.Controllers
                     Nombre = productoViewModel.Nombre,
                     Cantidad = productoViewModel.Cantidad,
                     Precio = productoViewModel.Precio,
-                    Descripcion = productoViewModel.Descripcion
+                    Descripcion = productoViewModel.Descripcion,
+                    Estado = true
                 };
                 if (producto.Cantidad <= 0)
                 {
@@ -97,7 +98,7 @@ namespace Stilosoft.Controllers
 
                         await _productoService.RegistrarProducto(producto);
                         TempData["Accion"] = "RegistrarProducto";
-                        TempData["Mensaje"] = "Producto guardado con éxito";
+                        TempData["Mensaje"] = "Insumo guardado con éxito";
                         return RedirectToAction("Index");
                     }
                     catch (Exception)
@@ -123,6 +124,7 @@ namespace Stilosoft.Controllers
                 Cantidad = producto.Cantidad,
                 Precio = producto.Precio,
                 Descripcion = producto.Descripcion,
+                Estado = producto.Estado,
                 RutaImagen = producto.RutaImagen
             };
             return View(productoViewModel);
@@ -139,7 +141,8 @@ namespace Stilosoft.Controllers
                         Nombre = productoViewModel.Nombre,
                         Cantidad = productoViewModel.Cantidad,
                         Precio = productoViewModel.Precio,
-                        Descripcion = productoViewModel.Descripcion
+                        Descripcion = productoViewModel.Descripcion,
+                        Estado = productoViewModel.Estado,
                     };
                     if (producto.Cantidad <= 0)
                     {
@@ -185,7 +188,7 @@ namespace Stilosoft.Controllers
 
                         await _productoService.EditarProducto(producto);
                         TempData["Accion"] = "EditarProducto";
-                        TempData["Mensaje"] = "Producto editado correctamente";
+                        TempData["Mensaje"] = "Insumo editado correctamente";
                         return RedirectToAction("index");
                     }
                     catch (Exception)
@@ -239,6 +242,35 @@ namespace Stilosoft.Controllers
                 return RedirectToAction("index");
             }
 
+        }
+
+        public async Task<IActionResult> EditarEstado(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Error";
+                return RedirectToAction("index");
+            }
+            Producto producto = await _productoService.ObtenerProductoPorId(id.Value);
+            try
+            {
+                if (producto.Estado == true)
+                    producto.Estado = false;
+                else if (producto.Estado == false)
+                    producto.Estado = true;
+
+                await _productoService.EditarProducto(producto);
+                TempData["Accion"] = "EditarEstado";
+                TempData["Mensaje"] = "Estado editado correctamente";
+                return RedirectToAction("index");
+            }
+            catch (Exception)
+            {
+                TempData["Accion"] = "Error";
+                TempData["Mensaje"] = "Ingresaste un valor inválido";
+                return RedirectToAction("index");
+            }
         }
 
         [HttpGet]

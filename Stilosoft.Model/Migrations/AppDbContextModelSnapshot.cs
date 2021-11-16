@@ -528,6 +528,9 @@ namespace Stilosoft.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");

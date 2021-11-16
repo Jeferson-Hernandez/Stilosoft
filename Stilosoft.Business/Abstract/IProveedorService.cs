@@ -9,6 +9,7 @@ namespace Stilosoft.Business.Abstract
      public interface IProveedorService
     {        
         Task<IEnumerable<Proveedor>> ObtenerListaProveedor();
+        Task<IEnumerable<Proveedor>> ObtenerListaProveedorEstado();
         Task<Proveedor> ObtenerProveedorPorId(int id);
         Task GuardarProveedor(Proveedor proveedor);
         Task EditarProveedor(Proveedor proveedor);
