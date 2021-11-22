@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Stilosoft.Model.Entities.SolicitudServicio>
+
+@{
+    ViewData["Title"] = "Solicitud servicio";
+}
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <a asp-action="index" asp-controller="Clientes" class="btn btn-primary btn-lg mr-md-4">Clientes</a>
+            <a asp-action="index" asp-controller="Citas" class="btn btn-primary btn-lg mr-md-4">Citas</a>
+            <a asp-action="index" asp-controller="SolicitudServicio" class="btn btn-secondary btn-lg mr-md-4">Solicitud de servicio</a>
+            <a href="#" class="btn btn-primary btn-lg">Ventas</a>
+        </div>
+    </div>
+</div>
+<hr>
+<section class="content">
+    <p>
+        <a asp-action="index" asp-controller="Vistas" class="btn btn-success"> Crear solicitud de servicio</a>
+    </p>
+    <table class="table table-bordered" id="tabla">
+        <thead>
+            <tr>
+                <th>Acción</th>
+                <th>No. Solicitud</th>
+                <th>Cliente</th>
+                <th>Fecha de servicio</th>
+                <th>Cambiar estado</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <p style="color: cornflowerblue;">Abrir</p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha) || @Html.DisplayFor(modelItem => item.Hora)
+                    </td>
+                    <td>
+                        <form>
+                            <button type="submit"><i class="fas fa-toggle-on"></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option>Seleccionar</option>
+                            <option>Aprobado</option>
+                            <option>Finalizado</option>
+                        </select>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+@section Scripts{
+
+    <script src="~/js/tabla.js"></script>
+    <script src="~/js/modals.js"></script>
+    <script>
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Crear")) { <text>
+                  alertify.alert('Guardar estilista', '@TempData["Mensaje"]', function () { alertify.success('Solicitud guardada'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Error")) { <text>
+        alertify.alert('Error', '@TempData["Mensaje"]'});
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("Editar")) { <text>
+        alertify.alert('Editar estilista', '@TempData["Mensaje"]', function () { alertify.success('Solicitud editada'); });
+                 </text>
+        }
+        @if(TempData["Mensaje"] != null && TempData["Accion"].ToString().Equals("EditarEstado")) { <text>
+        alertify.success('Estado cambiado correctamente.');
+                 </text>
+        }
+    </script>
+
+}
