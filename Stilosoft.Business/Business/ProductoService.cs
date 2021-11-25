@@ -60,5 +60,9 @@ namespace Stilosoft.Business.Business
         {
             return await _context.Producto.FirstOrDefaultAsync(n => n.Nombre == Nombre);
         }
+        public async Task<List<Producto>> ObtenerListaProductosSolicitud()
+        {
+            return await _context.Producto.Where(s => s.Estado == true).ToListAsync();
+        }
     }
 }

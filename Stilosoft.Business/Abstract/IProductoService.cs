@@ -16,5 +16,6 @@ namespace Stilosoft.Business.Abstract
         Task EliminarProducto(int id);
         Task AgregarCantidad(int productoId, int cantidad);
         Task<Producto> NombreInsumoExiste(string Nombre);
+        Task<List<Producto>> ObtenerListaProductosSolicitud();
     }
 }

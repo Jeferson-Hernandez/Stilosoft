@@ -24,6 +24,10 @@ namespace Stilosoft.Business.Business
         {
             return await _context.Servicio.ToListAsync();
         }
+        public async Task<IEnumerable<Servicio>> ObtenerListaServiciosEstado()
+        {
+            return await _context.Servicio.Where(s => s.Estado == true).ToListAsync();
+        }
 
         public async Task<Servicio> ObtenerServicioPorId(int id)
         {
@@ -66,6 +70,11 @@ namespace Stilosoft.Business.Business
                 listaServiciosDtos.Add(citaServiciosDto);
             });
             return listaServiciosDtos;
+        }
+
+        public async Task<List<Servicio>> ObtenerListaServiciosSolicitud()
+        {
+            return await _context.Servicio.Where(s => s.Estado == true).ToListAsync();
         }
     }
 }

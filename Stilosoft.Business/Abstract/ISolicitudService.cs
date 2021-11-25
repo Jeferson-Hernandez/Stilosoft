@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Abstract
 {
-    interface ISolicitudService
+    public interface ISolicitudService
     {
-        Task<IEnumerable<SolicitudServicio>> ObtenerListaCitas();
+        Task<IEnumerable<SolicitudServicio>> ObtenerListaSolicitudes();
     }
 }

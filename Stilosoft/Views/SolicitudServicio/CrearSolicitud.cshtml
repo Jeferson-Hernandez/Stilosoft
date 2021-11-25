@@ -1,0 +1,152 @@
+﻿@model Stilosoft.ViewModels.SolicitudServicio.SolicitudServicioViewModel
+
+@{
+    ViewData["Title"] = "Crear Compra";
+}
+
+<div class="container-fluid">
+    <br />
+    <form asp-action="CrearDetalle" asp-controller="Compras" method="post">
+        <div class="row">
+            <div class="col-6">
+                <h3>Seleccione el cliente </h3>
+                <select asp-items="ViewBag.Clientes" asp-for="clienteId" class="form-control "></select>
+                <span asp-validation-for="clienteId" class="text-danger"></span>
+            </div>
+            <div class="col-6 text-right">
+                <input type="submit" value="Terminar solicitud" class="btn btn-info mt-4 mr-5" disabled/>
+            </div>
+        </div>
+        <hr />
+        <h3 class="text-center">Agregar servicios</h3>
+        <br />
+        <div class="row">
+            <div class="col-3">
+                <h3>Servicio</h3>
+                <div class="row">
+                    <div class="form-group col-xs-6 pl-2">
+                        <select onchange="" id="servicio" class="form-control">
+                            <option>Seleccione</option>
+                            @foreach (var item in Model.servicios)
+                            {
+                                <option duracion="@item.Duracion" value="@item.ServicioId">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-6 pl-2">
+                        <input type="number" placeholder="Valor servicio" class="form-control" id="valorServicio" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button onclick="agregarServicio()" type="button" class="btn btn-primary">Agregar servicio</button>
+                </div>
+            </div>
+            <div class="col-8">
+                <h2>Lista de servicios</h2>
+                <input type="hidden" id="listaServicios" />
+                <table id="tablaServicios" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Servicio</td>
+                            <td>Duración</td>
+                            <td>Valor</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <h4>Total: <span id="totalServicios"></span></h4>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <h3 class="text-center">Agregar productos</h3>
+        <br />
+        <div class="row">
+            <div class="col-3">
+                <h3>Producto</h3>
+                <div class="row">
+                    <div class="form-group col-xs-6 pl-2">
+                        <select id="productoId" class="form-control">
+                            <option>Seleccione</option>
+                            @foreach (var item in Model.productos)
+                            {
+                                <option value="@item.ProductoId">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-6 pl-2">
+                        <input type="number" placeholder="Cantidad producto" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input onclick="agregarProducto()" type="submit" value="Agregar producto" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="col-8">
+                <h2>Lista de productos</h2>
+                <input type="hidden" id="listaProductos" />
+                <table id="tablaProductos" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Cantidad</td>
+                            <td>Valor</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <h4>Total: <span id="totalServicios"></span></h4>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var totalServicios = 0;
+    var contServicios = 0;
+    function agregarServicio() {
+        let servicio = $("#servicio option:selected");
+        let servicioId = $("#servicio option:selected").val();
+        let servicioText = $("#servicio option:selected").text();
+        let valorServicio = $("#valorServicio").val();
+
+        if (valorServicio >= 5000) {
+            $("#tablaServicios").append(`
+            <tr id="${contServicios}">
+                <td>    
+                    ${servicioText}
+                </td>
+                <td>
+                    ${servicio.attr("duracion")}
+                </td>
+                <td>
+                    ${valorServicio}
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>                                          
+                </td>
+            </tr>
+            `);
+            contServicios++;
+            totalServicios = parseInt(totalServicios) + parseInt(valorServicio);
+            $("#totalServicios").text(totalServicios);
+            $("#valorServicio").val('');
+
+        }
+    }
+</script>

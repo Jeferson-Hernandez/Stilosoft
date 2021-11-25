@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Stilosoft.Business.Business
 {
-    class SolicitudService:ISolicitudService
+    public class SolicitudService:ISolicitudService
     {
         private readonly AppDbContext _context;
 
@@ -18,7 +18,7 @@ namespace Stilosoft.Business.Business
         {
             _context = context;
         }
-        public async Task<IEnumerable<SolicitudServicio>> ObtenerListaCitas()
+        public async Task<IEnumerable<SolicitudServicio>> ObtenerListaSolicitudes()
         {
             return await _context.SolicitudServicio.Include(c => c.Cliente).ToListAsync();
         }

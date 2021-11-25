@@ -17,5 +17,7 @@ namespace Stilosoft.Business.Abstract
         Task EliminarServicio(int id);
         Task<Servicio> NombreServicioExiste(string nombre);
         List<CitaServiciosDto> ObtenerListaServiciosCita();
+        Task<IEnumerable<Servicio>> ObtenerListaServiciosEstado();
+        Task<List<Servicio>> ObtenerListaServiciosSolicitud();
     }
 }
