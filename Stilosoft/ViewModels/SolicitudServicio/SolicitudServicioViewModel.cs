@@ -1,6 +1,7 @@
 ﻿using Stilosoft.Model.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +9,26 @@ using System.Threading.Tasks;
 namespace Stilosoft.ViewModels.SolicitudServicio
 {
     public class SolicitudServicioViewModel
-    {
+    {   [Required]
+        public string ClienteId { get; set; }
         [Required]
-        public string clienteId { get; set; }
-        public List<Servicio> servicios { get; set; }
-        public List<Producto> productos { get; set; }
+        public DateTime FechaHora { get; set; }
+        public List<Servicio> Servicios { get; set; }
+        public List<Producto> Productos { get; set; }
+        public List<SolicitudServicios> ServiciosSolicitud { get; set; }
+        public List<SolicitudProductos> ProductosSolicutud { get; set; }
+    }
+    public class SolicitudServicios
+    {
+        public int ServicioId { get; set; }
+        public int Duracion { get; set; }
+        public int EstilistaId { get; set; }
+        public long Precio { get; set; }
+    }
+    public class SolicitudProductos
+    {
+        public int ProductoId { get; set; }
+        public int Cantidad { get; set; }
+        public long Precio { get; set; }
     }
 }

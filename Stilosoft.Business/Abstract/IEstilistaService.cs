@@ -16,5 +16,6 @@ namespace Stilosoft.Business.Abstract
         Task EditarEstilista(Estilista estilista);
         Task GuardarEstilista(Estilista estilista);
         Task<Estilista> ObtenerEstilistaPorId(int id);
+        Task<IEnumerable<Estilista>> ObtenerListaEstilistasEstado();
     }
 }

@@ -6,42 +6,56 @@
 
 <div class="container-fluid">
     <br />
-    <form asp-action="CrearDetalle" asp-controller="Compras" method="post">
+    <form asp-action="CrearSolicitud" asp-controller="SolicitudServicio" method="post">
         <div class="row">
-            <div class="col-6">
-                <h3>Seleccione el cliente </h3>
-                <select asp-items="ViewBag.Clientes" asp-for="clienteId" class="form-control "></select>
-                <span asp-validation-for="clienteId" class="text-danger"></span>
+            <div class="col-8">
+                <div class="row">
+                    <div class="form-group col-xs-6 pl-2">
+                        <h3>Cliente</h3>
+                        <select asp-items="ViewBag.Clientes" asp-for="ClienteId" class="form-control "></select>
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-xs-2 pl-2">
+                        <h3> Fecha y hora</h3>
+                        <input value="" type="datetime-local" asp-for="FechaHora" class="form-control" />
+                        <span asp-validation-for="FechaHora" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="col-6 text-right">
-                <input type="submit" value="Terminar solicitud" class="btn btn-info mt-4 mr-5" disabled/>
+            <div class="col-3 text-right">
+                <input id="terminarSolicitud" type="submit" value="Terminar solicitud" class="btn btn-info mt-4 mr-5" disabled/>
             </div>
         </div>
         <hr />
         <h3 class="text-center">Agregar servicios</h3>
         <br />
         <div class="row">
-            <div class="col-3">
-                <h3>Servicio</h3>
+            <div class="col-4">
                 <div class="row">
-                    <div class="form-group col-xs-6 pl-2">
-                        <select onchange="" id="servicio" class="form-control">
+                    <div class="form-group col-xs-4 pl-2">
+                        <h3>Servicio</h3>
+                        <select id="servicio" class="form-control">
                             <option>Seleccione</option>
-                            @foreach (var item in Model.servicios)
+                            @foreach (var item in Model.Servicios)
                             {
                                 <option duracion="@item.Duracion" value="@item.ServicioId">@item.Nombre</option>
                             }
                         </select>
                     </div>
-                    <div class="form-group col-xs-6 pl-2">
+                    <div class="form-group col-xs-4 pl-2">
+                        <h3>Valor servicio</h3>
                         <input type="number" placeholder="Valor servicio" class="form-control" id="valorServicio" />
+                    </div>
+                    <div class="form-group col-xs-4 pl-2">
+                        <h3>Estilista</h3>
+                        <select asp-items="ViewBag.Estilistas" class="form-control" id="estilistaSolicitud"></select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button onclick="agregarServicio()" type="button" class="btn btn-primary">Agregar servicio</button>
+                    <button id="agregarServicioBtn" onclick="agregarServicio()" type="button" class="btn btn-primary">Agregar servicio</button>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
                 <h2>Lista de servicios</h2>
                 <input type="hidden" id="listaServicios" />
                 <table id="tablaServicios" class="table table-bordered">
@@ -49,6 +63,7 @@
                         <tr>
                             <td>Servicio</td>
                             <td>Duración</td>
+                            <td>Estilista</td>
                             <td>Valor</td>
                             <td>Eliminar</td>
                         </tr>
@@ -57,7 +72,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="5" class="text-center">
                                 <h4>Total: <span id="totalServicios"></span></h4>
                             </td>
                         </tr>
@@ -69,27 +84,28 @@
         <h3 class="text-center">Agregar productos</h3>
         <br />
         <div class="row">
-            <div class="col-3">
-                <h3>Producto</h3>
+            <div class="col-4">
                 <div class="row">
                     <div class="form-group col-xs-6 pl-2">
-                        <select id="productoId" class="form-control">
+                        <h3>Producto</h3>
+                        <select id="producto" class="form-control">
                             <option>Seleccione</option>
-                            @foreach (var item in Model.productos)
+                            @foreach (var item in Model.Productos)
                             {
-                                <option value="@item.ProductoId">@item.Nombre</option>
+                                <option precio="@item.Precio" value="@item.ProductoId">@item.Nombre</option>
                             }
                         </select>
                     </div>
                     <div class="form-group col-xs-6 pl-2">
-                        <input type="number" placeholder="Cantidad producto" class="form-control" />
+                        <h3>Cantidad</h3>
+                        <input id="cantidadProducto" type="number" placeholder="Cantidad producto" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <input onclick="agregarProducto()" type="submit" value="Agregar producto" class="btn btn-primary" />
+                    <button onclick="agregarProducto()" type="button" class="btn btn-primary">Agregar producto</button>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
                 <h2>Lista de productos</h2>
                 <input type="hidden" id="listaProductos" />
                 <table id="tablaProductos" class="table table-bordered">
@@ -106,7 +122,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="4" class="text-center">
-                                <h4>Total: <span id="totalServicios"></span></h4>
+                                <h4>Total: <span id="totalProductos"></span></h4>
                             </td>
                         </tr>
                     </tfoot>
@@ -120,21 +136,31 @@
     var totalServicios = 0;
     var contServicios = 0;
     function agregarServicio() {
+        let estilistaId = $("#estilistaSolicitud option:selected").val();
+        let estilistaText = $("#estilistaSolicitud option:selected").text();
         let servicio = $("#servicio option:selected");
         let servicioId = $("#servicio option:selected").val();
         let servicioText = $("#servicio option:selected").text();
         let valorServicio = $("#valorServicio").val();
+        let estilista = $("#estilistaSolicitud");
 
         if (valorServicio >= 5000) {
             $("#tablaServicios").append(`
             <tr id="${contServicios}">
-                <td>    
+                <td>
+                    <input type="hidden" name="ServiciosSolicitud[${contServicios}].ServicioId" value="${servicioId}" />
                     ${servicioText}
                 </td>
                 <td>
+                    <input type="hidden" name="ServiciosSolicitud[${contServicios}].Duracion" value="${servicio.attr("duracion")}" />
                     ${servicio.attr("duracion")}
                 </td>
+                <td>    
+                    <input type="hidden" name="ServiciosSolicitud[${contServicios}].EstilistaId" value="${estilistaId}" />
+                    ${estilistaText}
+                </td>
                 <td>
+                    <input type="hidden" name="ServiciosSolicitud[${contServicios}].Precio" value="${valorServicio}" />
                     ${valorServicio}
                 </td>
                 <td>
@@ -146,7 +172,49 @@
             totalServicios = parseInt(totalServicios) + parseInt(valorServicio);
             $("#totalServicios").text(totalServicios);
             $("#valorServicio").val('');
-
+        }
+        if (contServicios > 0 && contServicios <= 5) {
+            if (contServicios == 5) {
+                $("#agregarServicioBtn").prop("disabled", true);
+            }
+            $("#terminarSolicitud").prop("disabled", false);
+        } else {
+            $("#terminarSolicitud").prop("disabled", true);
         }
     }
+    var totalProductos = 0;
+    var contProductos = 0;
+    function agregarProducto() {
+        let producto = $("#producto option:selected");
+        let productoId = $("#producto option:selected").val();
+        let productoText = $("#producto option:selected").text();
+        let cantidadProducto = $("#cantidadProducto").val();
+
+        if (cantidadProducto >= 1) {
+            $("#tablaProductos").append(`
+            <tr id="${contProductos}">
+                <td>  
+                    <input type="hidden" name="ProductosSolicutud[${contProductos}].ProductoId" value="${productoId}" />
+                    ${productoText}
+                </td>
+                <td>
+                    <input type="hidden" name="ProductosSolicutud[${contProductos}].Cantidad" value="${cantidadProducto}" />
+                    ${cantidadProducto}
+                </td>
+                <td>    
+                    <input type="hidden" name="ProductosSolicutud[${contProductos}].Precio" value="${producto.attr("precio")}" />
+                    ${producto.attr("precio")}
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>                                          
+                </td>
+            </tr>
+            `);
+            contProductos++;
+            totalProductos = parseInt(totalProductos) + parseInt(producto.attr("precio"));
+            $("#totalProductos").text(totalProductos);
+            $("#cantidadProducto").val('');
+        }
+    }
+
 </script>

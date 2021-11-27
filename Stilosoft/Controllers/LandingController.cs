@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Stilosoft.Business.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,15 @@ namespace Stilosoft.Controllers
 {
     public class LandingController : Controller
     {
-        public IActionResult Index()
+        private readonly IProductoService _productoService;
+
+        public LandingController(IProductoService productoService)
         {
-            return View();
+            _productoService = productoService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await _productoService.ObtenerListaProductosEstado());
         }
 
         public IActionResult Insumos()

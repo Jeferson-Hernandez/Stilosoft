@@ -17,14 +17,16 @@ namespace Stilosoft.Controllers
         private readonly IProductoService _productoService;
         private readonly IServicioService _servicioService;
         private readonly IClienteService _clienteService;
+        private readonly IEstilistaService _estilistaService;
         private readonly AppDbContext _context;
 
-        public SolicitudServicioController(ISolicitudService solicitudService, IProductoService productoService, IServicioService servicioService, IClienteService clienteService, AppDbContext context)
+        public SolicitudServicioController(ISolicitudService solicitudService, IProductoService productoService, IServicioService servicioService, IClienteService clienteService, IEstilistaService estilistaService, AppDbContext context)
         {
             _solicitudService = solicitudService;
             _productoService = productoService;
             _servicioService = servicioService;
             _clienteService = clienteService;
+            _estilistaService = estilistaService;
             _context = context;
         }
         [HttpGet]
@@ -37,16 +39,27 @@ namespace Stilosoft.Controllers
         {
             var cliente = await _context.Cliente.Include(u => u.IdentityUser).Where(e => e.Estado == true).Select(s => new
             {
-                clienteId = s.ClienteId,
-                datosCliente = string.Format("{0} {1} - {2}", s.Nombre, s.Apellido, s.Documento)
+                ClienteId = s.ClienteId,
+                DatosCliente = string.Format("{0} {1} - {2}", s.Nombre, s.Apellido, s.Documento)
             }).ToListAsync();
 
-            ViewBag.Clientes = new SelectList(cliente, "clienteId", "datosCliente");
+            ViewBag.Clientes = new SelectList(cliente, "ClienteId", "DatosCliente");
+            ViewBag.Estilistas = new SelectList(await _estilistaService.ObtenerListaEstilistasEstado(), "EstilistaId", "Nombre");
             SolicitudServicioViewModel solicitud = new();
-            solicitud.servicios = await _servicioService.ObtenerListaServiciosSolicitud();
-            solicitud.productos = await _productoService.ObtenerListaProductosSolicitud();
-            
+            solicitud.Servicios = await _servicioService.ObtenerListaServiciosSolicitud();
+            solicitud.Productos = await _productoService.ObtenerListaProductosSolicitud();
             return View(solicitud);
+        }
+        [HttpPost]
+        public IActionResult CrearSolicitud(SolicitudServicioViewModel solicitud)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+            TempData["Accion"] = "Error";
+            TempData["Mensaje"] = "Ingresaste un valor inválido";
+            return RedirectToAction("index");
         }
     }
 }

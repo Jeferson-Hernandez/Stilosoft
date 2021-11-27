@@ -51,6 +51,9 @@ namespace Stilosoft.Business.Business
         {            
             return await _context.Estilista.Where(c => c.Cedula == cedula).ToListAsync();
         }
-
+        public async Task<IEnumerable<Estilista>> ObtenerListaEstilistasEstado()
+        {
+            return await _context.Estilista.Where(s => s.Estado == true).ToListAsync();
+        }
     }
 }
