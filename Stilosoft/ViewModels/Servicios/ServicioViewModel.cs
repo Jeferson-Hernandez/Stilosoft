@@ -18,12 +18,6 @@ namespace Stilosoft.ViewModels.Servicios
         [DisplayName("Duración")]
         [Required(ErrorMessage = "La duración es obligatoria")]
         public int Duracion { get; set; }
-        [Required(ErrorMessage = "El costo es obligatorio")]
-        public long Costo { get; set; }
-        [DisplayName("Categoría")]
-        [Required(ErrorMessage = "La categoría es obligatoria")]
-        [Column(TypeName = "nvarchar(50)")]
-        public string Categoria { get; set; }
         public bool Estado { get; set; }
     }
 }

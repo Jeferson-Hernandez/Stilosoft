@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Productos</a>
+            <!--<a asp-action="index" asp-controller="Producto" class="btn btn-primary btn-lg mr-md-4">Productos</a>-->
             <a asp-action="index" asp-controller="Estilistas" class="btn btn-primary btn-lg mr-md-4">Estilistas</a>
             <a asp-action="index" asp-controller="Servicios" class="btn btn-secondary btn-lg mr-md-4">Servicios</a>
             <a href="#" class="btn btn-primary btn-lg">Programación agenda</a>
@@ -44,7 +44,7 @@
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Duracion)
+                        @Html.DisplayFor(modelItem => item.Duracion) minutos
                     </td>
                     <td>
                         @if (item.Estado == true)
@@ -62,9 +62,9 @@
                     </td>
                     <td>
                         <a onclick="mostrarModalS('@Url.Action("Editar","Servicios", new {id = item.ServicioId}, Context.Request.Scheme)', 'Editar servicio')" class="btn btn-dark"><i class="fas fa-pencil-alt"></i></a>
-                        <form asp-action="Eliminar" asp-route-id="@item.ServicioId" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                        </form>
+                        <!-- <form asp-action="Eliminar" asp-route-id="@item.ServicioId" class="d-inline">
+    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                   </form>-->
                     </td>
                 </tr>
             }

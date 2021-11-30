@@ -54,7 +54,7 @@ namespace Stilosoft.Controllers
                         TempData["Mensaje"] = "El servicio ya se encuentra registrado";
                         return RedirectToAction("index");
                     }
-                    else if (servicioViewModel.Costo <= 0 || servicioViewModel.Duracion <=0)
+                    else if (servicioViewModel.Duracion <=0)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La duración y el costo no deben ser menores a 1";
@@ -116,7 +116,7 @@ namespace Stilosoft.Controllers
                     {
                         return RedirectToAction("index");
                     }*/
-                    if (servicioViewModel.Costo <= 0 || servicioViewModel.Duracion <= 0)
+                    if (servicioViewModel.Duracion <= 0)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La duración y el costo no deben ser menores a 1";
