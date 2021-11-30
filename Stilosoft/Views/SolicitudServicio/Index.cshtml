@@ -33,29 +33,32 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        <p style="color: cornflowerblue;">Abrir</p>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cliente.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fecha) || @Html.DisplayFor(modelItem => item.Hora)
-                    </td>
-                    <td>
-                        <form>
-                            <button type="submit"><i class="fas fa-toggle-on"></i></button>
-                        </form>
-                    </td>
-                    <td>
-                        <select class="form-control">
-                            <option>Seleccionar</option>
-                            <option>Aprobado</option>
-                            <option>Finalizado</option>
-                        </select>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <p style="color: cornflowerblue;">Abrir</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SolicitudServicioId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha) - @Html.DisplayFor(modelItem => item.Hora)
+                </td>
+                <td>
+                    <form>
+                        <button type="submit"><i class="fas fa-toggle-on"></i></button>
+                    </form>
+                </td>
+                <td>
+                    <select class="form-control">
+                        <option>Seleccionar</option>
+                        <option>Aprobado</option>
+                        <option>Finalizado</option>
+                    </select>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

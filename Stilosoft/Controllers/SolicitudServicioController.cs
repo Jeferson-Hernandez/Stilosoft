@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Stilosoft.Business.Abstract;
 using Stilosoft.Model.DAL;
+using Stilosoft.Model.Entities;
 using Stilosoft.ViewModels.SolicitudServicio;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,63 @@ namespace Stilosoft.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                using(var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var totalCompra = solicitud.TotalProductos + solicitud.TotalServicios;
+                        SolicitudServicio solicitudServicio = new()
+                        {
+                            ClienteId = solicitud.ClienteId,
+                            Fecha = solicitud.FechaHora.Date,
+                            Hora = solicitud.FechaHora.TimeOfDay.ToString(),
+                            Total = totalCompra,
+                            Estado = "Activa"
+                        };
+                        _context.Add(solicitudServicio);
+                        _context.SaveChanges();
+
+                        foreach (var servicio in solicitud.ServiciosSolicitud)
+                        {
+                            DetalleServicioServicios detalleServicios = new()
+                            {
+                                SolicitudServicioId = solicitudServicio.SolicitudServicioId,
+                                ServicioId = servicio.ServicioId,
+                                EstilistaId = servicio.EstilistaId,
+                                Precio = servicio.Precio
+                            };
+                            _context.Add(detalleServicios);
+                        }
+                        _context.SaveChanges();
+
+                        if (solicitud.ProductosSolicutud.Count() > 0)
+                        {
+                            foreach (var producto in solicitud.ProductosSolicutud)
+                            {
+                                DetalleServicioProductos detalleProductos = new()
+                                {
+                                    SolicitudServicioId = solicitudServicio.SolicitudServicioId,
+                                    ProductoId = producto.ProductoId,
+                                    Cantidad = producto.Cantidad,
+                                    Precio = producto.Precio
+                                };
+                                _context.Add(detalleProductos);
+                            }
+                            _context.SaveChanges();
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        TempData["Accion"] = "Error";
+                        TempData["Mensaje"] = "No se pudo completar la operación";
+                        return RedirectToAction("index");
+                    }
+                }
+                TempData["Accion"] = "Crear";
+                TempData["Mensaje"] = "Solicitud creada correctamente";
+                return RedirectToAction("index");
             }
             TempData["Accion"] = "Error";
             TempData["Mensaje"] = "Ingresaste un valor inválido";

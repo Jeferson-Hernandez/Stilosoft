@@ -13,6 +13,8 @@ namespace Stilosoft.ViewModels.SolicitudServicio
         public string ClienteId { get; set; }
         [Required]
         public DateTime FechaHora { get; set; }
+        public long TotalServicios { get; set; }
+        public long TotalProductos { get; set; }
         public List<Servicio> Servicios { get; set; }
         public List<Producto> Productos { get; set; }
         public List<SolicitudServicios> ServiciosSolicitud { get; set; }
