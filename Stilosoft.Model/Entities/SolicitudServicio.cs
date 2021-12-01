@@ -12,8 +12,9 @@ namespace Stilosoft.Model.Entities
     {
         [Key]
         public int SolicitudServicioId { get; set; }
-        public int ClienteId { get; set; }
-        
+        [ForeignKey("Cliente")]
+        public string ClienteId { get; set; }
+
         [Column(TypeName = "Date")]
         public DateTime Fecha { get; set; }
 

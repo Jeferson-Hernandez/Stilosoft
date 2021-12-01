@@ -10,8 +10,8 @@ using Stilosoft.Model.DAL;
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211116161602_inicial")]
-    partial class inicial
+    [Migration("20211122192147_solicitud")]
+    partial class solicitud
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -608,10 +608,7 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClienteId1")
+                    b.Property<string>("ClienteId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estado")
@@ -628,7 +625,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("SolicitudServicioId");
 
-                    b.HasIndex("ClienteId1");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("SolicitudServicio");
                 });
@@ -868,7 +865,7 @@ namespace Stilosoft.Model.Migrations
                 {
                     b.HasOne("Stilosoft.Model.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId1");
+                        .HasForeignKey("ClienteId");
 
                     b.Navigation("Cliente");
                 });

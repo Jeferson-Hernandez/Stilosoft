@@ -55,6 +55,7 @@ namespace Stilosoft
             services.AddScoped<ICitaService, CitaService>();
             services.AddScoped<IProveedorService, ProveedorService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ISolicitudService, SolicitudService>();
 
 
             services.Configure<IdentityOptions>(options =>

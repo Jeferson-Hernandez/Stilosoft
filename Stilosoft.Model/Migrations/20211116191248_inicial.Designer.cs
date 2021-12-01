@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stilosoft.Model.DAL;
 
 namespace Stilosoft.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211116191248_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -606,7 +608,10 @@ namespace Stilosoft.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClienteId")
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClienteId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estado")
@@ -623,7 +628,7 @@ namespace Stilosoft.Model.Migrations
 
                     b.HasKey("SolicitudServicioId");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteId1");
 
                     b.ToTable("SolicitudServicio");
                 });
@@ -863,7 +868,7 @@ namespace Stilosoft.Model.Migrations
                 {
                     b.HasOne("Stilosoft.Model.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId1");
 
                     b.Navigation("Cliente");
                 });

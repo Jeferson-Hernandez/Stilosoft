@@ -45,6 +45,5 @@ namespace Stilosoft.Business.Business
             _context.Remove(cliente);
             await _context.SaveChangesAsync();
         }
-        
     }
 }
