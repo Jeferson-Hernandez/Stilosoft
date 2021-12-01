@@ -108,19 +108,31 @@
                     <a onclick="mostrarModalG('@Url.Action("CrearDetalle","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Agregar producto a la compra')" class="btn btn-info"><i class="fas fa-plus"></i></a>
                 </td>
                 <td>
-                    
+
                     <!--<a asp-action="DetalleIndex" asp-controller="Compras" asp-route-id="@item.CompraId" class="btn btn-dark"><i class="far fa-file-alt"></i></a>-->
                     <a onclick="mostrarModalG('@Url.Action("DetalleIndex","Compras", new {id = item.CompraId}, Context.Request.Scheme)', 'Detalle compra')" class="btn btn-dark"><i class="far fa-file-alt"></i></a>
 
                 </td>
+                @{
+                    if (item.FormaPago == "Crédito")
+                    {
+                        <td>
+                            <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
+                            <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>                
+                            <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
+                            </form>
+                        </td>
 
-                <td>
-                    <a onclick="mostrarModalG('@Url.Action("Index","AbonoCompra", new {id = item.CompraId}, Context.Request.Scheme)', 'Abono Compra')" class="btn btn-dark"><i class="fas fa-coins"></i></a>
-                    <form asp-action="EliminarCompra" asp-route-id="@item.CompraId" onclick="return  DeleteConfirm()" href="/Compras/Index/@item.CompraId" class="d-inline">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt" onclientclick="return confirm('¿Confirma eliminar compra?');"></i></button>
-                    </form>
-                </td>
-
+                    }
+                }
             </tr>
             }
         </tbody>

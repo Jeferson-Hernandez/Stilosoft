@@ -8,6 +8,15 @@
     <p>
         <a onclick="mostrarModalS('@Url.Action("AgregarAbonoCompra","AbonoCompra",new {id = @ViewBag.IdCompra},Context.Request.Scheme)','Abono Compra')" class="btn btn-success"> Agregar abono</a>
     </p>
+    @{
+        @foreach (var itemValor in Model)
+        {
+            <div style="top:0px; left:200px; width: 200px; margin-top: 10px;">
+                <p><strong>Precio total: </strong> @Html.DisplayFor(modelItem => itemValor.ValorInicial)</p>             
+            </div>
+            break;
+        }
+    }
     <table class="table" id="tabla">
         <thead>
             <tr>
@@ -60,28 +69,28 @@
             }
         </tbody>
     </table>
-    @foreach (var item2 in Model)
+    <!--@foreach (var item2 in Model)
     {
 
-<div style="top:0px; left:200px; width: 200px; margin-top: 10px;">
-    <p><strong>Precio total: </strong> @Html.DisplayFor(modelItem => item2.ValorInicial)</p>
-  
-        <p><strong>Cuotas en total: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>
+        <div style="top:0px; left:200px; width: 200px; margin-top: 10px;">
+            <p><strong>Precio total: </strong> @Html.DisplayFor(modelItem => item2.ValorInicial)</p>
 
-</div>
-        @*<div style="margin-left:410px; margin-right:300px; margin-top:-150px; position: fixed;">
             <p><strong>Cuotas en total: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>
-            <p><strong>Cuotas pagadas: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>
-        </div>*@
-        break;
-    }
+
+        </div>
+        @*<div style="margin-left:410px; margin-right:300px; margin-top:-150px; position: fixed;">
+                <p><strong>Cuotas en total: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>
+                <p><strong>Cuotas pagadas: </strong> @Html.DisplayFor(modelItem => item2.Compra.Cuotas)</p>
+            </div>*@
+       
+    }-->
     @{
         @foreach (var item3 in Model)
         {
             if (item3.ValorFinal == 0)
             {
                 <div style="position: absolute; top:100px; left:500px; width: 100px; margin-top: -80px; text-overflow: ellipsis; white-space:nowrap;">
-                <h3 align="center">PAGO COMPLETADO</h3>
+                    <h3 align="center">PAGO COMPLETADO</h3>
                 </div>
             }
         }

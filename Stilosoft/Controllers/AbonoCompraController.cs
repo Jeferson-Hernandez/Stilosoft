@@ -46,12 +46,7 @@ namespace Stilosoft.Controllers
             DetalleCompra detalleCompra = await _detalleCompraService.ObtenerDetalleCompraId(Id);
             Compra compra = await _comprasService.ObtenerCompraPorId(Id);
        
-              AbonoCompraViewModels abonoCompraViewModels = new()
-            {
-                Cuotas = compra.Cuotas,
-                ValorInicial = detalleCompra.Total,
-
-            };
+             
                                  
             return View(new AbonoCompraViewModels());
         }
