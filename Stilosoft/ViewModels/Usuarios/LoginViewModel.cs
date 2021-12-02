@@ -10,7 +10,7 @@ namespace Stilosoft.ViewModels.Usuarios
     public class LoginViewModel
     {
         [Required(ErrorMessage = "El email es obligatorio")]
-        [EmailAddress(ErrorMessage = "Email invalido")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Correo electrónico incorrecto")]
         public string Email { get; set; }
         
         [Required(ErrorMessage = "La contraseña es obligatoria")]        

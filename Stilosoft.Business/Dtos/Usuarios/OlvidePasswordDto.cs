@@ -10,7 +10,7 @@ namespace Stilosoft.Business.Dtos.Usuarios
     public class OlvidePasswordDto 
     {
         [Required(ErrorMessage = "El email es requerido")]
-        [EmailAddress(ErrorMessage = "Email invalido")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Correo electrónico incorrecto")]
         public string Email { get; set; }
     }
 }

@@ -50,13 +50,13 @@ namespace Stilosoft.Controllers
                     Descripcion = productoViewModel.Descripcion,
                     Estado = true
                 };
-                if (producto.Cantidad <= 0)
+                if (producto.Cantidad < 0)
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
                     return RedirectToAction("index");
                 }
-                else if (producto.Precio <= 0)
+                if (producto.Precio <= 0)
                 {
                     TempData["Accion"] = "Error";
                     TempData["Mensaje"] = "El precio debe ser mayor a 0";
@@ -144,7 +144,7 @@ namespace Stilosoft.Controllers
                         Descripcion = productoViewModel.Descripcion,
                         Estado = productoViewModel.Estado,
                     };
-                    if (producto.Cantidad <= 0)
+                    if (producto.Cantidad < 0)
                     {
                         TempData["Accion"] = "Error";
                         TempData["Mensaje"] = "La cantidad debe ser mayor a 0";
