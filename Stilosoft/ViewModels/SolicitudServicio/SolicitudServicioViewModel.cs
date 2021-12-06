@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Stilosoft.ViewModels.SolicitudServicio
 {
     public class SolicitudServicioViewModel
-    {   [Required]
+    {   [Required(ErrorMessage = "El cliente es obligatorio")]
         public string ClienteId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "La fecha y hora son obligatorias")]
         public DateTime FechaHora { get; set; }
         public long TotalServicios { get; set; }
         public long TotalProductos { get; set; }

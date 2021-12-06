@@ -14,21 +14,23 @@
                         <div class="form-group">
                             <label class="control-label">Producto</label>
                             <select asp-items="ViewBag.ListarProducto" class="form-control" id="insumo"></select>
-                            @*<span asp-validation-for="ProductoId" class="text-danger"></span>*@
+                            <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label class="control-label">Cantidad</label>
-                            <input class="form-control" id="cantidadInsumo" />
-                            @*<span asp-validation-for="Cantidad" class="text-danger"></span>*@
+                            <input type="number" value="" class="form-control" id="cantidadInsumo" />
+                            <span id="cantidad_error_obligatoria" class="text-danger">La cantidad es obligatoria</span>
+                            <span id="cantidad_error_cantidad" class="text-danger">La cantidad debe ser mayor a 0 y menor a 100</span>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label class="control-label">Precio</label>
-                            <input class="form-control" id="costoInsumo" />
-                            @*<span asp-validation-for="Costo" class="text-danger"></span>*@
+                            <input type="number" value="" class="form-control" id="costoInsumo" readonly />
+                            <span id="precio_error_obligatoria" class="text-danger">El precio es obligatorio</span>
+                            <span id="precio_error_cantidad" class="text-danger">El precio debe ser mayor a 0 y menor a 1 millón</span>
                         </div>
                     </div>
                 </div>
@@ -43,8 +45,9 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label class="control-label">Iva</label>
-                            <input class="form-control" id="iva" readonly />
-                            @*<span asp-validation-for="Iva" class="text-danger"></span>*@
+                            <input type="number" value="" class="form-control" id="iva" readonly />
+                            <span id="iva_error_obligatoria" class="text-danger">El iva es obligatorio</span>
+                            <span id="iva_error_cantidad" class="text-danger">El iva debe ser mayor a 0 y menor a 75</span>
                         </div>
                     </div>
                     <div class="col-4">
@@ -58,7 +61,7 @@
                 <div class="form-group">
                     <input onclick="agregarInsumo()" type="submit" value="Agregar producto" class="btn btn-primary" />
                 </div>
-            
+                <span class="text-danger" id="form_error">Alguno de los campos no cumple con los requisitos</span>
         </div>
     </div>     
     <br /><hr /><br />
@@ -101,24 +104,93 @@
 
 }
 <script>
-    $(document).ready(function () {        
-        $("#costoInsumo").change(function () {
-            var cantidadInsumo = $("#cantidadInsumo").val();
+    $(document).ready(function () {   
+        var cantidadInsumo = 0;
+        //Esconder los mensajes de los errores
+        $("#cantidad_error_obligatoria").hide();
+        $("#cantidad_error_cantidad").hide();
+        $("#precio_error_obligatoria").hide();
+        $("#precio_error_cantidad").hide();
+        $("#iva_error_obligatoria").hide();
+        $("#iva_error_cantidad").hide();
+        $("#form_error").hide();
+
+        $("#costoInsumo").keyup(function () {
+            cantidadInsumo = $("#cantidadInsumo").val();
             var costoInsumo = $("#costoInsumo").val();
+            $("#iva").val('');
+            $("#total").val('');
+
             $("#subTotal").val(cantidadInsumo * costoInsumo);
-            if ($("#subTotal").val() >= 1) {
+            if ($("#subTotal").val() >= 1 && (costoInsumo > 0 && costoInsumo < 1000000)) {
                 $("#iva").prop('readonly', false);
             } else {
                 $("#iva").prop('readonly', true);
+                $("#costoInsumo").val('');
+                $("#subTotal").val('');
+                $("#iva").val('');
+                $("#total").val('');
+            }
+
+            if (costoInsumo == '' || costoInsumo == null) {
+                $("#precio_error_obligatoria").show();
+                $("#precio_error_cantidad").hide();
+            } else if (costoInsumo <= 0 || costoInsumo > 1000000) {
+                $("#precio_error_cantidad").show();
+                $("#precio_error_obligatoria").hide();
+            } else {
+                $("#precio_error_cantidad").hide();
+                $("#precio_error_obligatoria").hide();
             }
         })
-        $("#iva").change(function () {
-            var iva = $("#iva").val() * 0.01;
-            var subtotalIva = $("#subTotal").val() * iva;
+
+        $("#iva").keyup(function () {
+            let iva = $("#iva").val();
+            let ivaPorcentaje = $("#iva").val() * 0.01;
+            let subtotalIva = $("#subTotal").val() * ivaPorcentaje;
             $("#total").val(parseInt($("#subTotal").val()) + subtotalIva);
+
+            if (iva == '' || iva == null) {
+                $("#iva_error_obligatoria").show();
+                $("#iva_error_cantidad").hide();
+            } else if (iva <= 0 || iva > 75) {
+                $("#iva_error_cantidad").show();
+                $("#iva_error_obligatoria").hide();
+            } else {
+                $("#iva_error_cantidad").hide();
+                $("#iva_error_obligatoria").hide();
+            }
+        })
+
+        $("#cantidadInsumo").keyup(function () {
+            cantidadInsumo = $("#cantidadInsumo").val();
+            $("#costoInsumo").val('');
+            $("#subTotal").val('');
+            $("#iva").val('');
+            $("#total").val('');
+
+            if (cantidadInsumo >= 1 && cantidadInsumo <= 100) {
+                $("#costoInsumo").prop('readonly', false);
+            } else {
+                $("#costoInsumo").prop('readonly', true);
+                $("#costoInsumo").val('');
+                $("#subTotal").val('');
+                $("#iva").val('');
+                $("#total").val('');
+            }
+
+            if (cantidadInsumo == '' || cantidadInsumo == null) {
+                $("#cantidad_error_obligatoria").show();
+                $("#cantidad_error_cantidad").hide();
+            } else if (cantidadInsumo <= 0 || cantidadInsumo > 100) {
+                $("#cantidad_error_cantidad").show();
+                $("#cantidad_error_obligatoria").hide();
+            } else {
+                $("#cantidad_error_cantidad").hide();
+                $("#cantidad_error_obligatoria").hide();
+            }
         })
     })
-
     var totalCompra = 0;
     var cont = 0;
     function agregarInsumo() {
@@ -129,8 +201,9 @@
         let subtotal = $("#subTotal").val();
         let iva = $("#iva").val();
         let total = $("#total").val();
-            
-        if (total != 0) {
+
+        if (total != 0 && (cantidad > 0 && cantidad <= 100) && (precio > 0 && precio <= 1000000) && (iva > 0 && iva <= 75)) {
+            $("#form_error").hide();
             $("#tablaInsumos").append(`
             <tr id="${cont}">
                 <td>
@@ -170,6 +243,8 @@
             $("#subTotal").val('');
             $("#iva").val('');
             $("#total").val('');
+        } else {
+            $("#form_error").show();
         }
     }
 

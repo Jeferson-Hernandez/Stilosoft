@@ -19,8 +19,8 @@
                     </div>
                     <div class="form-group col-xs-2 pl-2">
                         <h3> Fecha y hora</h3>
-                        <input value="" type="datetime-local" asp-for="FechaHora" class="form-control" />
-                        <span asp-validation-for="FechaHora" class="text-danger"></span>
+                        <input value="" type="datetime-local" asp-for="FechaHora" id="fechaHora" class="form-control" />
+                        <span id="fecha_error" class="text-danger">La fecha debe ser mayor al dia actual</span>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <div class="form-group col-xs-4 pl-2">
                         <h3>Servicio</h3>
                         <select id="servicio" class="form-control">
-                            <option>Seleccione</option>
+                            <option value="select">Seleccione</option>
                             @foreach (var item in Model.Servicios)
                             {
                                 <option duracion="@item.Duracion" value="@item.ServicioId">@item.Nombre</option>
@@ -135,6 +135,7 @@
 </div>
 
 <script>
+        
     var totalServicios = 0;
     var contServicios = 0;
     function agregarServicio() {
@@ -144,7 +145,6 @@
         let servicioId = $("#servicio option:selected").val();
         let servicioText = $("#servicio option:selected").text();
         let valorServicio = $("#valorServicio").val();
-        let estilista = $("#estilistaSolicitud");
 
         if (valorServicio >= 5000) {
             $("#tablaServicios").append(`
