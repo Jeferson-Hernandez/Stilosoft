@@ -323,19 +323,18 @@ namespace Stilosoft.Model.Migrations
                 {
                     SolicitudServicioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Fecha = table.Column<DateTime>(type: "Date", nullable: false),
                     Hora = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     Total = table.Column<long>(type: "bigint", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(20)", nullable: true),
-                    ClienteId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Estado = table.Column<string>(type: "nvarchar(20)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SolicitudServicio", x => x.SolicitudServicioId);
                     table.ForeignKey(
-                        name: "FK_SolicitudServicio_Cliente_ClienteId1",
-                        column: x => x.ClienteId1,
+                        name: "FK_SolicitudServicio_Cliente_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "Cliente",
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Restrict);
@@ -608,9 +607,9 @@ namespace Stilosoft.Model.Migrations
                 column: "SolicitudServicioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SolicitudServicio_ClienteId1",
+                name: "IX_SolicitudServicio_ClienteId",
                 table: "SolicitudServicio",
-                column: "ClienteId1");
+                column: "ClienteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

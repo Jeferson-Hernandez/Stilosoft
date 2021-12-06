@@ -30,7 +30,20 @@ namespace Stilosoft.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int Id)
         {
+            Compra compra = await _comprasService.ObtenerCompraPorId(Id);
+            AbonoCompra abonoCompra = await _abonoCompraService.ObtenerAbonoCompraId(Id);
+            if (!AbonoCompraExists(Id))
+            {
+                ViewBag.ValorFinalAbonoCompra = _abonoCompraService.ObtenerTotalDetalleCompraPorId(Id);
+            }
+            else
+            {
+                ViewBag.ValorFinalAbonoCompra = _abonoCompraService.ObtenerAbonoPorId(Id);
+            }
             ViewBag.IdCompra = Id;
+            ViewBag.ValorFinalCompra = _abonoCompraService.ObtenerTotalDetalleCompraPorId(Id);
+            ViewBag.CuotasTotal = compra.Cuotas;
+            ViewBag.CantidadAbono = _abonoCompraService.ObtenerTotalDetalleCompraPorId(Id) / compra.Cuotas;
             return View(await _abonoCompraService.ObtenerListaAbonoPorId(Id));       
         }
         /*[HttpGet]
